@@ -1,7 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ColeHop.MainPage"
-             Title="COLEPICK">
+<ContentPage
+    x:Class="ColeHop.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="ColeHop">
 
+    <VerticalStackLayout
+        Padding="20"
+        Spacing="20">
+
+        <Label
+            Text="Bienvenido a ColeHop"
+            FontSize="28"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" />
+
+        <Button
+            Text="Acceder"
+            Command="{Binding GoToLoginCommand}" />
+
+    </VerticalStackLayout>
 </ContentPage>

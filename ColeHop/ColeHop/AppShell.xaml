@@ -7,8 +7,18 @@
     Title="ColeHop">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        Title="Inicio"
+        ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
+
+    <ShellContent
+        Title="Profesores"
+        ContentTemplate="{DataTemplate views:DashboardTeacherPage}"
+        Route="DashboardTeacher" />
+
+    <ShellContent
+        Title="Tutores"
+        ContentTemplate="{DataTemplate views:DashboardTutorPage}"
+        Route="DashboardTutor" />
 
 </Shell>

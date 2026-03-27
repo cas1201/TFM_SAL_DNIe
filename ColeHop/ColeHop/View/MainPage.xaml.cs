@@ -1,4 +1,4 @@
-﻿namespace ColeHop
+﻿namespace ColeHop.View
 {
     public partial class MainPage : ContentPage
     {

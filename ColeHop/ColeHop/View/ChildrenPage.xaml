@@ -1,12 +1,31 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ColeHop.View.ChildrenPage"
-             Title="ChildrenPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="ColeHop.View.ChildrenPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Mis Hijos">
+
+    <CollectionView
+        ItemsSource="{Binding Children}"
+        SelectionMode="None"
+        Margin="10">
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Border
+                    Stroke="LightGray"
+                    StrokeThickness="1"
+                    Padding="10"
+                    Margin="5"
+                    StrokeShape="RoundRectangle 8">
+
+                    <VerticalStackLayout>
+                        <Label Text="{Binding FullName}" FontSize="20" />
+                        <Label Text="{Binding Grade}" FontSize="14" TextColor="Gray" />
+                    </VerticalStackLayout>
+
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+    </CollectionView>
 </ContentPage>

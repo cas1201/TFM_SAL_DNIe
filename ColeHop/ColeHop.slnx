@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="ColePick/ColeHop.csproj">
+  <Project Path="ColeHop/ColeHop.csproj">
     <Deploy Solution="Debug|*" />
   </Project>
 </Solution>
