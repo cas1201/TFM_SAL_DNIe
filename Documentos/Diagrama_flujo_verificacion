@@ -1,0 +1,41 @@
+Diagrama textual detallado
+[Usuario introduce CAN]
+          │
+          ▼
+[App activa modo NFC]
+          │
+          ▼
+[Se detecta chip DNIe 3.0]
+          │
+          ▼
+[1. SELECT eMRTD Application]
+          │
+          ▼
+[2. Iniciar PACE usando CAN]
+          │
+          ├─ Obtener parámetros PACE del chip
+          ├─ Intercambio de claves efímeras DH
+          ├─ Derivación de claves de sesión
+          ▼
+[Canal Seguro (SM) ACTIVADO]
+          │
+          ▼
+[3. Lectura de Data Groups]
+          ├─ DG1 → Datos MRZ
+          ├─ DG2 → Foto JPEG2000
+          ├─ DG11 → Datos complementarios
+          ├─ DG14 → Security Info
+          ├─ EF.SOD → Firmas y hashes
+          ▼
+[4. Validación criptográfica]
+          ├─ Recalcular hashes de DGs
+          ├─ Comparar con SOD
+          ├─ Verificar firma con CSCA España
+          ▼
+[Integridad y autenticidad OK]
+          │
+          ▼
+[5. Validación biométrica opcional]
+          ├─ Selfie + comparación facial
+          ▼
+[Identidad VALIDADA]

@@ -1,0 +1,86 @@
+✅ 1. Lectura NFC (comunicación IsoDep) – 100% libre y nativo
+Para la conexión NFC NO necesitas ninguna librería de terceros.
+Android expone APIs nativas 100% gratuitas:
+
+Android.Nfc.NfcAdapter
+Android.Nfc.Tag
+Android.Nfc.Tech.IsoDep
+
+Estas son API estándar de Android.
+✔ No tienen licencia
+✔ No requieren SDK extra
+✔ Son estables y ampliamente soportadas
+En MAUI, son accesibles vía plataforma Android, por lo que cumplen tu requisito:
+Todo 100% libre y sin dependencias de pago.
+✅ La lectura NFC (IsoDep) ya está cubierta con las APIs de Android.
+
+✅ 2. Implementación open‑source para criptografía de eMRTD (PACE + SM + SOD)
+Aunque el DNIe 3.0 exige PACE + Secure Messaging, puedes usar bibliotecas open‑source para la criptografía de base.
+✅ 2.1. BouncyCastle C# — MIT License
+Es la librería estándar para:
+
+AES
+SHA-1/256/512
+HMAC
+ECDH
+PKCS7
+Verificación de firmas
+
+📌 Licencia: MIT (gratis, libre, apta para uso comercial)
+📌 URL: https://www.bouncycastle.org/csharp/
+Es compatible con MAUI.
+✅ Con esto puedes implementar:
+
+Derivación de claves PACE
+Secure Messaging (SM)
+Verificación firma SOD
+Cifrado DO87/DO8E/DO99
+
+
+✅ 3. Lectura y parsing LDS (DG1, DG2, DG14, SOD)
+Para parsear ASN.1 / LDS de ICAO 9303:
+✅ 3.1. Asn1Parser — MIT License
+Te permite decodificar estructuras DER de LDS:
+
+DG1 (MRZ)
+DG2 (JPEG2000)
+DG11
+DG14
+EF.SOD
+
+📌 Licencia: MIT
+📌 Funciona en MAUI (solo .NET puro)
+
+✅ 4. Procesamiento JPEG2000 (para la foto DG2)
+El DNIe 3.0 trae la foto en formato JPEG2000.
+Opciones open‑source:
+✅ 4.1. OpenJPEG (.NET bindings)
+Licencia BSD → libre, gratuita.
+O, si prefieres C# puro:
+✅ 4.2. Jpeg2000.Net (MIT License)
+Biblioteca sencilla para decodificar JP2 en C#.
+✅ Ambas libres
+✅ Sin licencias comerciales
+✅ Compatibles con MAUI
+
+✅ 5. Comparación facial (si implementas biometría)
+Si quieres validar que la cara del DG2 coincide con un selfie:
+✅ 5.1. ONNXRuntime + modelos open-source
+Licencia del runtime: MIT
+Modelos faciales open‑source: ArcFace, SFace, InsightFace
+Ninguno requiere licencia de pago.
+
+✅ 6. Resumen final — Arquitectura "Free & Open Source"
+✅ NFC
+→ APIs nativas de Android (gratis)
+✅ PACE / Secure Messaging
+→ BouncyCastle (MIT)
+✅ APDU parsing / ASN.1 / LDS
+→ Asn1Parser (MIT)
+✅ DG2 (JPEG2000)
+→ OpenJPEG (BSD) o Jpeg2000.Net (MIT)
+✅ Validación SOD
+→ BouncyCastle (MIT)
+✅ Biometría (opcional)
+→ ONNXRuntime + modelos open-source (MIT)
+✅ Total licencia: 100% open‑source free

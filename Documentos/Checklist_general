@@ -1,0 +1,100 @@
+✅ 1. Preparación del proyecto MAUI
+
+ Crear proyecto MAUI .NET 8/9 orientado a Android.
+ Configurar AndroidManifest.xml con permisos NFC.
+ Configurar uses-feature NFC obligatorio o no.
+ Activar ReaderMode en MainActivity.
+ Implementar callback de detección de TAG NFC.
+
+
+✅ 2. Capa NFC / Comunicación con el chip
+
+ Detectar TAG compatible (ISO14443-A/B).
+ Obtener instancia IsoDep del TAG.
+ Establecer conexión con IsoDep.ConnectAsync().
+ Implementar canal de comunicación (IsoDepChannel).
+ Implementar método genérico para Transceive APDU.
+
+
+✅ 3. Protocolo inicial eMRTD
+
+ Enviar APDU SELECT para seleccionar la aplicación eMRTD del DNIe.
+ Validar respuesta SW1/SW2 del SELECT.
+
+
+✅ 4. Implementar PACE (requerido para DNIe 3.0)
+
+ Solicitar parámetros PACE al chip.
+ Implementar derivación de clave usando CAN.
+ Implementar intercambio DH/EC-DH para PACE.
+ Generar claves de sesión (KSenc, KSmac).
+ Activar "Secure Messaging" (SM).
+
+
+✅ 5. Implementar Secure Messaging
+
+ Envolver APDUs con DO87/DO97/DO8E.
+ Implementar cifrado AES/CAM según protocolo.
+ Validar MAC de cada respuesta del chip.
+ Implementar desempaquetado de respuesta (DO87/DO99).
+
+
+✅ 6. Lectura de ficheros LDS
+Implementar lector para cada Data Group necesario:
+
+ Implementar APDU READ BINARY con SM activo.
+ Leer DG1 (datos personales MRZ).
+ Leer DG2 (imagen facial JPEG2000).
+ Leer DG11 (datos adicionales).
+ Leer DG14 (información de seguridad).
+ Leer EF.SOD (firmas y hashes).
+
+
+✅ 7. Parsing LDS (ICAO 9303)
+
+ Implementar parser BER/DER para estructuras LDS.
+ Extraer campos de DG1 (nombre, fecha, ID, etc.).
+ Extraer imagen del DG2.
+ Mapear todos los datos a modelos C#.
+
+
+✅ 8. Validación criptográfica del chip
+
+ Calcular hash de cada DG leído (SHA).
+ Extraer hashes del SOD.
+ Comparar hashes locales vs SOD.
+ Cargar certificados CSCA oficiales de España.
+ Verificar firma del SOD contra cadena CSCA.
+ Verificar integridad del documento.
+
+
+✅ 9. Validación biométrica (opcional)
+
+ Capturar selfie del usuario.
+ Usar modelo facial ONNX/TensorFlow Lite para face-matching.
+ Comparar selfie con imagen DG2.
+
+
+✅ 10. Integración general en la aplicación
+
+ Crear ViewModel para gestionar flujo de escaneo.
+ Crear estados: “Detectando chip”, “Estableciendo PACE”, “Leyendo DGs”, “Validando SOD”.
+ Mostrar resultados en UI (foto, datos, estado de validación).
+
+
+✅ 11. Seguridad y cumplimiento
+
+ Almacenar datos solo en memoria volátil.
+ No persistir DG2 sin cifrado fuerte.
+ Cifrado AES-256 para cualquier almacenamiento temporal.
+ Eliminar imágenes/intermedios al finalizar.
+ Cumplir RGPD (bloqueo, minimización, consentimiento).
+
+
+✅ 12. Testing
+
+ Pruebas con DNIe real en varios dispositivos NFC.
+ Comprobación de errores APDU.
+ Testing de PACE (errores de CAN).
+ Testing de desconexión de chip.
+ Testing de SOD e inconsistencias.

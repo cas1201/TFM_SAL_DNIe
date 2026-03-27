@@ -1,0 +1,65 @@
+🧠 Backend (API REST – .NET 8 o Azure Functions)
+/Controllers
+    /AuthController
+    /TutorsController
+    /ChildrenController
+    /AuthorizedPersonsController
+    /PickupController
+    /TeachersController
+
+/Services
+/Repositories
+/Entities
+/DTOs
+
+Servicios backend
+✅ Autenticación (JWT)
+✅ Aprobación de tutores
+✅ Gestión de niños
+✅ Gestión de autorizados
+✅ Calendario de recogidas
+✅ Listado diario para profesores
+✅ Log de entregas realizadas
+
+🗂️ Base de datos
+Puedes usar SQL Server, PostgreSQL o SQLite (si prefieres local).
+Aquí tienes las entidades clave:
+User
+ ├─ Id
+ ├─ Email
+ ├─ PasswordHash
+ ├─ Role (Teacher / Tutor)
+
+Tutor
+ ├─ Id
+ ├─ UserId
+ ├─ Status (Pending/Approved/Rejected)
+
+Child
+ ├─ Id
+ ├─ TutorId
+ ├─ Name
+
+AuthorizedPerson
+ ├─ Id
+ ├─ TutorId
+ ├─ Name
+ ├─ DNI
+ ├─ Relationship
+ ├─ PhotoUrl (opcional)
+
+AuthorizedSchedule
+ ├─ Id
+ ├─ AuthorizedPersonId
+ ├─ ChildId
+ ├─ DayOfWeek
+ ├─ Date
+ ├─ IsRecurring
+
+PickupLog
+ ├─ Id
+ ├─ ChildId
+ ├─ AuthorizedPersonId
+ ├─ TeacherId
+ ├─ DateTime
+ ├─ WasViaNFC (bool)

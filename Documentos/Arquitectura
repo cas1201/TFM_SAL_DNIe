@@ -1,0 +1,93 @@
+/DNIeVerifierApp
+│
+├── App.xaml
+├── App.xaml.cs
+├── MauiProgram.cs
+│
+├── /Views
+│   ├── LoginPage.xaml
+│   ├── LoginPage.xaml.cs
+│   ├── DashboardTeacherPage.xaml
+│   ├── DashboardTeacherPage.xaml.cs
+│   ├── DashboardTutorPage.xaml
+│   ├── DashboardTutorPage.xaml.cs
+│   ├── RegisterTutorPage.xaml
+│   ├── RegisterTutorPage.xaml.cs
+│   ├── ChildrenPage.xaml
+│   ├── ChildrenPage.xaml.cs
+│   ├── AuthorizedPersonsPage.xaml
+│   ├── AuthorizedPersonsPage.xaml.cs
+│   ├── AuthorizationCalendarPage.xaml
+│   ├── AuthorizationCalendarPage.xaml.cs
+│   ├── DailyPickupListPage.xaml
+│   ├── DailyPickupListPage.xaml.cs
+│   ├── NfcScanPage.xaml            (futuro: lectura de DNIe 3.0)
+│   ├── NfcScanPage.xaml.cs
+│
+├── /ViewModels
+│   ├── LoginViewModel.cs
+│   ├── DashboardTeacherViewModel.cs
+│   ├── DashboardTutorViewModel.cs
+│   ├── RegisterTutorViewModel.cs
+│   ├── ChildrenViewModel.cs
+│   ├── AuthorizedPersonsViewModel.cs
+│   ├── AuthorizationCalendarViewModel.cs
+│   ├── DailyPickupListViewModel.cs
+│   ├── NfcScanViewModel.cs        (futuro)
+│
+├── /Models
+│   ├── User.cs
+│   ├── Tutor.cs
+│   ├── Teacher.cs
+│   ├── Child.cs
+│   ├── AuthorizedPerson.cs
+│   ├── AuthorizedSchedule.cs
+│   ├── PickupLog.cs
+│
+│   ├── DnieModels/
+│       ├── PersonData.cs
+│       ├── DocumentData.cs
+│       ├── ChipInfo.cs
+│       ├── SodInfo.cs
+│       ├── ValidationResult.cs
+│
+├── /Services
+│   ├── /Api
+│   │   ├── AuthApiService.cs
+│   │   ├── TutorApiService.cs
+│   │   ├── TeacherApiService.cs
+│   │   ├── ChildrenApiService.cs
+│   │   ├── AuthorizedPersonsApiService.cs
+│   │   ├── PickupApiService.cs
+│   │
+│   ├── /Nfc
+│   │   ├── NfcService.cs
+│   │   ├── NfcListener.cs
+│   │   ├── IsoDepChannel.cs
+│   │
+│   ├── /Security
+│   │   ├── PaceService.cs
+│   │   ├── SecureMessagingService.cs
+│   │   ├── KeyDerivation.cs
+│   │
+│   ├── /ChipReader
+│   │   ├── ApduService.cs
+│   │   ├── FileSelector.cs
+│   │   ├── DataGroupReader.cs
+│   │   ├── LdsParser.cs
+│   │
+│   ├── /Validation
+│       ├── HashValidator.cs
+│       ├── SodValidator.cs
+│       ├── CertificateProvider.cs
+│
+├── /Utils
+│   ├── ByteExtensions.cs
+│   ├── Asn1Utils.cs
+│   ├── Logging.cs
+│   ├── Constants.cs
+│
+└── /Platforms/Android
+    ├── MainActivity.cs
+    ├── AndroidManifest.xml
+    ├── NfcBroadcastReceiver.cs

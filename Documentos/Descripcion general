@@ -1,0 +1,79 @@
+✅ 1. Roles del sistema
+👨‍🏫 Profesor
+
+Puede aprobar registro de tutores.
+Puede ver listado diario de recogidas autorizadas.
+Puede validar al autorizado que se presenta (con DNIe 3.0 en futuro).
+
+👪 Tutor (padre/madre)
+
+Se da de alta (pendiente de aprobación del profesor).
+Asigna a sus hijos.
+Registra personas autorizadas para recoger a sus hijos.
+Configura días autorizados para cada persona autorizada.
+Puede deshabilitar o modificar autorizaciones en cualquier momento.
+
+🧍 Persona Autorizada
+
+Perfil sin acceso a la app.
+Solo existe como entidad en la base de datos.
+En el colegio, el profesor verifica su identidad (futuro NFC).
+
+✅ 2. Flujo funcional principal
+🔹 2.1. Alta de tutor
+
+Tutor instala la app y crea cuenta.
+Sube documentación básica (DNI, nombre, email).
+Selecciona el colegio/curso del niño.
+El profesor recibe notificación de alta -> aceptar / rechazar.
+Tutor pasa a estado activo.
+
+
+🔹 2.2. Registro de niños del tutor
+
+Tutor registra uno o varios hijos.
+Profesor verifica que el niño pertenece a su clase.
+Profesor aprueba la solicitud.
+Niño queda asociado al tutor.
+
+
+🔹 2.3. Registro de personas autorizadas por el tutor
+
+Tutor añade persona autorizada:
+
+Nombre
+Apellidos
+DNI
+Relación
+(Opcional) Foto para control visual
+
+
+Tutor asigna uno o varios niños a esa persona.
+Tutor define:
+
+Días de la semana autorizados
+Fecha concreta o rango
+
+
+La autorización queda activa.
+
+
+🔹 2.4. Recogida en la escuela
+
+La persona autorizada llega al colegio.
+Profesor abre su vista “Recogidas de hoy”:
+
+Listado de niños que pueden ser recogidos hoy
+Personas autorizadas para cada niño
+
+
+Profesor busca al niño o escanea el DNIe 3.0 del autorizado (futuro).
+El sistema valida:
+
+Identidad del autorizado
+Día autorizado
+Niño asociado
+
+
+Profesor confirma entrega del niño.
+
