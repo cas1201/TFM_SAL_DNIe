@@ -1,0 +1,136 @@
+Desarrollo específico de la contribución
+Tipo 2: Desarrollo software
+
+4. Identificación de requisitos
+4.1 Identificación del problema y contexto de uso
+El problema abordado en este trabajo se sitúa en el contexto de los centros educativos de educación infantil y primaria, donde la recogida diaria de los menores se realiza habitualmente mediante procedimientos manuales, apoyados en el reconocimiento visual del personal docente o en autorizaciones previamente comunicadas por las familias. Estos procedimientos, aunque funcionales, presentan limitaciones importantes desde el punto de vista de la seguridad, la trazabilidad y la resistencia frente a errores humanos o intentos de suplantación de identidad.
+El contexto de uso de la solución propuesta es el de un entorno educativo real, caracterizado por:
+
+Alta rotación diaria de personas autorizadas.
+Necesidad de procesos ágiles que no ralenticen la salida del alumnado.
+Uso de dispositivos móviles como herramienta habitual.
+Tratamiento de información sensible relacionada con menores.
+
+Desde una perspectiva de ciberseguridad, el problema principal radica en la ausencia de mecanismos de autenticación fuerte que permitan verificar de manera inequívoca la identidad del adulto responsable que recoge al menor.
+
+4.2 Análisis de usuarios y actores implicados
+En el sistema propuesto se identifican los siguientes actores principales:
+
+Encargado de la recogida: adulto autorizado por los tutores legales del menor, que utiliza su DNIe 3.0 para identificarse en el momento de la recogida.
+Personal del centro educativo: responsable de validar la recogida mediante la aplicación.
+Sistema software: aplicación móvil que realiza la lectura NFC, la verificación criptográfica y la comprobación de autorizaciones.
+
+Este trabajo se centra exclusivamente en el proceso técnico de verificación de identidad, sin abordar aspectos administrativos o legales relacionados con la autorización inicial, que se considera preexistente en el sistema.
+
+4.3 Requisitos funcionales
+A partir del análisis realizado, se definen los siguientes requisitos funcionales:
+
+RF1: La aplicación debe permitir la lectura del DNI electrónico 3.0 mediante NFC.
+RF2: El sistema debe establecer un canal seguro de comunicación con el chip del DNIe.
+RF3: La aplicación debe verificar criptográficamente la identidad del titular del DNIe.
+RF4: El sistema debe comprobar que la identidad verificada está asociada a una autorización válida para la recogida.
+RF5: La aplicación debe registrar el resultado del proceso de verificación.
+
+
+4.4 Requisitos no funcionales (enfoque en ciberseguridad)
+
+RNF1: Confidencialidad de los datos intercambiados mediante el uso de canal seguro.
+RNF2: Integridad de la información leída del DNIe.
+RNF3: Autenticación fuerte basada en certificados digitales.
+RNF4: Minimización de datos personales tratados.
+RNF5: Usabilidad suficiente para un entorno educativo real.
+
+
+5. Descripción de la herramienta software desarrollada
+5.1 Proceso de desarrollo
+El desarrollo de la herramienta se ha llevado a cabo siguiendo un enfoque incremental, dividido en fases claramente diferenciadas:
+
+Análisis técnico del DNIe 3.0 y de los protocolos implicados en su lectura por NFC.
+Diseño de la arquitectura de la aplicación.
+Implementación de la capa de acceso NFC.
+Implementación del flujo de verificación del DNIe.
+Integración del módulo de validación de autorizaciones.
+Pruebas funcionales y de seguridad.
+
+Este enfoque ha permitido aislar los componentes críticos desde el punto de vista de la ciberseguridad y facilitar la evaluación individual de cada módulo.
+
+5.2 Arquitectura de la aplicación
+La aplicación se ha diseñado siguiendo una arquitectura modular, separando claramente la lógica de negocio de los elementos dependientes de plataforma.
+┌──────────────────────────────┐
+│        Interfaz de Usuario   │
+└─────────────┬────────────────┘
+              │
+┌─────────────▼────────────────┐
+│   Controlador de Verificación│
+└─────────────┬────────────────┘
+              │
+┌─────────────▼────────────────┐
+│   Módulo DNIe                │
+│   - APDU                     │
+│   - PACE                     │
+│   - Certificados             │
+└─────────────┬────────────────┘
+              │
+┌─────────────▼────────────────┐
+│   Servicio NFC               │
+└──────────────────────────────┘
+
+Esta separación permite:
+
+Reutilización del código criptográfico.
+Aislamiento del acceso NFC.
+Mayor mantenibilidad y seguridad.
+
+
+5.3 Flujo de verificación del DNIe 3.0
+El proceso de verificación implementado sigue el flujo técnico oficial del DNIe 3.0:
+
+
+Inicialización NFC
+El dispositivo móvil detecta la presencia del chip NFC del DNIe.
+
+
+Introducción del número CAN
+El usuario introduce el número CAN para habilitar el acceso al chip.
+
+
+Establecimiento de canal seguro (PACE)
+Se ejecuta el protocolo PACE para negociar claves y cifrar las comunicaciones.
+
+
+Lectura de datos y certificados
+Se accede a la información necesaria para identificar al titular.
+
+
+Verificación criptográfica
+Se validan los certificados digitales del DNIe utilizando criptografía de clave pública.
+
+
+Comparación con autorizaciones
+La identidad verificada se compara con los registros de autorización existentes.
+
+
+Resultado de verificación
+Se muestra el resultado (recogida autorizada / no autorizada).
+
+
+Este flujo garantiza que la identidad no pueda ser suplantada sin la posesión física del DNIe y el conocimiento del CAN.
+
+5.4 Interfaz de usuario
+La interfaz se ha diseñado con criterios de simplicidad, mostrando únicamente la información necesaria para el proceso de recogida. El flujo visual guía al usuario paso a paso, reduciendo errores y facilitando el uso en situaciones reales de carga de trabajo.
+(En este apartado podrás añadir capturas de pantalla en la versión final del documento.)
+
+6. Evaluación
+6.1 Evaluación de la usabilidad
+La usabilidad de la herramienta se ha evaluado de manera cualitativa, teniendo en cuenta su adecuación al entorno educativo. El proceso de verificación se ha diseñado para completarse en pocos segundos, limitando la interacción del usuario a la introducción del CAN y la aproximación del DNI al dispositivo móvil.
+El uso de NFC elimina la necesidad de conocimientos técnicos avanzados, lo que facilita su aceptación por parte del personal del centro.
+
+6.2 Evaluación de la aplicabilidad
+Desde el punto de vista de la aplicabilidad, la herramienta desarrollada demuestra que es técnicamente viable integrar mecanismos de autenticación fuerte basados en el DNIe en un proceso cotidiano como la recogida escolar.
+La solución mejora significativamente la seguridad frente a métodos basados en códigos QR o autorizaciones visuales, aportando:
+
+Mayor resistencia a la suplantación de identidad.
+Autenticación criptográfica verificable.
+Mayor confianza para el centro y las familias.
+
+Las principales limitaciones identificadas están relacionadas con la disponibilidad de dispositivos NFC compatibles y la usabilidad en determinadas plataformas, aspectos que pueden abordarse en trabajos futuros.
