@@ -13,7 +13,6 @@ out/
 publish/
 *.pubxml
 *.pubxml.user
-**/platforms/
 **/Resources/Raw/*.a
 **/Resources/Raw/*.so
 *.DS_Store
