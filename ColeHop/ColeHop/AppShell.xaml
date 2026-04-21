@@ -3,22 +3,22 @@
     x:Class="ColeHop.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ColeHop"
+    xmlns:views="clr-namespace:ColeHop.View"
     Title="ColeHop">
 
+    <!-- LOGIN -->
     <ShellContent
-        Title="Inicio"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
+        Route="login"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
 
+    <!-- DASHBOARD TUTOR -->
     <ShellContent
-        Title="Profesores"
-        ContentTemplate="{DataTemplate views:DashboardTeacherPage}"
-        Route="DashboardTeacher" />
+        Route="dashboard/tutor"
+        ContentTemplate="{DataTemplate views:DashboardTutorPage}" />
 
+    <!-- DASHBOARD TEACHER -->
     <ShellContent
-        Title="Tutores"
-        ContentTemplate="{DataTemplate views:DashboardTutorPage}"
-        Route="DashboardTutor" />
+        Route="dashboard/teacher"
+        ContentTemplate="{DataTemplate views:DashboardTeacherPage}" />
 
 </Shell>

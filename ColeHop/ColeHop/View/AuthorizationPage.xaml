@@ -1,0 +1,61 @@
+<ContentPage
+    x:Class="ColeHop.View.AuthorizationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Nueva autorización">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Fecha -->
+            <Label Text="Fecha"
+                   FontAttributes="Bold" />
+
+            <DatePicker
+                Date="{Binding SelectedDate}"
+                MinimumDate="{Binding MinimumDate}"
+                Format="dd/MM/yyyy" />
+
+            <!-- Niños -->
+            <Label Text="Niños autorizados"
+                   FontAttributes="Bold" />
+
+            <CollectionView
+                ItemsSource="{Binding Children}"
+                SelectionMode="Multiple"
+                SelectedItems="{Binding SelectedChildren}">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="12"
+                                Margin="4"
+                                Stroke="LightGray"
+                                StrokeShape="RoundRectangle 8">
+
+                            <Label Text="{Binding Name}" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Persona autorizada -->
+            <Label Text="Persona autorizada"
+                   FontAttributes="Bold" />
+
+            <Picker
+                ItemsSource="{Binding AuthorizedPeople}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedAuthorizedPerson}" />
+
+            <!-- Botón -->
+            <Button
+                Text="Crear autorización"
+                Command="{Binding CreateAuthorizationCommand}"
+                BackgroundColor="{DynamicResource Primary}"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

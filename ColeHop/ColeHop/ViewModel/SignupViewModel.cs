@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.ViewModel
 {
-    internal class RegisterTutorViewModel
+    internal class SignupViewModel
     {
     }
 }

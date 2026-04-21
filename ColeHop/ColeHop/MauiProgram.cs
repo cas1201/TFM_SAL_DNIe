@@ -1,6 +1,5 @@
 ﻿using ColeHop.Platforms.Android;
 using ColeHop.Services.NFC;
-using CommunityToolkit.Maui;
 
 namespace ColeHop
 {
@@ -11,7 +10,6 @@ namespace ColeHop
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
