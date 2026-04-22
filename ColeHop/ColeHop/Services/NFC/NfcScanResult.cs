@@ -1,9 +1,4 @@
-﻿namespace ColeHop.Services.NFC
+﻿namespace ColeHop.Services.Nfc
 {
-    public class NfcScanResult
-    {
-        public string Uid { get; init; } = string.Empty;
-        public byte[]? RawData { get; init; }
-        public DateTime Timestamp { get; init; } = DateTime.UtcNow;
-    }
+    public sealed record NfcScanResult(byte[]? RawData, bool IsValid, string? ErrorMessage);
 }

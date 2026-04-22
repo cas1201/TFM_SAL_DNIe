@@ -47,14 +47,16 @@
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw assets -->
-		<MauiAsset
-		  Include="Resources\Raw\**"
-		  LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<!-- NuGet packages -->
 	<ItemGroup>
-		
+	  <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="10.0.51" />
 	</ItemGroup>
 
 </Project>

@@ -1,8 +1,9 @@
-﻿using ColeHop.Services.NFC;
+﻿using ColeHop.Core.Services.Nfc;
+using ColeHop.Services.Nfc;
 
 namespace ColeHop.ViewModel
 {
-    public class NfcScanViewModel
+    public sealed class NfcScanViewModel
     {
         readonly INfcService _nfc;
 
@@ -12,9 +13,9 @@ namespace ColeHop.ViewModel
             _nfc.TagDetected += OnTagDetected;
         }
 
-        private void OnTagDetected(object? sender, NfcScanResult e)
+        private void OnTagDetected(object? sender, NfcScanResult nfcReadResult)
         {
-            // RESULTADO LEIDO: NfcScanResult e
+            // RESULTADO LEIDO: nfcReadResult
         }
     }
 }

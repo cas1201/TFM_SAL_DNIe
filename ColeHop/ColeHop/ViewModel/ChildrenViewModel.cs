@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.ViewModel
 {
-    internal class ChildrenViewModel
+    public sealed class ChildrenViewModel
     {
     }
 }

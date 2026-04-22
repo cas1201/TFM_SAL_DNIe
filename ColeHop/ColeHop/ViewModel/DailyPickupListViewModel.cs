@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.ViewModel
 {
-    internal class DailyPickupListViewModel
+    public sealed class DailyPickupListViewModel
     {
     }
 }

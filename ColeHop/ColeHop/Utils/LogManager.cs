@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.Utils
 {
-    internal class LogManager
+    public sealed class LogManager
     {
     }
 }

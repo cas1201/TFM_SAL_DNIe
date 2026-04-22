@@ -2,7 +2,7 @@
     x:Class="ColeHop.View.NfcScanPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Escaneo NFC">
+    Title="Escaneo Nfc">
 
     <VerticalStackLayout Padding="24" Spacing="20" HorizontalOptions="Center">
 

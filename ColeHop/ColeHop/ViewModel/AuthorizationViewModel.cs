@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.ViewModel
 {
-    internal class AuthorizationViewModel
+    public sealed class AuthorizationViewModel
     {
     }
 }

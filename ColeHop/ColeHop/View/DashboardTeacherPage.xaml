@@ -16,7 +16,7 @@
             Command="{Binding GoToDailyPickupListCommand}" />
 
         <Button
-            Text="Escanear NFC"
+            Text="Escanear Nfc"
             Command="{Binding GoToNfcScanCommand}" />
 
     </VerticalStackLayout>

@@ -1,79 +1,186 @@
-✅ 1. Roles del sistema
-👨‍🏫 Profesor
+1. Roles del sistema
+-Profesor (Teacher)
+Rol operativo y de control dentro del centro educativo.
+Responsabilidades:
 
-Puede aprobar registro de tutores.
-Puede ver listado diario de recogidas autorizadas.
-Puede validar al autorizado que se presenta (con DNIe 3.0 en futuro).
+Aprobar o rechazar el registro inicial de tutores.
+Ver el listado diario de recogidas autorizadas.
+Iniciar y supervisar el proceso de recogida.
+Verificar la identidad de la persona autorizada que se presenta.
+Confirmar y registrar la entrega del menor.
 
-👪 Tutor (padre/madre)
+El profesor no crea autorizaciones, solo las valida y ejecuta.
+Es el actor que cierra el ciclo de seguridad.
 
-Se da de alta (pendiente de aprobación del profesor).
-Asigna a sus hijos.
-Registra personas autorizadas para recoger a sus hijos.
-Configura días autorizados para cada persona autorizada.
-Puede deshabilitar o modificar autorizaciones en cualquier momento.
+-Tutor legal (Tutor)
+Rol de configuración y definición de permisos.
+Responsabilidades:
 
-🧍 Persona Autorizada
+Registrarse en la aplicación (registro sujeto a aprobación).
+Gestionar los menores a su cargo.
+Registrar personas autorizadas para recoger a sus hijos.
+Crear, modificar y deshabilitar autorizaciones de recogida.
+Definir los días concretos o rangos temporales de autorización.
+Consultar el historial de recogidas.
 
-Perfil sin acceso a la app.
-Solo existe como entidad en la base de datos.
-En el colegio, el profesor verifica su identidad (futuro NFC).
+El tutor define las reglas, pero no interviene en la recogida presencial.
 
-✅ 2. Flujo funcional principal
-🔹 2.1. Alta de tutor
+-Persona autorizada
+Entidad física, no usuaria de la app.
+Características:
 
-Tutor instala la app y crea cuenta.
-Sube documentación básica (DNI, nombre, email).
-Selecciona el colegio/curso del niño.
-El profesor recibe notificación de alta -> aceptar / rechazar.
-Tutor pasa a estado activo.
+No dispone de cuenta ni acceso a la aplicación.
+Existe únicamente como entidad registrada por el tutor.
+Se presenta físicamente en el centro.
+Su identidad se verifica en el momento de la recogida (DNIe + NFC).
 
+Es el sujeto verificado, no un actor digital.
 
-🔹 2.2. Registro de niños del tutor
+2. Flujo funcional completo de la aplicación
+El flujo se presenta en orden cronológico real, desde el alta hasta la recogida, integrando control humano + verificación criptográfica.
 
-Tutor registra uno o varios hijos.
-Profesor verifica que el niño pertenece a su clase.
-Profesor aprueba la solicitud.
-Niño queda asociado al tutor.
+2.1. Alta de tutor (registro controlado)
+Objetivo: evitar accesos no verificados al sistema.
+Flujo
 
+El tutor instala la aplicación y accede a la opción Registro.
+Introduce sus datos básicos:
 
-🔹 2.3. Registro de personas autorizadas por el tutor
-
-Tutor añade persona autorizada:
-
-Nombre
-Apellidos
-DNI
-Relación
-(Opcional) Foto para control visual
+Nombre y apellidos.
+DNI.
+Email.
 
 
-Tutor asigna uno o varios niños a esa persona.
-Tutor define:
+Selecciona el centro educativo y curso/clase del menor.
+El sistema valida los datos introducidos.
+El tutor queda en estado pendiente de aprobación.
+El profesor visualiza la solicitud de alta.
+El profesor acepta o rechaza la solicitud.
+Si es aceptada, el tutor pasa a estado activo y puede iniciar sesión.
 
-Días de la semana autorizados
-Fecha concreta o rango
+Decisión de seguridad clave:
+El registro no concede acceso automático al sistema.
+
+2.2. Registro y validación de menores
+Objetivo: asegurar que los menores están correctamente asociados.
+Flujo
+
+El tutor accede a Gestión de menores.
+Registra uno o varios hijos:
+
+Nombre.
+Curso/grupo.
+
+
+El sistema registra la solicitud.
+El profesor verifica que el menor pertenece a su clase.
+El profesor aprueba la asociación.
+El menor queda vinculado al tutor.
+
+Evita altas incorrectas o fraudulentas.
+
+2.3. Registro de personas autorizadas
+Objetivo: definir quién puede recoger al menor.
+Flujo
+
+El tutor accede a Personas autorizadas.
+Registra una nueva persona autorizada indicando:
+
+Nombre.
+Apellidos.
+DNI.
+Relación con el menor.
+(Opcional) fotografía para control visual.
+
+
+El sistema valida la información.
+La persona queda disponible para crear autorizaciones.
+
+Esta persona no accede nunca a la app.
+
+2.4. Creación de una autorización de recogida
+Objetivo: definir permisos concretos y temporales.
+Flujo
+
+El tutor inicia Nueva autorización.
+Selecciona:
+
+Uno o varios menores.
+Una persona autorizada.
+Una fecha concreta o un rango temporal.
+
+
+El sistema valida:
+
+Existencia de menores y autorizado.
+Coherencia temporal.
 
 
 La autorización queda activa.
 
+El tutor puede:
 
-🔹 2.4. Recogida en la escuela
-
-La persona autorizada llega al colegio.
-Profesor abre su vista “Recogidas de hoy”:
-
-Listado de niños que pueden ser recogidos hoy
-Personas autorizadas para cada niño
+Modificarla.
+Deshabilitarla.
+Eliminarla en cualquier momento.
 
 
-Profesor busca al niño o escanea el DNIe 3.0 del autorizado (futuro).
-El sistema valida:
+2.5. Proceso de recogida en la escuela
+Este es el núcleo del sistema y del TFM.
 
-Identidad del autorizado
-Día autorizado
-Niño asociado
+Fase 1 – Preparación del profesor
+
+El profesor inicia su jornada.
+Accede a la vista Recogidas de hoy.
+El sistema muestra:
+
+Listado de menores con autorización válida para el día actual.
+
+Fase 2 – Selección del menor
+
+La persona autorizada llega al centro.
+El profesor selecciona al menor correspondiente.
+La aplicación muestra:
+
+Ficha del menor.
+Datos de la persona autorizada.
+Vista de verificación con NFC activo.
+
+Fase 3 – Verificación de identidad (DNIe + NFC)
+
+El profesor inicia el escaneo.
+La persona aproxima su DNIe 3.0 al dispositivo.
+El sistema:
+
+Establece comunicación NFC.
+Protege el canal (PACE).
+Lee los datos del chip.
+Verifica certificados e integridad.
 
 
-Profesor confirma entrega del niño.
+Se obtiene la identidad del adulto de forma criptográficamente segura.
 
+Fase 4 – Comprobación de autorización
+El sistema valida automáticamente:
+Identidad verificada coincide con la persona autorizada
+El día es válido
+El menor está asociado
+No existe una recogida previa registrada
+
+Resultado:
+Autorizado
+No autorizado (con motivo)
+
+Fase 5 – Confirmación y registro
+
+El profesor confirma la entrega del menor.
+El sistema registra:
+
+Fecha y hora.
+Menor.
+Persona autorizada.
+
+
+Se genera un registro de recogida trazable.
+
+Este registro puede consultarse posteriormente.

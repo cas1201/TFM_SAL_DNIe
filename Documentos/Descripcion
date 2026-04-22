@@ -1,3 +1,0 @@
-Aplicacion que sea para verificar un dni3.0 con nfc para recoger a niños del colegio utilizada por los tutores de los niños y los profesores que permita inicio de sesion, vista de profesor y de tutor. 
-Los tutores podran darse de alta con aprobacion de los profesores y tendran asociados unos niños, tambien podran dar de alta personas autorizadas añadiendo los datos para que puedan hacer la recogida (estas personas seran a las que se les lea el dni3.0), los tutores tambien podran especificar un dia/dias en los que autorizan la recogida del niño por el autorizado deseado. 
-Los profesores tendran la posibilidad de aceptar solicitudes de alta de padres y un listado diario con los niños que pueden ser recogidos y los autorizados

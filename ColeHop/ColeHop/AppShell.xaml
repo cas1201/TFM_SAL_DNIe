@@ -6,19 +6,8 @@
     xmlns:views="clr-namespace:ColeHop.View"
     Title="ColeHop">
 
-    <!-- LOGIN -->
     <ShellContent
         Route="login"
         ContentTemplate="{DataTemplate views:LoginPage}" />
-
-    <!-- DASHBOARD TUTOR -->
-    <ShellContent
-        Route="dashboard/tutor"
-        ContentTemplate="{DataTemplate views:DashboardTutorPage}" />
-
-    <!-- DASHBOARD TEACHER -->
-    <ShellContent
-        Route="dashboard/teacher"
-        ContentTemplate="{DataTemplate views:DashboardTeacherPage}" />
 
 </Shell>

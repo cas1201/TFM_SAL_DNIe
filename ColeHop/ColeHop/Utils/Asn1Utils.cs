@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.Utils
 {
-    internal class Asn1Utils
+    public sealed class Asn1Utils
     {
     }
 }

@@ -1,0 +1,385 @@
+UC‑01 – Registro de tutor
+Actor principal: Tutor
+Actores secundarios: Profesor
+Descripción:
+Permite a un tutor legal solicitar el alta en el sistema.
+Precondiciones:
+
+El tutor no dispone de una cuenta activa.
+El tutor no está autenticado.
+
+Flujo principal:
+
+El tutor accede a la opción Registro.
+Introduce sus datos personales (DNI, nombre, email).
+Selecciona el centro educativo y curso del menor.
+El sistema valida los datos introducidos.
+El sistema registra la solicitud con estado pendiente.
+El profesor recibe la solicitud.
+El profesor aprueba o rechaza el alta.
+
+Postcondiciones:
+
+Si se aprueba, el tutor queda habilitado para iniciar sesión.
+Si se rechaza, la cuenta no queda activa.
+
+
+UC‑02 – Inicio de sesión
+Actor principal: Tutor / Profesor
+Descripción:
+Permite a un usuario autenticarse en la aplicación.
+Precondiciones:
+
+El usuario dispone de una cuenta aprobada.
+
+Flujo principal:
+
+El usuario introduce sus credenciales.
+El sistema valida la información.
+El sistema establece una sesión autenticada.
+El sistema redirige al dashboard correspondiente según el rol.
+
+Postcondiciones:
+
+El usuario accede a las funcionalidades de su rol.
+
+
+UC‑03 – Registro y gestión de menores
+Actor principal: Tutor
+Actores secundarios: Profesor
+Descripción:
+Permite asociar menores al tutor legal.
+Precondiciones:
+
+Tutor autenticado y activo.
+
+Flujo principal:
+
+El tutor accede a Gestión de menores.
+Registra uno o varios menores.
+El sistema guarda la solicitud.
+El profesor verifica la pertenencia del menor.
+El profesor aprueba la asociación.
+
+Postcondiciones:
+
+El menor queda vinculado al tutor en el sistema.
+
+
+UC‑04 – Registro de personas autorizadas
+Actor principal: Tutor
+Descripción:
+Permite registrar personas autorizadas a recoger a los menores.
+Precondiciones:
+
+Tutor autenticado.
+Existen menores asociados al tutor.
+
+Flujo principal:
+
+El tutor accede a Personas autorizadas.
+Introduce los datos de la persona autorizada:
+
+Nombre, apellidos, DNI, relación.
+(Opcional) fotografía.
+
+
+El sistema valida y guarda la información.
+
+Postcondiciones:
+
+La persona autorizada queda disponible para crear autorizaciones.
+
+
+UC‑05 – Creación y gestión de autorizaciones de recogida
+Actor principal: Tutor
+Descripción:
+Permite crear, modificar o deshabilitar autorizaciones de recogida.
+Precondiciones:
+
+Tutor autenticado.
+Menores y personas autorizadas registradas.
+
+Flujo principal:
+
+El tutor selecciona uno o varios menores.
+Selecciona una persona autorizada.
+Define una fecha o rango de fechas.
+El sistema valida la coherencia.
+El sistema guarda la autorización activa.
+
+Postcondiciones:
+
+La autorización queda registrada y disponible para su uso.
+
+
+UC‑06 – Consulta de recogidas autorizadas del día
+Actor principal: Profesor
+Descripción:
+Permite visualizar las recogidas válidas para el día actual.
+Precondiciones:
+
+Profesor autenticado.
+
+Flujo principal:
+
+El profesor accede a Recogidas de hoy.
+El sistema muestra los menores con autorización válida.
+
+Postcondiciones:
+
+El profesor dispone del contexto para iniciar una recogida.
+
+
+UC‑07 – Inicio del proceso de recogida
+Actor principal: Profesor
+Descripción:
+Permite iniciar el proceso de verificación para un menor concreto.
+Precondiciones:
+
+Profesor autenticado.
+Existe una autorización válida para el día.
+
+Flujo principal:
+
+El profesor selecciona un menor del listado.
+El sistema muestra la ficha del menor y del autorizado.
+Se activa el escaneo NFC.
+
+Postcondiciones:
+
+El sistema queda listo para verificar la identidad.
+
+
+UC‑08 – Verificación de identidad mediante DNIe
+Actor principal: Sistema
+Descripción:
+Realiza la verificación criptográfica de la identidad del autorizado.
+Precondiciones:
+
+NFC activado.
+DNIe compatible.
+
+Flujo principal:
+
+Se establece comunicación NFC.
+Se protege el canal (PACE).
+Se leen los datos del chip.
+Se validan certificados e integridad.
+
+Postcondiciones:
+
+La identidad queda verificada de forma segura.
+
+
+UC‑09 – Comprobación de autorización de recogida
+Actor principal: Sistema
+Descripción:
+Determina si la persona verificada puede recoger al menor.
+Precondiciones:
+
+Identidad verificada correctamente.
+
+Flujo principal:
+
+El sistema cruza identidad y autorizaciones activas.
+Verifica fecha, menor y estado.
+Determina si la recogida es válida.
+
+Postcondiciones:
+
+Resultado autorizado / no autorizado con motivo.
+
+
+UC‑10 – Registro de recogida
+Actor principal: Profesor
+Descripción:
+Registra la entrega del menor.
+Precondiciones:
+
+Autorización validada correctamente.
+
+Flujo principal:
+
+El profesor confirma la entrega.
+El sistema registra fecha, hora, menor y autorizado.
+
+Postcondiciones:
+
+La recogida queda registrada de forma trazable.
+
+
+UC‑11 – Consulta del historial de recogidas
+Actor principal: Tutor / Profesor
+Descripción:
+Permite consultar registros históricos de recogidas.
+Precondiciones:
+
+Usuario autenticado.
+
+Postcondiciones:
+
+El usuario visualiza la trazabilidad de las entregas.
+
+
+--> Mapeo de Casos de Uso → Servicios del Sistema
+Primero, recordamos qué tipo de servicios vamos a tener:
+
+AuthService → identidad, sesión, estado del usuario
+TutorManagementService → alta y gestión de tutores/menores y autorizaciones de recogida
+PickupService → ejecución de la recogida
+NfcService → verificación técnica de identidad (DNIe)
+ConsultationService (opcional) → consultas/historiales
+
+
+1️⃣ Casos de uso de autenticación e identidad
+🧩 UC‑01 – Registro de tutor
+🧩 UC‑02 – Inicio de sesión
+➜ Servicio responsable: AuthService
+
+
+Caso de UsoResponsabilidad concretaUC‑01Registrar tutor en estado pendienteUC‑02Autenticar usuario y establecer sesión
+📍 Por qué aquí
+
+El registro y el login afectan directamente a la identidad.
+El estado pendiente / activo forma parte de la lógica de autenticación.
+Centraliza seguridad y control de acceso.
+
+📌 Notas de diseño
+
+El profesor no se autentica aquí, solo aprueba estados.
+El login no depende de roles de dominio, solo de identidad.
+
+
+2️⃣ Casos de uso de gestión de tutor y menores
+🧩 UC‑03 – Registro y gestión de menores
+➜ Servicio responsable: TutorManagementService
+
+
+Caso de UsoResponsabilidad concretaUC‑03Asociar menores a tutor y validarlos
+📍 Por qué un servicio separado
+
+No es autenticación.
+No es autorización de recogida.
+Es gestión de relaciones tutor–menor.
+
+📌 Actor del servicio
+
+Tutor → solicita
+Profesor → valida
+
+Este servicio no decide permisos de recogida, solo quién es responsable de quién.
+
+3️⃣ Casos de uso de personas autorizadas y autorizaciones
+🧩 UC‑04 – Registro de personas autorizadas
+🧩 UC‑05 – Creación y gestión de autorizaciones
+➜ Servicio responsable: TutorManagementService
+
+
+Caso de UsoResponsabilidad concretaUC‑04Registrar personas autorizadasUC‑05Crear, modificar y deshabilitar autorizaciones
+📍 Por qué ambos juntos
+
+Ambos definen reglas previas.
+Ambos son configuraciones creadas por el tutor.
+Ambos afectan directamente a si una recogida será válida o no.
+
+📌 Importante
+
+Aquí NO se valida identidad real.
+Solo se definen reglas del tipo “quién puede recoger a quién y cuándo”.
+
+
+4️⃣ Casos de uso de preparación de recogida
+🧩 UC‑06 – Consulta de recogidas autorizadas del día
+🧩 UC‑07 – Inicio del proceso de recogida
+➜ Servicio responsable: PickupService
+
+
+Caso de UsoResponsabilidad concretaUC‑06Listar recogidas válidas para hoyUC‑07Preparar el contexto de recogida
+📍 Por qué aquí
+
+No se configuran reglas, se aplican.
+El profesor entra en escena.
+Se empieza el flujo de ejecución real.
+
+📌 Este servicio
+
+Consume datos de TutorManagementService
+No verifica identidad todavía
+Prepara el terreno para NFC
+
+
+5️⃣ Casos de uso de verificación de identidad
+🧩 UC‑08 – Verificación de identidad mediante DNIe
+➜ Servicio responsable: NfcService
+(apoyado por el módulo DNIe)
+
+
+Caso de UsoResponsabilidad concretaUC‑08Verificar identidad criptográficamente
+📍 Por qué separado
+
+Es infraestructura técnica.
+No decide si está autorizado.
+Solo responde: “esta identidad es válida y es X”.
+
+📌 Principio clave
+
+NFC nunca toma decisiones de negocio
+
+
+6️⃣ Casos de uso de decisión y registro de recogida
+🧩 UC‑09 – Comprobación de autorización
+🧩 UC‑10 – Registro de recogida
+➜ Servicio responsable: PickupService
+
+
+Caso de UsoResponsabilidad concretaUC‑09Verificar reglas de autorizaciónUC‑10Registrar recogida
+📍 Por qué aquí
+
+Son decisiones en tiempo real.
+Combinan:
+
+identidad verificada
+reglas del tutor
+estado del sistema
+
+
+El profesor confirma, el sistema ejecuta.
+
+📌 PickupService es el “orquestador”
+
+Llama a NfcService (datos)
+Consulta TutorManagementService (reglas)
+Registra trazabilidad
+
+
+7️⃣ Casos de uso de consulta e historial
+🧩 UC‑11 – Consulta del historial de recogidas
+➜ Servicio responsable: PickupService (o servicio de consulta)
+
+
+Caso de UsoResponsabilidad concretaUC‑11Consultar registros históricos
+📍 Diseño
+
+Puedes dejarlo en PickupService
+O extraerlo a un ConsultationService si crece
+
+RESUMEN:
+AuthService
+ ├─ UC‑01 Registro tutor
+ └─ UC‑02 Login
+
+TutorManagementService
+ ├─ UC‑03 Gestión de menores
+ ├─ UC‑04 Personas autorizadas
+ └─ UC‑05 Autorizaciones
+
+PickupService
+ ├─ UC‑06 Listado diario
+ ├─ UC‑07 Inicio recogida
+ ├─ UC‑09 Comprobación
+ ├─ UC‑10 Registro
+ └─ UC‑11 Historial
+
+NfcService
+ └─ UC‑08 Verificación identidad

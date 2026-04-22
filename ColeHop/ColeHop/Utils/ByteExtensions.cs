@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.Utils
 {
-    internal class ByteExtensions
+    public sealed class ByteExtensions
     {
     }
 }

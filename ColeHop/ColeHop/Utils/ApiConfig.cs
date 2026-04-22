@@ -1,6 +1,6 @@
 ﻿namespace ColeHop.Utils
 {
-    internal class ApiConfig
+    public sealed class ApiConfig
     {
     }
 }
