@@ -89,11 +89,9 @@ Contiene implementaciones dependientes de la plataforma:
 Acceso al hardware NFC en Android.
 Gestión de sesiones NFC e intercambio de APDUs.
 
-
-
 Esta separación permite aislar completamente la lógica criptográfica y de identidad de los detalles específicos del sistema operativo.
 
-📊 Diagrama 1 – Arquitectura general de la aplicación
+Diagrama 1 – Arquitectura general de la aplicación
 Puedes incluir algo así (luego lo dibujas con draw.io, PowerPoint o similar):
 +--------------------+
 |        UI          |
@@ -138,7 +136,7 @@ Extracción de la identidad verificada y devolución al resto del sistema.
 
 Este diseño permite garantizar que la identidad obtenida no depende únicamente de la posesión del documento, sino que ha sido verificada mediante mecanismos criptográficos robustos.
 
-📊 Diagrama 2 – Flujo de verificación de identidad mediante DNIe
+Diagrama 2 – Flujo de verificación de identidad mediante DNIe
 Usuario introduce CAN
           |
           v
@@ -163,91 +161,37 @@ Comprobación autorización
           v
 Registro de recogida
 
-Este flujo es el que has implementado conceptualmente y parcialmente en código, y demuestra claramente la viabilidad del sistema.
+4.3 Evaluación preliminar
+La evaluación de la solución propuesta en este trabajo se plantea, en esta fase del proyecto, como una evaluación preliminar, orientada a analizar la viabilidad técnica, el grado de cumplimiento de los objetivos planteados y las mejoras potenciales frente a los sistemas tradicionales de recogida escolar.
+Dado que el desarrollo de la aplicación no se encuentra completamente finalizado en esta segunda entrega, la evaluación se centra en aspectos cualitativos y de diseño, así como en el análisis de seguridad del enfoque adoptado, dejando para la tercera entrega una evaluación cuantitativa y funcional más exhaustiva.
 
-4.2.4 Consideraciones sobre demostración y modo de prueba
-Dado que la lectura del DNI electrónico implica el uso de documentos oficiales y hardware específico, la aplicación ha sido diseñada para permitir un modo de demostración controlado, en el que el flujo de verificación puede simularse sin depender de un DNI real.
-No obstante, el código implementa el proceso completo de verificación conforme a los estándares, lo que permitiría su uso en un entorno real con mínimos ajustes adicionales.
+4.3.1 Cumplimiento preliminar de los objetivos
+A partir de los objetivos definidos en el Capítulo 3, se puede realizar una primera valoración del grado de cumplimiento alcanzado hasta el momento.
+En primer lugar, se ha diseñado una arquitectura de aplicación móvil segura que permite la verificación de identidad del adulto responsable de la recogida, cumpliendo el objetivo de aplicar principios de ciberseguridad a un entorno real. La separación clara entre capas (Core, Services y Platforms) demuestra que el diseño es escalable, mantenible y adecuado para incorporar mecanismos de seguridad avanzados sin acoplamientos innecesarios.
+En segundo lugar, se ha avanzado de forma significativa en la implementación del acceso NFC al chip del DNIe, concretamente en dispositivos Android. Se ha conseguido establecer la comunicación con el hardware NFC, gestionar sesiones mediante IsoDep y sentar las bases para el intercambio de comandos APDU, lo que demuestra la viabilidad técnica del acceso al DNIe desde la aplicación móvil.
+Asimismo, se ha definido e implementado conceptualmente el flujo completo de verificación del DNIe, incluyendo la autenticación previa mediante CAN, el establecimiento de un canal seguro mediante el protocolo PACE y la validación criptográfica de los datos leídos a través del fichero EF.SOD. Aunque la implementación de algunos pasos criptográficos se encuentra todavía en fase de desarrollo, el diseño refleja fielmente los estándares oficiales y demuestra que los objetivos planteados son realistas y alcanzables.
 
+4.3.2 Análisis de seguridad de la solución propuesta
+Desde el punto de vista de la ciberseguridad, la solución presenta mejoras sustanciales respecto a los sistemas habituales de recogida escolar.
+A diferencia de soluciones basadas en códigos QR o en listas de autorizaciones visuales, el sistema diseñado se apoya en una verificación fuerte de identidad, utilizando un documento oficial con respaldo legal y mecanismos criptográficos robustos. El uso del DNIe garantiza que la identidad del adulto autorizado no depende únicamente de la posesión de un dispositivo o credencial fácilmente transferible, sino de un proceso de autenticación basado en criptografía de clave pública y en hardware seguro.
+La ejecución del protocolo PACE permite proteger la comunicación NFC frente a ataques de escucha pasiva, intermediario o reproducción, asegurando la confidencialidad e integridad del canal de comunicación. De igual manera, la validación del fichero EF.SOD permite verificar que los datos leídos del chip no han sido manipulados y que proceden de un documento auténtico emitido por una autoridad oficial.
+Además, el diseño del sistema aplica el principio de minimización de datos, ya que únicamente se extrae y utiliza la información estrictamente necesaria para verificar la identidad, sin almacenar datos sensibles adicionales. El número CAN, por ejemplo, se utiliza exclusivamente durante el proceso de autenticación y no se persiste en ningún caso, reduciendo el impacto ante una posible brecha de seguridad.
+
+4.3.3 Comparación preliminar con soluciones existentes
+De forma preliminar, puede afirmarse que la solución propuesta ofrece un nivel de seguridad superior al de las aplicaciones de recogida escolar existentes, que habitualmente basan su funcionamiento en mecanismos de autenticación débiles o indirectos.
+Mientras que muchas soluciones comerciales se apoyan en la posesión de un código QR o en credenciales almacenadas en un dispositivo móvil, el sistema desarrollado introduce una verificación criptográfica directa de la identidad del sujeto, reduciendo de forma significativa el riesgo de suplantación. Este enfoque resulta especialmente relevante en un entorno sensible como el educativo, donde el impacto de un fallo de seguridad puede ser considerable.
+No obstante, este aumento de la seguridad conlleva una mayor complejidad técnica, lo que justifica la necesidad de una evaluación adicional en términos de usabilidad y rendimiento, aspectos que serán abordados en la fase final del trabajo.
+
+4.3.4 Limitaciones actuales y trabajo pendiente
+Como corresponde a una evaluación preliminar, es necesario reconocer las limitaciones actuales del sistema en esta fase del desarrollo.
+Aunque la arquitectura y el flujo de verificación están claramente definidos, algunos componentes criptográficos, como la implementación completa del protocolo PACE y la validación exhaustiva del EF.SOD, se encuentran todavía en fase de implementación. Asimismo, la evaluación realizada no incluye métricas cuantitativas de rendimiento ni pruebas extensivas con documentos reales, aspectos que se abordarán en la tercera entrega.
+Por otro lado, el uso de documentos oficiales en un entorno de demostración presenta dificultades prácticas y legales, por lo que se ha previsto la incorporación de un modo de demostración controlado que permita validar el flujo de funcionamiento sin depender de un DNIe real durante las pruebas.
+
+4.3.5 Valoración global preliminar
+En conjunto, la evaluación preliminar permite concluir que la solución propuesta es técnicamente viable y que el enfoque adoptado responde de manera adecuada a los objetivos planteados al inicio del trabajo. El desarrollo realizado hasta el momento demuestra que la integración del DNI electrónico y la tecnología NFC en un sistema de recogida escolar es posible y que aporta mejoras claras en términos de seguridad y trazabilidad.
+El grado de avance alcanzado en esta segunda entrega permite afirmar que los objetivos definidos son realistas y que, con la continuación del desarrollo de los componentes pendientes y la realización de pruebas adicionales, será posible completar la solución de forma satisfactoria en la tercera entrega.
 
 (Generacion antigua, REVISAR) 
-5.1 Proceso de desarrollo
-El desarrollo de la herramienta se ha llevado a cabo siguiendo un enfoque incremental, dividido en fases claramente diferenciadas:
-
-Análisis técnico del DNIe 3.0 y de los protocolos implicados en su lectura por NFC.
-Diseño de la arquitectura de la aplicación.
-Implementación de la capa de acceso NFC.
-Implementación del flujo de verificación del DNIe.
-Integración del módulo de validación de autorizaciones.
-Pruebas funcionales y de seguridad.
-
-Este enfoque ha permitido aislar los componentes críticos desde el punto de vista de la ciberseguridad y facilitar la evaluación individual de cada módulo.
-
-5.2 Arquitectura de la aplicación
-La aplicación se ha diseñado siguiendo una arquitectura modular, separando claramente la lógica de negocio de los elementos dependientes de plataforma.
-┌──────────────────────────────┐
-│        Interfaz de Usuario   │
-└─────────────┬────────────────┘
-              │
-┌─────────────▼────────────────┐
-│   Controlador de Verificación│
-└─────────────┬────────────────┘
-              │
-┌─────────────▼────────────────┐
-│   Módulo DNIe                │
-│   - APDU                     │
-│   - PACE                     │
-│   - Certificados             │
-└─────────────┬────────────────┘
-              │
-┌─────────────▼────────────────┐
-│   Servicio NFC               │
-└──────────────────────────────┘
-
-Esta separación permite:
-
-Reutilización del código criptográfico.
-Aislamiento del acceso NFC.
-Mayor mantenibilidad y seguridad.
-
-
-5.3 Flujo de verificación del DNIe 3.0
-El proceso de verificación implementado sigue el flujo técnico oficial del DNIe 3.0:
-
-
-Inicialización NFC
-El dispositivo móvil detecta la presencia del chip NFC del DNIe.
-
-
-Introducción del número CAN
-El usuario introduce el número CAN para habilitar el acceso al chip.
-
-
-Establecimiento de canal seguro (PACE)
-Se ejecuta el protocolo PACE para negociar claves y cifrar las comunicaciones.
-
-
-Lectura de datos y certificados
-Se accede a la información necesaria para identificar al titular.
-
-
-Verificación criptográfica
-Se validan los certificados digitales del DNIe utilizando criptografía de clave pública.
-
-
-Comparación con autorizaciones
-La identidad verificada se compara con los registros de autorización existentes.
-
-
-Resultado de verificación
-Se muestra el resultado (recogida autorizada / no autorizada).
-
-
-Este flujo garantiza que la identidad no pueda ser suplantada sin la posesión física del DNIe y el conocimiento del CAN.
-
-5.4 Interfaz de usuario
-La interfaz se ha diseñado con criterios de simplicidad, mostrando únicamente la información necesaria para el proceso de recogida. El flujo visual guía al usuario paso a paso, reduciendo errores y facilitando el uso en situaciones reales de carga de trabajo.
-(En este apartado podrás añadir capturas de pantalla en la versión final del documento.)
 
 6. Evaluación
 6.1 Evaluación de la usabilidad
