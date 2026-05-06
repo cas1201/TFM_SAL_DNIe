@@ -18,9 +18,9 @@ public partial class NfcScanPage : ContentPage
         await _viewModel.InitializeAsync();
     }
 
-    protected override void OnDisappearing()
+    protected override async void OnDisappearing()
     {
         base.OnDisappearing();
-        _viewModel.CancelScanCommand.Execute(null);
+        await _viewModel.CleanupAsync();
     }
 }

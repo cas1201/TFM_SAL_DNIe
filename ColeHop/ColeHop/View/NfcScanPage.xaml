@@ -1,20 +1,17 @@
 <ContentPage
     x:Class="ColeHop.View.NfcScanPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Verificación NFC">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24" VerticalOptions="Center">
 
-            <!-- Título dinámico -->
             <Label
-                Text="{Binding ChildName, StringFormat='Recogida de: {0}'}"
+                Text="{Binding ChildName, StringFormat='Recogida de {0}'}"
                 FontSize="20"
                 FontAttributes="Bold"
                 HorizontalTextAlignment="Center" />
 
-            <!-- Input CAN -->
             <VerticalStackLayout
                 Spacing="8"
                 IsVisible="{Binding ShowCanInput}">
@@ -44,7 +41,6 @@
                     Margin="0,16,0,0" />
             </VerticalStackLayout>
 
-            <!-- Indicador NFC -->
             <Border
                 StrokeThickness="0"
                 BackgroundColor="#F0F0F0"
@@ -72,7 +68,6 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Estado -->
             <Label
                 Text="{Binding ScanStatus}"
                 FontSize="16"
@@ -80,7 +75,6 @@
                 TextColor="Gray"
                 Margin="0,8,0,0" />
 
-            <!-- Botón cancelar -->
             <Button
                 Text="Cancelar"
                 Command="{Binding CancelScanCommand}"

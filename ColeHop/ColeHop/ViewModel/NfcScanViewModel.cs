@@ -56,6 +56,7 @@ namespace ColeHop.ViewModel
             {
                 ScanStatus = "Por favor, active NFC en los ajustes";
                 await Shell.Current.DisplayAlertAsync("Aviso", "NFC desactivado. Actívelo para continuar.", "OK");
+                await Shell.Current.GoToAsync("..");
                 return;
             }
 
@@ -100,31 +101,84 @@ namespace ColeHop.ViewModel
             {
                 IsScanning = true;
                 ShowCanInput = false;
-                ScanStatus = "Acerque el DNI electrónico al lector...";
+                ScanStatus = "Acerque el DNI electrónico al lector... (10 segundos)";
 
-                _scanCts = new CancellationTokenSource();
+                // Crear CancellationTokenSource con timeout de 10 segundos
+                _scanCts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
                 await _nfcService.BeginDnieReadingAsync(Can, _scanCts.Token);
             }
             catch (OperationCanceledException)
             {
-                ScanStatus = "Escaneo cancelado";
+                // Verificar si fue timeout o cancelación manual
+                if (_scanCts?.IsCancellationRequested == true && _scanCts.Token.IsCancellationRequested)
+                {
+                    // Fue timeout
+                    IsScanning = false;
+                    ShowCanInput = true;
+                    ScanStatus = "Tiempo de espera agotado. Intente de nuevo.";
+                    await EnsureNfcStoppedAsync();
+                    await Shell.Current.DisplayAlertAsync(
+                        "Tiempo agotado", 
+                        "No se detectó el DNI en 10 segundos. Por favor, intente de nuevo.", 
+                        "OK");
+                }
+                else
+                {
+                    // Fue cancelación manual
+                    ScanStatus = "Escaneo cancelado";
+                    await EnsureNfcStoppedAsync();
+                }
             }
             catch (Exception ex)
             {
                 IsScanning = false;
                 ShowCanInput = true;
                 ScanStatus = $"Error: {ex.Message}";
+                await EnsureNfcStoppedAsync();
                 await Shell.Current.DisplayAlertAsync("Error de verificación", ex.Message, "OK");
             }
         }
 
         [RelayCommand]
-        private void CancelScan()
+        private async Task CancelScanAsync()
         {
             _scanCts?.Cancel();
             IsScanning = false;
             ShowCanInput = true;
             ScanStatus = "Escaneo cancelado";
+            await EnsureNfcStoppedAsync();
+        }
+
+        private async Task EnsureNfcStoppedAsync()
+        {
+            try
+            {
+                await _nfcService.StopAsync();
+            }
+            catch
+            {
+                // Ignorar errores al detener NFC
+            }
+        }
+
+        public async Task CleanupAsync()
+        {
+            // Cancelar cualquier escaneo en curso
+            _scanCts?.Cancel();
+            _scanCts?.Dispose();
+            _scanCts = null;
+
+            // Desactivar foreground dispatch NFC
+            try
+            {
+                await _nfcService.StopAsync();
+            }
+            catch
+            {
+                // Ignorar errores al detener NFC durante cleanup
+            }
+
+            IsScanning = false;
         }
 
         private async void OnIdentityVerified(object? sender, VerifiedIdentity verifiedIdentity)
@@ -135,6 +189,7 @@ namespace ColeHop.ViewModel
 
                 if (_currentContext == null)
                 {
+                    await EnsureNfcStoppedAsync();
                     await Shell.Current.DisplayAlertAsync("Error", "No hay contexto de recogida activo", "OK");
                     return;
                 }
@@ -145,6 +200,7 @@ namespace ColeHop.ViewModel
                 {
                     IsScanning = false;
                     ScanStatus = $"Acceso denegado: {authResult.DenialReason}";
+                    await EnsureNfcStoppedAsync();
                     await Shell.Current.DisplayAlertAsync("Acceso denegado", authResult.DenialReason ?? "No autorizado", "OK");
                     await Shell.Current.GoToAsync("..");
                     return;
@@ -155,6 +211,7 @@ namespace ColeHop.ViewModel
 
                 IsScanning = false;
                 ScanStatus = "Recogida confirmada correctamente";
+                await EnsureNfcStoppedAsync();
 
                 await Shell.Current.DisplayAlertAsync(
                     "Recogida autorizada",
@@ -167,6 +224,7 @@ namespace ColeHop.ViewModel
             {
                 IsScanning = false;
                 ScanStatus = $"Error: {ex.Message}";
+                await EnsureNfcStoppedAsync();
                 await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         }

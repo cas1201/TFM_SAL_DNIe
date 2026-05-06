@@ -1,20 +1,17 @@
-﻿using ColeHop.Core.Services.Auth;
-
-namespace ColeHop
+﻿namespace ColeHop
 {
     public partial class App : Application
     {
-        private readonly IAuthService _auth;
-
-        public App(IAuthService auth)
+        public App()
         {
             InitializeComponent();
-            _auth = auth;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell(_auth));
+            // Resolver AppShell desde el contenedor DI para evitar problemas con servicios disposed
+            var appShell = Handler?.MauiContext?.Services.GetRequiredService<AppShell>();
+            return new Window(appShell!);
         }
     }
 }

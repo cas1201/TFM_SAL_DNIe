@@ -58,7 +58,6 @@ namespace ColeHop
                 var loginContent = new ShellContent
                 {
                     Route = "login",
-                    Title = "Acceso",
                     ContentTemplate = new DataTemplate(typeof(LoginPage))
                 };
                 Items.Add(loginContent);
@@ -78,7 +77,6 @@ namespace ColeHop
                         var tutorContent = new ShellContent
                         {
                             Route = "tutor",
-                            Title = "Panel Tutor",
                             ContentTemplate = new DataTemplate(typeof(DashboardTutorPage))
                         };
                         Items.Add(tutorContent);
@@ -89,7 +87,6 @@ namespace ColeHop
                         var teacherContent = new ShellContent
                         {
                             Route = "teacher",
-                            Title = "Panel Profesor",
                             ContentTemplate = new DataTemplate(typeof(DashboardTeacherPage))
                         };
                         Items.Add(teacherContent);

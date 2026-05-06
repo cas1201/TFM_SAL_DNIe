@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.Nfc;
 using Android.Nfc.Tech;
 using Android.OS;
@@ -11,6 +12,8 @@ namespace ColeHop.Platforms.Android.Nfc
         private readonly Context _context;
         private readonly NfcAdapter? _nfcAdapter;
         private IsoDep? _isoDep;
+        private bool _isListening;
+        private TaskCompletionSource<bool>? _tagDetectedTcs;
 
         public AndroidNfcPlatformService()
         {
@@ -29,53 +32,218 @@ namespace ColeHop.Platforms.Android.Nfc
 
         public Task StartListeningAsync()
         {
+            if (_nfcAdapter == null)
+                return Task.CompletedTask;
+
+            var activity = Platform.CurrentActivity;
+            if (activity == null)
+                return Task.CompletedTask;
+
+            _isListening = true;
+            _tagDetectedTcs = new TaskCompletionSource<bool>();
+
+            // Configurar foreground dispatch para recibir intents NFC con prioridad
+            var intent = new Intent(activity, activity.GetType()).AddFlags(ActivityFlags.SingleTop);
+
+            PendingIntent? pendingIntent;
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+            {
+                // Android 12+ (API 31+)
+                pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.Mutable);
+            }
+            else
+            {
+                // Android 11 y anteriores
+                pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
+            }
+
+            // Filtros para tecnologías ISO-DEP (usadas por DNIe)
+            var isoDepClassName = Java.Lang.Class.FromType(typeof(IsoDep)).Name;
+            if (string.IsNullOrEmpty(isoDepClassName))
+                return Task.CompletedTask;
+
+            var techList = new[]
+            {
+                new[] { isoDepClassName }
+            };
+
+            // Activar foreground dispatch
+            _nfcAdapter.EnableForegroundDispatch(activity, pendingIntent, null, techList);
+
             return Task.CompletedTask;
         }
 
         public Task StopListeningAsync()
         {
+            _isListening = false;
+
             try
             {
-                _isoDep?.Close();
-                _isoDep = null;
+                // Desactivar foreground dispatch
+                if (_nfcAdapter != null)
+                {
+                    var activity = Platform.CurrentActivity;
+                    if (activity != null)
+                    {
+                        try
+                        {
+                            System.Diagnostics.Debug.WriteLine("NFC: Desactivando foreground dispatch...");
+                            _nfcAdapter.DisableForegroundDispatch(activity);
+                            System.Diagnostics.Debug.WriteLine("NFC: Foreground dispatch desactivado");
+                        }
+                        catch (Java.Lang.IllegalStateException ex)
+                        {
+                            // La Activity puede estar en un estado incorrecto (pausada, etc.)
+                            System.Diagnostics.Debug.WriteLine($"NFC: Error al desactivar foreground dispatch (IllegalStateException): {ex.Message}");
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"NFC: Error al desactivar foreground dispatch: {ex.GetType().Name} - {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("NFC: No se puede desactivar foreground dispatch - Activity es null");
+                    }
+                }
+
+                // Cerrar conexión ISO-DEP si existe
+                try
+                {
+                    if (_isoDep != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("NFC: Cerrando conexión ISO-DEP...");
+                        _isoDep.Close();
+                        System.Diagnostics.Debug.WriteLine("NFC: Conexión ISO-DEP cerrada");
+                    }
+                }
+                catch (Java.IO.IOException ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"NFC: Error al cerrar conexión ISO-DEP: {ex.Message}");
+                }
+                finally
+                {
+                    _isoDep = null;
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"NFC: Error general en StopListeningAsync: {ex.GetType().Name} - {ex.Message}");
+            }
+
+            // Cancelar TaskCompletionSource si existe
+            _tagDetectedTcs?.TrySetCanceled();
+            _tagDetectedTcs = null;
 
             return Task.CompletedTask;
         }
 
-        public void HandleIntent(Intent intent) 
+        public async Task WaitForTagAsync(CancellationToken cancellationToken)
         {
-            if (intent.Action != NfcAdapter.ActionTechDiscovered &&
-                intent.Action != NfcAdapter.ActionTagDiscovered)
-                return;
+            if (_tagDetectedTcs == null)
+                throw new InvalidOperationException("No hay sesión de escucha activa. Llame a StartListeningAsync primero.");
 
-            // Extraer tag del intent - manejo según versión de Android
-            Tag? tag;
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+            System.Diagnostics.Debug.WriteLine("NFC: Esperando detección de tag...");
+
+            // Registrar cancelación
+            using var registration = cancellationToken.Register(() =>
             {
-                // Android 13+ (API 33+)
+                System.Diagnostics.Debug.WriteLine("NFC: WaitForTagAsync cancelado");
+                _tagDetectedTcs?.TrySetCanceled();
+            });
+
+            try
+            {
+                await _tagDetectedTcs.Task;
+                System.Diagnostics.Debug.WriteLine("NFC: Tag detectado y conectado");
+            }
+            catch (TaskCanceledException)
+            {
+                System.Diagnostics.Debug.WriteLine("NFC: Espera de tag cancelada");
+                throw;
+            }
+        }
+
+        public void HandleIntent(Intent intent)
+        {
+            try
+            {
+                // Ignorar intents NFC si no estamos esperando una lectura
+                if (!_isListening)
+                {
+                    System.Diagnostics.Debug.WriteLine("NFC: Intent ignorado - no hay sesión de lectura activa");
+                    return;
+                }
+
+                if (intent.Action != NfcAdapter.ActionTechDiscovered &&
+                    intent.Action != NfcAdapter.ActionTagDiscovered)
+                {
+                    System.Diagnostics.Debug.WriteLine($"NFC: Intent ignorado - action no soportada: {intent.Action}");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"NFC: Procesando intent - Action: {intent.Action}");
+
+                // Extraer tag del intent - manejo según versión de Android
+                Tag? tag;
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+                {
+                    // Android 13+ (API 33+)
 #pragma warning disable CA1416
-                tag = intent.GetParcelableExtra(NfcAdapter.ExtraTag, Java.Lang.Class.FromType(typeof(Tag))) as Tag;
+                    tag = intent.GetParcelableExtra(NfcAdapter.ExtraTag, Java.Lang.Class.FromType(typeof(Tag))) as Tag;
 #pragma warning restore CA1416
-            }
-            else
-            {
-                // Android 12 y anteriores
+                }
+                else
+                {
+                    // Android 12 y anteriores
 #pragma warning disable CA1422
-                tag = (Tag?)intent.GetParcelableExtra(NfcAdapter.ExtraTag);
+                    tag = (Tag?)intent.GetParcelableExtra(NfcAdapter.ExtraTag);
 #pragma warning restore CA1422
+                }
+
+                if (tag == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("NFC: Tag es null");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"NFC: Tag detectado - ID: {BitConverter.ToString(tag.GetId() ?? Array.Empty<byte>())}");
+
+                // Cerrar conexión anterior si existe
+                try
+                {
+                    _isoDep?.Close();
+                }
+                catch (Java.IO.IOException)
+                {
+                    // Ignorar errores al cerrar conexión anterior
+                }
+
+                // Obtener tecnología ISO-DEP del tag
+                _isoDep = IsoDep.Get(tag);
+                if (_isoDep == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("NFC: Tag no soporta ISO-DEP");
+                    throw new InvalidOperationException("El tag NFC no es compatible con ISO-DEP.");
+                }
+
+                System.Diagnostics.Debug.WriteLine("NFC: Conectando a tag ISO-DEP...");
+                _isoDep.Connect();
+                System.Diagnostics.Debug.WriteLine("NFC: Conectado exitosamente");
+
+                // Señalar que el tag fue detectado y conectado
+                _tagDetectedTcs?.TrySetResult(true);
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"NFC: Error en HandleIntent - {ex.GetType().Name}: {ex.Message}");
+                _isoDep?.Close();
+                _isoDep = null;
 
-            if (tag == null)
-                return;
-
-            // Obtener tecnología ISO-DEP del tag
-            _isoDep = IsoDep.Get(tag);
-            if (_isoDep == null)
-                throw new InvalidOperationException("El tag NFC no es compatible con ISO-DEP.");
-
-            _isoDep.Connect();
+                // Señalar error en la detección
+                _tagDetectedTcs?.TrySetException(ex);
+                throw;
+            }
         }
 
         public async Task<NfcScanResult> TransceiveAsync(byte[] apdu, CancellationToken cancellationToken)
@@ -90,6 +258,9 @@ namespace ColeHop.Platforms.Android.Nfc
                     cancellationToken.ThrowIfCancellationRequested();
                     return _isoDep.Transceive(apdu);
                 }, cancellationToken);
+
+                if (response == null)
+                    return new NfcScanResult(Array.Empty<byte>(), false, "Respuesta NFC vacía.");
 
                 return new NfcScanResult(response, true, null);
             }

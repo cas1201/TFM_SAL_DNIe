@@ -32,6 +32,9 @@ namespace ColeHop
             // Auth
             builder.Services.AddSingleton<IAuthService, AuthService>();
 
+            // Shell
+            builder.Services.AddSingleton<AppShell>();
+
             // Pickup
             builder.Services.AddSingleton<IPickupService, PickupService>();
 

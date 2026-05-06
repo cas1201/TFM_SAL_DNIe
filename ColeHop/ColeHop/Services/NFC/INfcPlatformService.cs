@@ -7,6 +7,7 @@
 
         Task StartListeningAsync();
         Task StopListeningAsync();
+        Task WaitForTagAsync(CancellationToken cancellationToken);
         Task<NfcScanResult> TransceiveAsync(byte[] apdu, CancellationToken cancellationToken);
     }
 }

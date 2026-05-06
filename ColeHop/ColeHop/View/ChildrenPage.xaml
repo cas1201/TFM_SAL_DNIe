@@ -1,12 +1,10 @@
 <ContentPage
     x:Class="ColeHop.View.ChildrenPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Mis Hijos">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Grid RowDefinitions="*,Auto" Padding="10">
 
-        <!-- Lista de hijos -->
         <CollectionView
             Grid.Row="0"
             ItemsSource="{Binding Children}"
@@ -36,7 +34,8 @@
                             <Label
                                 Text="{Binding FullName}"
                                 FontSize="20"
-                                FontAttributes="Bold" />
+                                FontAttributes="Bold" 
+                                TextColor="{DynamicResource Primary}"/>
                             <Label
                                 Text="{Binding Grade}"
                                 FontSize="14"
@@ -47,19 +46,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!-- Botón volver -->
-        <Button
-            Grid.Row="1"
-            Text="← Volver"
-            Command="{Binding GoBackCommand}"
-            BackgroundColor="Transparent"
-            TextColor="{DynamicResource Primary}"
-            BorderWidth="1"
-            BorderColor="{DynamicResource Primary}"
-            CornerRadius="12"
-            HeightRequest="50"
-            Margin="0,10,0,0" />
 
     </Grid>
 </ContentPage>
