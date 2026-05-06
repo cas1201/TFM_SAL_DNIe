@@ -16,17 +16,19 @@ namespace ColeHop.Services.Auth
         public UserRole? CurrentRole => _currentSession?.Role;
         public string? CurrentUserId => _currentSession?.UserId;
 
+        public event EventHandler<UserRole?>? AuthenticationStateChanged;
+
         public async Task RegisterTutorAsync(TutorRegistrationData registrationData)
         {
-            // Llamada a backend / API.
-
+            // Validación básica
             if (string.IsNullOrWhiteSpace(registrationData.Email))
                 throw new InvalidOperationException("Email requerido.");
 
             if (string.IsNullOrWhiteSpace(registrationData.Password))
                 throw new InvalidOperationException("Password requerido.");
 
-            // Registro en backend estado pendiente de aprobación
+            // Llamada a backend / API
+            // Registro en backend: estado pendiente de aprobación
             await Task.CompletedTask;
         }
 
@@ -35,10 +37,8 @@ namespace ColeHop.Services.Auth
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
                 throw new InvalidOperationException("Credenciales inválidas.");
 
-            // Validación contra backend / API.
-            // Simulamos resultado válido
             var userId = Guid.NewGuid().ToString();
-            var role = UserRole.Tutor; // o Teacher, según backend
+            var role = UserRole.Tutor;
             var token = Guid.NewGuid().ToString();
 
             await SecureStorage.SetAsync(UserIdKey, userId);
@@ -46,12 +46,30 @@ namespace ColeHop.Services.Auth
             await SecureStorage.SetAsync(TokenKey, token);
 
             _currentSession = new AuthSession(userId, role, token);
+            AuthenticationStateChanged?.Invoke(this, role);
+        }
+
+        public async Task SimulateLoginAsync(UserRole role)
+        {
+            // Simular autenticación sin backend real
+            var userId = Guid.NewGuid().ToString();
+            var token = Guid.NewGuid().ToString();
+
+            await SecureStorage.SetAsync(UserIdKey, userId);
+            await SecureStorage.SetAsync(RoleKey, role.ToString());
+            await SecureStorage.SetAsync(TokenKey, token);
+
+            _currentSession = new AuthSession(userId, role, token);
+
+            // Notificar cambio de estado. AppShell escucha este evento
+            AuthenticationStateChanged?.Invoke(this, role);
         }
 
         public async Task<bool> TryRestoreSessionAsync()
         {
             try
             {
+                // Intentar recuperar sesión del almacenamiento seguro
                 var userId = await SecureStorage.GetAsync(UserIdKey);
                 var token = await SecureStorage.GetAsync(TokenKey);
                 var roleValue = await SecureStorage.GetAsync(RoleKey);
@@ -62,6 +80,7 @@ namespace ColeHop.Services.Auth
                 if (!Enum.TryParse<UserRole>(roleValue, out var role))
                     return false;
 
+                // Restaurar sesión
                 _currentSession = new AuthSession(userId, role, token);
                 return true;
             }
@@ -73,11 +92,16 @@ namespace ColeHop.Services.Auth
 
         public async Task LogoutAsync()
         {
+            // Limpiar almacenamiento seguro
             SecureStorage.Remove(UserIdKey);
             SecureStorage.Remove(RoleKey);
             SecureStorage.Remove(TokenKey);
 
             _currentSession = null;
+
+            // Notificar logout. AppShell vuelve a LoginPage
+            AuthenticationStateChanged?.Invoke(this, null);
+
             await Task.CompletedTask;
         }
     }

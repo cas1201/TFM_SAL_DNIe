@@ -1,21 +1,29 @@
 ﻿using ColeHop.Core.Services.Auth;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ColeHop.ViewModel
 {
-    public sealed class DashboardTeacherViewModel : BaseViewModel
+    public sealed partial class DashboardTeacherViewModel : BaseViewModel
     {
         public DashboardTeacherViewModel(IAuthService auth) : base(auth) { }
 
-        #region Navigation
-        public async Task GoToNfcScanAsync() => await Shell.Current.GoToAsync("nfc/scan");
-
-        public async Task GoToPickupListAsync() => await Shell.Current.GoToAsync("pickup/list");
-
-        public async Task LogoutAsync()
+        [RelayCommand]
+        private async Task GoToDailyPickupListAsync()
         {
-            await Auth.LogoutAsync();
-            await Shell.Current.GoToAsync("//login");
+            await Shell.Current.GoToAsync("pickup/list");
         }
-        #endregion
+
+        [RelayCommand]
+        private async Task GoToNfcScanAsync()
+        {
+            await Shell.Current.GoToAsync("nfc/scan");
+        }
+
+        [RelayCommand]
+        private async Task LogoutAsync()
+        {
+            // El evento AuthenticationStateChanged en AppShell se encargará de mostrar LoginPage
+            await Auth.LogoutAsync();
+        }
     }
 }

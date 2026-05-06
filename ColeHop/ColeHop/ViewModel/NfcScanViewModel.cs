@@ -1,21 +1,174 @@
-﻿using ColeHop.Core.Services.Nfc;
-using ColeHop.Services.Nfc;
+﻿using ColeHop.Core.Services.Auth;
+using ColeHop.Core.Services.Nfc;
+using ColeHop.Core.Services.Nfc.Dtos;
+using ColeHop.Core.Services.Pickup;
+using ColeHop.Core.Services.Pickup.Dtos;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ColeHop.ViewModel
 {
-    public sealed class NfcScanViewModel
+    [QueryProperty(nameof(ChildId), "childId")]
+    [QueryProperty(nameof(ChildName), "childName")]
+    public sealed partial class NfcScanViewModel : BaseViewModel
     {
-        readonly INfcService _nfc;
+        private readonly INfcService _nfcService;
+        private readonly IPickupService _pickupService;
+        private CancellationTokenSource? _scanCts;
+        private PickupContext? _currentContext;
 
-        public NfcScanViewModel(INfcService nfc)
+        [ObservableProperty]
+        private string _childId = string.Empty;
+
+        [ObservableProperty]
+        private string _childName = string.Empty;
+
+        [ObservableProperty]
+        private bool _isScanning;
+
+        [ObservableProperty]
+        private string _scanStatus = "Esperando DNI electrónico...";
+
+        [ObservableProperty]
+        private string _can = string.Empty;
+
+        [ObservableProperty]
+        private bool _showCanInput = true;
+
+        public NfcScanViewModel(IAuthService auth, INfcService nfcService, IPickupService pickupService) : base(auth)
         {
-            _nfc = nfc;
-            _nfc.TagDetected += OnTagDetected;
+            _nfcService = nfcService;
+            _pickupService = pickupService;
+            _nfcService.IdentityVerified += OnIdentityVerified;
         }
 
-        private void OnTagDetected(object? sender, NfcScanResult nfcReadResult)
+        public async Task InitializeAsync()
         {
-            // RESULTADO LEIDO: nfcReadResult
+            if (!_nfcService.IsSupported)
+            {
+                ScanStatus = "Este dispositivo no soporta NFC";
+                await Shell.Current.DisplayAlertAsync("Error", "NFC no soportado", "OK");
+                await Shell.Current.GoToAsync("..");
+                return;
+            }
+
+            if (!_nfcService.IsEnabled)
+            {
+                ScanStatus = "Por favor, active NFC en los ajustes";
+                await Shell.Current.DisplayAlertAsync("Aviso", "NFC desactivado. Actívelo para continuar.", "OK");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ChildId))
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "No se ha especificado el niño a recoger", "OK");
+                await Shell.Current.GoToAsync("..");
+                return;
+            }
+
+            try
+            {
+                var teacherId = Auth.CurrentUserId!;
+                var today = DateOnly.FromDateTime(DateTime.Today);
+                _currentContext = await _pickupService.StartPickupAsync(teacherId, ChildId, today);
+                ScanStatus = $"Listo para escanear DNI para recoger a {ChildName}";
+            }
+            catch (Exception ex)
+            {
+                ScanStatus = "Error al iniciar recogida";
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+        }
+
+        [RelayCommand]
+        private async Task StartScanAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Can) || Can.Length != 6)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "El CAN debe tener 6 dígitos", "OK");
+                return;
+            }
+
+            if (_currentContext == null)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", "Contexto de recogida no válido", "OK");
+                return;
+            }
+
+            try
+            {
+                IsScanning = true;
+                ShowCanInput = false;
+                ScanStatus = "Acerque el DNI electrónico al lector...";
+
+                _scanCts = new CancellationTokenSource();
+                await _nfcService.BeginDnieReadingAsync(Can, _scanCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                ScanStatus = "Escaneo cancelado";
+            }
+            catch (Exception ex)
+            {
+                IsScanning = false;
+                ShowCanInput = true;
+                ScanStatus = $"Error: {ex.Message}";
+                await Shell.Current.DisplayAlertAsync("Error de verificación", ex.Message, "OK");
+            }
+        }
+
+        [RelayCommand]
+        private void CancelScan()
+        {
+            _scanCts?.Cancel();
+            IsScanning = false;
+            ShowCanInput = true;
+            ScanStatus = "Escaneo cancelado";
+        }
+
+        private async void OnIdentityVerified(object? sender, VerifiedIdentity verifiedIdentity)
+        {
+            try
+            {
+                ScanStatus = $"Identidad verificada: {verifiedIdentity.FullName}";
+
+                if (_currentContext == null)
+                {
+                    await Shell.Current.DisplayAlertAsync("Error", "No hay contexto de recogida activo", "OK");
+                    return;
+                }
+
+                var authResult = await _pickupService.CheckAuthorizationAsync(_currentContext, verifiedIdentity);
+
+                if (!authResult.IsAuthorized)
+                {
+                    IsScanning = false;
+                    ScanStatus = $"Acceso denegado: {authResult.DenialReason}";
+                    await Shell.Current.DisplayAlertAsync("Acceso denegado", authResult.DenialReason ?? "No autorizado", "OK");
+                    await Shell.Current.GoToAsync("..");
+                    return;
+                }
+
+                var teacherId = Auth.CurrentUserId!;
+                var log = await _pickupService.ConfirmPickupAsync(teacherId, _currentContext, verifiedIdentity);
+
+                IsScanning = false;
+                ScanStatus = "Recogida confirmada correctamente";
+
+                await Shell.Current.DisplayAlertAsync(
+                    "Recogida autorizada",
+                    $"{verifiedIdentity.FullName} puede recoger a {ChildName}",
+                    "OK");
+
+                await Shell.Current.GoToAsync("../..");
+            }
+            catch (Exception ex)
+            {
+                IsScanning = false;
+                ScanStatus = $"Error: {ex.Message}";
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+            }
         }
     }
 }

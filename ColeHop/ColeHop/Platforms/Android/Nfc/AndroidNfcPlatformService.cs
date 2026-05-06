@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Nfc;
 using Android.Nfc.Tech;
+using Android.OS;
 using ColeHop.Services.Nfc;
 
 namespace ColeHop.Platforms.Android.Nfc
@@ -9,13 +10,17 @@ namespace ColeHop.Platforms.Android.Nfc
     {
         private readonly Context _context;
         private readonly NfcAdapter? _nfcAdapter;
-
         private IsoDep? _isoDep;
 
-        public AndroidNfcPlatformService(Context context)
+        public AndroidNfcPlatformService()
         {
-            _context = context;
-            _nfcAdapter = NfcAdapter.GetDefaultAdapter(context);
+            // Obtener contexto de Android desde Platform API
+            _context = Platform.CurrentActivity?.ApplicationContext ?? Platform.AppContext;
+
+            if (_context == null)
+                throw new InvalidOperationException("No se pudo obtener el contexto de Android");
+
+            _nfcAdapter = NfcAdapter.GetDefaultAdapter(_context);
         }
 
         public bool IsSupported => _nfcAdapter != null;
@@ -24,7 +29,6 @@ namespace ColeHop.Platforms.Android.Nfc
 
         public Task StartListeningAsync()
         {
-            // La escucha real se gestiona por Intents de Android.
             return Task.CompletedTask;
         }
 
@@ -40,16 +44,33 @@ namespace ColeHop.Platforms.Android.Nfc
             return Task.CompletedTask;
         }
 
-        public void HandleIntent(Intent intent)
+        public void HandleIntent(Intent intent) 
         {
             if (intent.Action != NfcAdapter.ActionTechDiscovered &&
                 intent.Action != NfcAdapter.ActionTagDiscovered)
                 return;
 
-            var tag = (Tag?)intent.GetParcelableExtra(NfcAdapter.ExtraTag);
+            // Extraer tag del intent - manejo según versión de Android
+            Tag? tag;
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+            {
+                // Android 13+ (API 33+)
+#pragma warning disable CA1416
+                tag = intent.GetParcelableExtra(NfcAdapter.ExtraTag, Java.Lang.Class.FromType(typeof(Tag))) as Tag;
+#pragma warning restore CA1416
+            }
+            else
+            {
+                // Android 12 y anteriores
+#pragma warning disable CA1422
+                tag = (Tag?)intent.GetParcelableExtra(NfcAdapter.ExtraTag);
+#pragma warning restore CA1422
+            }
+
             if (tag == null)
                 return;
 
+            // Obtener tecnología ISO-DEP del tag
             _isoDep = IsoDep.Get(tag);
             if (_isoDep == null)
                 throw new InvalidOperationException("El tag NFC no es compatible con ISO-DEP.");

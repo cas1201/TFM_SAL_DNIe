@@ -6,6 +6,9 @@ namespace ColeHop.ViewModel
 {
     public abstract partial class BaseViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private bool isBusy;
+
         protected readonly IAuthService Auth;
 
         protected BaseViewModel(IAuthService auth)

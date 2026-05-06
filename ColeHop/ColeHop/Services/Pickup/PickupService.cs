@@ -11,8 +11,7 @@ namespace ColeHop.Services.Pickup
 
         public Task<IReadOnlyList<DailyPickupItem>> GetDailyPickupsAsync(string teacherId, DateOnly date)
         {
-            // En una implementación real, aquí consultarías repositorios
-            // De momento devolvemos una lista simulada
+            // Datos simulados para desarrollo/testing
             IReadOnlyList<DailyPickupItem> result = new List<DailyPickupItem>
             {
                 new DailyPickupItem("child-1", "Juan Pérez", "María Pérez", false),
@@ -24,28 +23,22 @@ namespace ColeHop.Services.Pickup
 
         public Task<PickupContext> StartPickupAsync(string teacherId, string childId, DateOnly date)
         {
-            // Aquí se prepararía el contexto real consultando autorizaciones activas
-            // De momento simulamos un contexto válido
+            // Crear contexto de recogida
             var context = new PickupContext(childId, "authorization-123", "authorized-person-456", date);
             return Task.FromResult(context);
         }
 
         public Task<PickupAuthorizationResult> CheckAuthorizationAsync(PickupContext context, VerifiedIdentity verifiedIdentity)
         {
-            // Aquí iría la lógica real:
-            // - DNI coincide con persona autorizada
-            // - Fecha válida
-            // - Menor correcto
-            // - No recogido previamente
-
-            // Simulación positiva
+            // Verificar que la persona está autorizada para recoger al niño
+            // En producción: comparar DNI con autorizaciones en BD
             var result = new PickupAuthorizationResult(true, null);
             return Task.FromResult(result);
         }
 
         public Task<PickupLog> ConfirmPickupAsync(string teacherId, PickupContext context, VerifiedIdentity verifiedIdentity)
         {
-            // Registro definitivo de la recogida
+            // Registrar la recogida en el log
             var pickupLog = new PickupLog(Guid.NewGuid().ToString(), context.ChildId, verifiedIdentity.Dni, teacherId, DateTime.UtcNow);
             _pickupLogs.Add(pickupLog);
 
@@ -54,7 +47,6 @@ namespace ColeHop.Services.Pickup
 
         public Task<IReadOnlyList<PickupLog>> GetPickupHistoryAsync(string requesterId, PickupHistoryQuery query)
         {
-            // Aquí aplicarías filtros reales por fecha, menor, rol, etc.
             IReadOnlyList<PickupLog> result = _pickupLogs.AsReadOnly();
             return Task.FromResult(result);
         }

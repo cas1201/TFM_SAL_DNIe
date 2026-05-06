@@ -14,51 +14,97 @@ namespace ColeHop
             _auth = auth;
 
             RegisterRoutes();
-            InitializeAsync();
+            _auth.AuthenticationStateChanged += OnAuthenticationStateChanged;
+            InitializeShell();
         }
 
-        private async void InitializeAsync()
+        private void InitializeShell()
         {
-            if (await _auth.TryRestoreSessionAsync())
-                ConfigureShellForRole(_auth.CurrentRole!.Value);
+            // Por defecto mostrar LoginPage
+            ShowLoginPage();
+
+            // Luego intentar restaurar sesión en background
+            Task.Run(async () =>
+            {
+                if (await _auth.TryRestoreSessionAsync())
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        ConfigureShellForRole(_auth.CurrentRole!.Value);
+                    });
+                }
+            });
+        }
+
+        private void OnAuthenticationStateChanged(object? sender, UserRole? role)
+        {
+            if (role.HasValue)
+            {
+                // Mostrar dashboard según rol si esta logueado el usuario
+                ConfigureShellForRole(role.Value);
+            }
             else
-                await GoToAsync("//login");
+            {
+                // Logout o sesión expirada
+                ShowLoginPage();
+            }
+        }
+
+        private void ShowLoginPage()
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Items.Clear();
+                var loginContent = new ShellContent
+                {
+                    Route = "login",
+                    Title = "Acceso",
+                    ContentTemplate = new DataTemplate(typeof(LoginPage))
+                };
+                Items.Add(loginContent);
+                CurrentItem = loginContent;
+            });
         }
 
         private void ConfigureShellForRole(UserRole role)
         {
-            Items.Clear();
-            switch (role)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                case UserRole.Tutor:
-                    Items.Add(CreateShellContent("dashboard/tutor", typeof(DashboardTutorPage)));
-                    break;
-                case UserRole.Teacher:
-                    Items.Add(CreateShellContent("dashboard/teacher", typeof(DashboardTeacherPage)));
-                    break;
-            }
-        }
+                Items.Clear();
 
-        private static ShellContent CreateShellContent(string route, Type pageType)
-        {
-            return new ShellContent
-            {
-                Route = route,
-                ContentTemplate = new DataTemplate(pageType)
-            };
+                switch (role)
+                {
+                    case UserRole.Tutor:
+                        var tutorContent = new ShellContent
+                        {
+                            Route = "tutor",
+                            Title = "Panel Tutor",
+                            ContentTemplate = new DataTemplate(typeof(DashboardTutorPage))
+                        };
+                        Items.Add(tutorContent);
+                        CurrentItem = tutorContent;
+                        break;
+
+                    case UserRole.Teacher:
+                        var teacherContent = new ShellContent
+                        {
+                            Route = "teacher",
+                            Title = "Panel Profesor",
+                            ContentTemplate = new DataTemplate(typeof(DashboardTeacherPage))
+                        };
+                        Items.Add(teacherContent);
+                        CurrentItem = teacherContent;
+                        break;
+                }
+            });
         }
 
         private static void RegisterRoutes()
         {
-            // Signup
             Routing.RegisterRoute("signup", typeof(SignupPage));
-
-            // Tutor
             Routing.RegisterRoute("child/manage", typeof(ChildrenPage));
             Routing.RegisterRoute("authorized/manage", typeof(AuthorizedPersonPage));
             Routing.RegisterRoute("authorization/manage", typeof(AuthorizationPage));
-
-            // Teacher
             Routing.RegisterRoute("nfc/scan", typeof(NfcScanPage));
             Routing.RegisterRoute("pickup/list", typeof(DailyPickupListPage));
         }

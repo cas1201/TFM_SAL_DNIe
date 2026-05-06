@@ -6,8 +6,4 @@
     xmlns:views="clr-namespace:ColeHop.View"
     Title="ColeHop">
 
-    <ShellContent
-        Route="login"
-        ContentTemplate="{DataTemplate views:LoginPage}" />
-
 </Shell>

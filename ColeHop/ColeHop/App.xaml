@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ColeHop"
+             xmlns:converters="clr-namespace:ColeHop.Converters"
              x:Class="ColeHop.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,11 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:PickupStatusColorConverter x:Key="PickupStatusColorConverter" />
+            <converters:PickupStatusTextConverter x:Key="PickupStatusTextConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

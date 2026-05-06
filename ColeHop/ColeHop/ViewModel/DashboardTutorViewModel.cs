@@ -1,23 +1,41 @@
 ﻿using ColeHop.Core.Services.Auth;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ColeHop.ViewModel
 {
-    public sealed class DashboardTutorViewModel : BaseViewModel
+    public sealed partial class DashboardTutorViewModel : BaseViewModel
     {
         public DashboardTutorViewModel(IAuthService auth) : base(auth) { }
 
-        #region Navigation
-        public async Task GoToChildrenAsync() => await Shell.Current.GoToAsync("child/manage");
+        [RelayCommand]
+        private async Task GoToChildrenAsync()
+        {
+            await Shell.Current.GoToAsync("child/manage");
+        }
 
-        public async Task GoToAuthorizedAsync() => await Shell.Current.GoToAsync("authorized/manage");
+        [RelayCommand]
+        private async Task GoToAuthorizedPersonsAsync()
+        {
+            await Shell.Current.GoToAsync("authorized/manage");
+        }
 
-        public async Task GoToAuthorizationAsync() => await Shell.Current.GoToAsync("authorization/manage");
+        [RelayCommand]
+        private async Task GoToAuthorizationCalendarAsync()
+        {
+            await Shell.Current.GoToAsync("authorization/manage");
+        }
 
-        public async Task LogoutAsync()
+        [RelayCommand]
+        private async Task GoToNfcScanAsync()
+        {
+            await Shell.Current.GoToAsync("nfc/scan");
+        }
+
+        [RelayCommand]
+        private async Task LogoutAsync()
         {
             await Auth.LogoutAsync();
-            await Shell.Current.GoToAsync("//login");
+            // El evento AuthenticationStateChanged en AppShell se encargará de mostrar LoginPage
         }
-        #endregion
     }
 }

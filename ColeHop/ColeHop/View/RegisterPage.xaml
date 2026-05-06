@@ -5,16 +5,60 @@
     Title="Registro">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
+        <VerticalStackLayout Padding="24" Spacing="20">
 
-            <Entry Placeholder="Nombre" Text="{Binding FirstName}" />
-            <Entry Placeholder="Apellidos" Text="{Binding LastName}" />
-            <Entry Placeholder="Email" Text="{Binding Email}" />
-            <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Password}" />
+            <Label
+                Text="Crear cuenta"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="0,20,0,40" />
+
+            <Border
+                StrokeThickness="0"
+                BackgroundColor="#F5F5F5"
+                Padding="20"
+                StrokeShape="RoundRectangle 16">
+
+                <VerticalStackLayout Spacing="16">
+                    <Entry
+                        Placeholder="Nombre"
+                        Text="{Binding FirstName}" />
+
+                    <Entry
+                        Placeholder="Apellidos"
+                        Text="{Binding LastName}" />
+
+                    <Entry
+                        Placeholder="Email"
+                        Keyboard="Email"
+                        Text="{Binding Email}" />
+
+                    <Entry
+                        Placeholder="Contraseña"
+                        IsPassword="True"
+                        Text="{Binding Password}" />
+                </VerticalStackLayout>
+            </Border>
 
             <Button
                 Text="Registrar"
-                Command="{Binding RegisterCommand}" />
+                Command="{Binding RegisterCommand}"
+                BackgroundColor="{DynamicResource Primary}"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50"
+                Margin="0,10,0,0" />
+
+            <Button
+                Text="Ya tengo cuenta"
+                Command="{Binding GoToLoginCommand}"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                BorderWidth="1"
+                BorderColor="Gray"
+                CornerRadius="12"
+                HeightRequest="50" />
 
         </VerticalStackLayout>
     </ScrollView>

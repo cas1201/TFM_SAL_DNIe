@@ -4,32 +4,108 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Recogidas del día">
 
-    <CollectionView
-        ItemsSource="{Binding PickupList}"
-        SelectionMode="None"
-        Margin="10">
+    <Grid RowDefinitions="Auto,*" Padding="10">
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Border
-                    Stroke="LightGray"
-                    StrokeThickness="1"
-                    Padding="12"
-                    Margin="6"
-                    StrokeShape="RoundRectangle 8">
+        <!-- Header con botón de recarga -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,16">
+            <Label
+                Text="Recogidas programadas para hoy"
+                FontSize="18"
+                FontAttributes="Bold"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill" />
 
-                    <VerticalStackLayout>
-                        <Label Text="{Binding ChildName}" FontAttributes="Bold" />
-                        <Label Text="{Binding AuthorizedPerson}" />
-                        <Label
-                            Text="{Binding PickupTime}"
-                            TextColor="Gray"
-                            FontSize="12" />
-                    </VerticalStackLayout>
+            <Button
+                Text="↻"
+                Command="{Binding LoadPickupsCommand}"
+                WidthRequest="44"
+                HeightRequest="44"
+                FontSize="20"
+                BackgroundColor="{DynamicResource Primary}"
+                TextColor="White"
+                CornerRadius="22" />
+        </HorizontalStackLayout>
 
-                </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
+        <!-- Loading indicator -->
+        <ActivityIndicator
+            Grid.Row="1"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
 
-    </CollectionView>
+        <!-- Lista de recogidas -->
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding PickupList}"
+            SelectionMode="None"
+            IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label
+                        Text="No hay recogidas programadas para hoy"
+                        FontSize="16"
+                        TextColor="Gray"
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Stroke="{Binding AlreadyPickedUp, Converter={StaticResource PickupStatusColorConverter}}"
+                        StrokeThickness="2"
+                        Padding="16"
+                        Margin="0,6"
+                        BackgroundColor="White"
+                        StrokeShape="RoundRectangle 12">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectPickupCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label
+                                    Text="{Binding ChildName}"
+                                    FontSize="18"
+                                    FontAttributes="Bold" />
+
+                                <Label
+                                    Text="{Binding AuthorizedPersonName, StringFormat='Puede recoger: {0}'}"
+                                    FontSize="14"
+                                    TextColor="Gray" />
+
+                                <Label
+                                    Text="{Binding AlreadyPickedUp, Converter={StaticResource PickupStatusTextConverter}}"
+                                    FontSize="12"
+                                    FontAttributes="Italic"
+                                    TextColor="{Binding AlreadyPickedUp, Converter={StaticResource PickupStatusColorConverter}}" />
+                            </VerticalStackLayout>
+
+                            <Label
+                                Grid.Column="1"
+                                Text="→"
+                                FontSize="28"
+                                TextColor="{DynamicResource Primary}"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding AlreadyPickedUp, Converter={StaticResource InvertedBoolConverter}}" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="✓"
+                                FontSize="32"
+                                TextColor="Green"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding AlreadyPickedUp}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentPage>

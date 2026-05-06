@@ -7,9 +7,18 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
+            <Label
+                Text="Crear autorización"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center"
+                Margin="0,10,0,30" />
+
             <!-- Fecha -->
-            <Label Text="Fecha"
-                   FontAttributes="Bold" />
+            <Label
+                Text="Fecha"
+                FontAttributes="Bold"
+                FontSize="16" />
 
             <DatePicker
                 Date="{Binding SelectedDate}"
@@ -17,20 +26,25 @@
                 Format="dd/MM/yyyy" />
 
             <!-- Niños -->
-            <Label Text="Niños autorizados"
-                   FontAttributes="Bold" />
+            <Label
+                Text="Niños autorizados"
+                FontAttributes="Bold"
+                FontSize="16"
+                Margin="0,10,0,0" />
 
             <CollectionView
                 ItemsSource="{Binding Children}"
                 SelectionMode="Multiple"
-                SelectedItems="{Binding SelectedChildren}">
+                SelectedItems="{Binding SelectedChildren}"
+                HeightRequest="150">
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border Padding="12"
-                                Margin="4"
-                                Stroke="LightGray"
-                                StrokeShape="RoundRectangle 8">
+                        <Border
+                            Padding="12"
+                            Margin="0,4"
+                            Stroke="LightGray"
+                            StrokeShape="RoundRectangle 8">
 
                             <Label Text="{Binding Name}" />
                         </Border>
@@ -39,20 +53,34 @@
             </CollectionView>
 
             <!-- Persona autorizada -->
-            <Label Text="Persona autorizada"
-                   FontAttributes="Bold" />
+            <Label
+                Text="Persona autorizada"
+                FontAttributes="Bold"
+                FontSize="16"
+                Margin="0,10,0,0" />
 
             <Picker
                 ItemsSource="{Binding AuthorizedPeople}"
                 ItemDisplayBinding="{Binding FullName}"
                 SelectedItem="{Binding SelectedAuthorizedPerson}" />
 
-            <!-- Botón -->
+            <!-- Botones -->
             <Button
                 Text="Crear autorización"
                 Command="{Binding CreateAuthorizationCommand}"
                 BackgroundColor="{DynamicResource Primary}"
                 TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50"
+                Margin="0,20,0,0" />
+
+            <Button
+                Text="← Volver"
+                Command="{Binding GoBackCommand}"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                BorderWidth="1"
+                BorderColor="Gray"
                 CornerRadius="12"
                 HeightRequest="50" />
 

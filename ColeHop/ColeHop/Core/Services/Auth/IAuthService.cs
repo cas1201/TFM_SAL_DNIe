@@ -9,8 +9,11 @@ namespace ColeHop.Core.Services.Auth
         UserRole? CurrentRole { get; }
         string? CurrentUserId { get; }
 
+        event EventHandler<UserRole?>? AuthenticationStateChanged;
+
         Task RegisterTutorAsync(TutorRegistrationData registrationData);
         Task LoginAsync(string email, string password);
+        Task SimulateLoginAsync(UserRole role);
         Task<bool> TryRestoreSessionAsync();
         Task LogoutAsync();
     }

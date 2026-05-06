@@ -4,32 +4,80 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Acceso">
 
-    <VerticalStackLayout
-        Padding="24"
-        Spacing="16">
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24"
+            Spacing="20"
+            VerticalOptions="Center">
 
-        <Label
-            Text="Inicio de sesión"
-            FontAttributes="Bold"
-            FontSize="24"
-            HorizontalOptions="Center" />
+            <Label
+                Text="ColeHop"
+                FontAttributes="Bold"
+                FontSize="32"
+                HorizontalOptions="Center"
+                TextColor="{DynamicResource Primary}"
+                Margin="0,20,0,10" />
 
-        <Entry
-            Placeholder="Usuario"
-            Text="{Binding Username}" />
+            <Label
+                Text="Inicio de sesión"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Margin="0,0,0,30" />
 
-        <Entry
-            Placeholder="Contraseña"
-            IsPassword="True"
-            Text="{Binding Password}" />
+            <Border
+                StrokeThickness="0"
+                BackgroundColor="#F5F5F5"
+                Padding="20"
+                StrokeShape="RoundRectangle 16">
 
-        <Button
-            Text="Entrar"
-            Command="{Binding LoginCommand}" />
+                <VerticalStackLayout Spacing="16">
+                    <Entry
+                        Placeholder="Usuario o email"
+                        Text="{Binding Username}" />
 
-        <ActivityIndicator
+                    <Entry
+                        Placeholder="Contraseña"
+                        IsPassword="True"
+                        Text="{Binding Password}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button
+                Text="Entrar como Profesor"
+                Command="{Binding GoToTeacherCommand}"
+                BackgroundColor="{DynamicResource Primary}"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50"
+                Margin="0,10,0,0" />
+
+            <Button
+                Text="Entrar como Tutor"
+                Command="{Binding GoToTutorCommand}"
+                BackgroundColor="White"
+                TextColor="{DynamicResource Primary}"
+                BorderColor="{DynamicResource Primary}"
+                BorderWidth="2"
+                CornerRadius="12"
+                HeightRequest="50" />
+
+            <BoxView
+                HeightRequest="1"
+                Color="LightGray"
+                Margin="0,20" />
+
+            <Button
+                Text="Crear cuenta nueva"
+                Command="{Binding GoToSignupCommand}"
+                BackgroundColor="Transparent"
+                TextColor="Gray"
+                BorderWidth="1"
+                BorderColor="Gray"
+                CornerRadius="12"
+                HeightRequest="50" />
+            <ActivityIndicator
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}" />
-
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

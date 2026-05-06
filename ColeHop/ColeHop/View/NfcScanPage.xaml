@@ -2,27 +2,97 @@
     x:Class="ColeHop.View.NfcScanPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Escaneo Nfc">
+    Title="Verificación NFC">
 
-    <VerticalStackLayout Padding="24" Spacing="20" HorizontalOptions="Center">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24" VerticalOptions="Center">
 
-        <Label
-            Text="Acerque el DNI electrónico al lector"
-            FontSize="18"
-            HorizontalOptions="Center" />
+            <!-- Título dinámico -->
+            <Label
+                Text="{Binding ChildName, StringFormat='Recogida de: {0}'}"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
 
-        <Image
-            Source="dotnet_bot.png"
-            WidthRequest="150" />
+            <!-- Input CAN -->
+            <VerticalStackLayout
+                Spacing="8"
+                IsVisible="{Binding ShowCanInput}">
 
-        <ActivityIndicator
-            IsRunning="{Binding IsScanning}"
-            IsVisible="{Binding IsScanning}" />
+                <Label
+                    Text="Introduzca el CAN del DNI (6 dígitos)"
+                    FontSize="14"
+                    HorizontalTextAlignment="Center" />
 
-        <Label
-            Text="{Binding ScanStatus}"
-            HorizontalOptions="Center"
-            TextColor="Gray" />
+                <Entry
+                    Text="{Binding Can}"
+                    Placeholder="000000"
+                    Keyboard="Numeric"
+                    MaxLength="6"
+                    HorizontalTextAlignment="Center"
+                    FontSize="24"
+                    WidthRequest="200"
+                    HorizontalOptions="Center" />
 
-    </VerticalStackLayout>
+                <Button
+                    Text="Iniciar escaneo"
+                    Command="{Binding StartScanCommand}"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    Margin="0,16,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Indicador NFC -->
+            <Border
+                StrokeThickness="0"
+                BackgroundColor="#F0F0F0"
+                Padding="32"
+                StrokeShape="RoundRectangle 16"
+                IsVisible="{Binding IsScanning}">
+
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <Image
+                        Source="dotnet_bot.png"
+                        WidthRequest="120"
+                        HeightRequest="120" />
+
+                    <ActivityIndicator
+                        IsRunning="{Binding IsScanning}"
+                        Color="{DynamicResource Primary}"
+                        WidthRequest="48"
+                        HeightRequest="48" />
+
+                    <Label
+                        Text="Acerque el DNI electrónico"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Estado -->
+            <Label
+                Text="{Binding ScanStatus}"
+                FontSize="16"
+                HorizontalTextAlignment="Center"
+                TextColor="Gray"
+                Margin="0,8,0,0" />
+
+            <!-- Botón cancelar -->
+            <Button
+                Text="Cancelar"
+                Command="{Binding CancelScanCommand}"
+                IsVisible="{Binding IsScanning}"
+                BackgroundColor="Transparent"
+                TextColor="{DynamicResource Primary}"
+                BorderWidth="1"
+                BorderColor="{DynamicResource Primary}"
+                CornerRadius="12"
+                HeightRequest="50"
+                Margin="0,16,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

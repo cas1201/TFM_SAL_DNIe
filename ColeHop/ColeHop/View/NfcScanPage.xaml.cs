@@ -1,9 +1,26 @@
+using ColeHop.ViewModel;
+
 namespace ColeHop.View;
 
 public partial class NfcScanPage : ContentPage
 {
-    public NfcScanPage()
+    private readonly NfcScanViewModel _viewModel;
+
+    public NfcScanPage(NfcScanViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.InitializeAsync();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _viewModel.CancelScanCommand.Execute(null);
     }
 }

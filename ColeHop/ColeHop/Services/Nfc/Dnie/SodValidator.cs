@@ -50,8 +50,28 @@ namespace ColeHop.Services.Nfc.Dnie
 
         private static byte[] ComputeHash(byte[] data, HashAlgorithmName algorithm)
         {
-            using var hashAlg = HashAlgorithm.Create(algorithm.Name) ?? throw new InvalidOperationException("Algoritmo hash no soportado.");
-            return hashAlg.ComputeHash(data);
+            if (algorithm == HashAlgorithmName.SHA256)
+            {
+                using var hashAlg = SHA256.Create();
+                return hashAlg.ComputeHash(data);
+            }
+            else if (algorithm == HashAlgorithmName.SHA384)
+            {
+                using var hashAlg = SHA384.Create();
+                return hashAlg.ComputeHash(data);
+            }
+            else if (algorithm == HashAlgorithmName.SHA512)
+            {
+                using var hashAlg = SHA512.Create();
+                return hashAlg.ComputeHash(data);
+            }
+            else if (algorithm == HashAlgorithmName.SHA1)
+            {
+                using var hashAlg = SHA1.Create();
+                return hashAlg.ComputeHash(data);
+            }
+
+            throw new InvalidOperationException($"Algoritmo hash no soportado: {algorithm.Name}");
         }
 
         private static bool VerifySignature(SodContent sod)
