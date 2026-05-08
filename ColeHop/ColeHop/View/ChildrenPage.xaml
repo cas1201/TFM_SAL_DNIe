@@ -1,51 +1,118 @@
 <ContentPage
     x:Class="ColeHop.View.ChildrenPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:ColeHop.Model.Domain"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    xmlns:utils="clr-namespace:ColeHop.Utils">
 
-    <Grid RowDefinitions="*,Auto" Padding="10">
+    <AbsoluteLayout>
 
-        <CollectionView
-            Grid.Row="0"
-            ItemsSource="{Binding Children}"
-            SelectionMode="None">
+        <RefreshView
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsRefreshing="{Binding IsRefreshing}"
+            Command="{Binding RefreshCommand}">
+            <CollectionView
+                ItemsSource="{Binding Children}"
+                SelectionMode="None"
+                Margin="10,10,10,80">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label
-                        Text="No hay hijos registrados"
-                        FontSize="16"
-                        TextColor="Gray"
-                        HorizontalTextAlignment="Center" />
+                        Style="{StaticResource EmptyStateTitle}"
+                        Text="{x:Static res:AppResources.NoChildrenRegistered}" />
+                    <Label
+                        Style="{StaticResource EmptyStateSubtitle}"
+                        Text="{x:Static res:AppResources.PressButtonToAddOne}" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border
-                        Stroke="{DynamicResource Primary}"
-                        StrokeThickness="2"
-                        Padding="16"
-                        Margin="0,6"
-                        BackgroundColor="White"
-                        StrokeShape="RoundRectangle 12">
+                <DataTemplate x:DataType="model:Child">
+                    <Border Style="{StaticResource Card}">
 
-                        <VerticalStackLayout Spacing="4">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsPending}" Value="True">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsRejected}" Value="True">
+                                <Setter Property="Opacity" Value="0.6" />
+                                <Setter Property="Stroke" Value="{DynamicResource Danger}" />
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectChildCommand}"
+                                CommandParameter="{Binding}" />
+                        </Border.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
                             <Label
-                                Text="{Binding FullName}"
-                                FontSize="20"
-                                FontAttributes="Bold" 
-                                TextColor="{DynamicResource Primary}"/>
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Style="{StaticResource ListItemTitle}"
+                                Text="{Binding FullName}" />
                             <Label
-                                Text="{Binding Grade}"
-                                FontSize="14"
-                                TextColor="Gray" />
-                        </VerticalStackLayout>
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Style="{StaticResource ListItemSubtitle}"
+                                Text="{Binding Grade}" />
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                FontFamily="MaterialSymbolsRounded"
+                                Text="&#xe5cc;"
+                                FontSize="28"
+                                TextColor="{DynamicResource Primary}"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsApproved}" />
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Text="{x:Static res:AppResources.PendingApproval}"
+                                FontSize="11"
+                                TextColor="{DynamicResource Gray500}"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsPending}" />
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Text="{x:Static res:AppResources.Rejected}"
+                                FontSize="11"
+                                TextColor="{DynamicResource Danger}"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                IsVisible="{Binding IsRejected}" />
+                        </Grid>
 
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+            </CollectionView>
+        </RefreshView>
 
-    </Grid>
+        <Button
+            AbsoluteLayout.LayoutBounds="1,1,60,60"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Style="{StaticResource FabButton}"
+            Command="{Binding AddChildCommand}">
+            <Button.ImageSource>
+                <FontImageSource
+                    FontFamily="MaterialSymbolsRounded"
+                    Glyph="{x:Static utils:MaterialIcon.Add}"
+                    Size="28"
+                    Color="White" />
+            </Button.ImageSource>
+        </Button>
+
+    </AbsoluteLayout>
 </ContentPage>

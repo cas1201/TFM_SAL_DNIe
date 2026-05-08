@@ -1,74 +1,551 @@
 <ContentPage
     x:Class="ColeHop.View.AuthorizationPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    xmlns:model="clr-namespace:ColeHop.Model.Domain"
+    xmlns:viewmodel="clr-namespace:ColeHop.ViewModel"
+    x:DataType="viewmodel:AuthorizationViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+    <ContentPage.Resources>
+        <Style x:Key="PeriodButtonSelected" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="BorderWidth" Value="0" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
 
-            <Label
-                Text="Crear autorización"
-                FontSize="24"
-                FontAttributes="Bold"
-                HorizontalTextAlignment="Center"
-                Margin="0,10,0,30" />
+        <Style x:Key="PeriodButtonUnselected" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray600}" />
+            <Setter Property="BorderColor" Value="{DynamicResource Gray300}" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
-            <Label
-                Text="Fecha"
-                FontAttributes="Bold"
-                FontSize="16" />
+    <Grid RowDefinitions="Auto,*,Auto" Style="{StaticResource PageContainer}">
 
-            <DatePicker
-                Date="{Binding SelectedDate}"
-                MinimumDate="{Binding MinimumDate}"
-                Format="dd/MM/yyyy" />
+        <!-- Header with Progress -->
+        <Border
+            Grid.Row="0"
+            Style="{StaticResource Card}"
+            Margin="0,0,0,16">
+            <VerticalStackLayout Spacing="12">
 
-            <Label
-                Text="Niños autorizados"
-                FontAttributes="Bold"
-                FontSize="16"
-                Margin="0,10,0,0" />
+                <!-- Step Indicator -->
+                <Label
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    TextColor="{DynamicResource Gray600}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static res:AppResources.Step}" />
+                            <Span Text=" " />
+                            <Span Text="{Binding CurrentStep}" FontAttributes="Bold" />
+                            <Span Text=" " />
+                            <Span Text="{x:Static res:AppResources.Of}" />
+                            <Span Text=" " />
+                            <Span Text="{Binding TotalSteps}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
 
-            <CollectionView
-                ItemsSource="{Binding Children}"
-                SelectionMode="Multiple"
-                SelectedItems="{Binding SelectedChildren}"
-                HeightRequest="150">
+                <!-- Progress Bar -->
+                <ProgressBar
+                    ProgressColor="{DynamicResource Primary}"
+                    HeightRequest="4">
+                    <ProgressBar.Progress>
+                        <Binding Path="StepProgress" />
+                    </ProgressBar.Progress>
+                </ProgressBar>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border
-                            Padding="12"
-                            Margin="0,4"
-                            Stroke="LightGray"
-                            StrokeShape="RoundRectangle 8">
+                <!-- Step Title -->
+                <Label
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding CurrentStep}" Value="1">
+                            <Setter Property="Text" Value="{x:Static res:AppResources.SelectChildren}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding CurrentStep}" Value="2">
+                            <Setter Property="Text" Value="{x:Static res:AppResources.SelectPerson}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding CurrentStep}" Value="3">
+                            <Setter Property="Text" Value="{x:Static res:AppResources.SetDates}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding CurrentStep}" Value="4">
+                            <Setter Property="Text" Value="{x:Static res:AppResources.Summary}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
 
-                            <Label Text="{Binding Name}" />
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            </VerticalStackLayout>
+        </Border>
 
-            <Label
-                Text="Persona autorizada"
-                FontAttributes="Bold"
-                FontSize="16"
-                Margin="0,10,0,0" />
+        <!-- Content Area -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16">
 
-            <Picker
-                ItemsSource="{Binding AuthorizedPeople}"
-                ItemDisplayBinding="{Binding FullName}"
-                SelectedItem="{Binding SelectedAuthorizedPerson}" />
+                <!-- Step 1: Select Children -->
+                <VerticalStackLayout IsVisible="{Binding IsStep1Visible}" Spacing="12">
+
+                    <!-- Children Cards -->
+                    <CollectionView ItemsSource="{Binding Children}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel:SelectableChild">
+                                <Border
+                                    Margin="0,4"
+                                    Padding="16"
+                                    StrokeThickness="1"
+                                    Stroke="{DynamicResource Gray300}"
+                                    StrokeShape="RoundRectangle 12">
+
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AuthorizationViewModel}}, Path=ToggleChildSelectionCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label 
+                                            Text="{Binding FullName}"
+                                            FontSize="16"
+                                            FontAttributes="Bold">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="White" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label 
+                                            Text="{Binding Grade}"
+                                            FontSize="14">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="White" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+
+                <!-- Step 2: Select Authorized Person -->
+                <VerticalStackLayout IsVisible="{Binding IsStep2Visible}" Spacing="12">
+
+                    <CollectionView ItemsSource="{Binding AuthorizedPeople}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel:SelectableAuthorizedPerson">
+                                <Border
+                                    Margin="0,4"
+                                    Padding="20"
+                                    StrokeThickness="1"
+                                    Stroke="{DynamicResource Gray300}"
+                                    StrokeShape="RoundRectangle 12">
+
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AuthorizationViewModel}}, Path=SelectPersonCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+
+                                    <HorizontalStackLayout Spacing="16">
+                                        <!-- Avatar -->
+                                        <Border
+                                            WidthRequest="48"
+                                            HeightRequest="48"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 24"
+                                            VerticalOptions="Center">
+
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="White" />
+                                                    <Setter Property="Opacity" Value="0.3" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource Gray100}" />
+                                                    <Setter Property="Opacity" Value="1" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+
+                                            <Label
+                                                FontSize="18"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0:1}{1:1}">
+                                                        <Binding Path="FullName" />
+                                                        <Binding Path="FullName" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                        <Setter Property="TextColor" Value="White" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="False">
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+
+                                        <!-- Name -->
+                                        <Label 
+                                            Text="{Binding FullName}"
+                                            FontSize="18"
+                                            FontAttributes="Bold"
+                                            VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="White" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+
+                <!-- Step 3: Set Dates -->
+                <VerticalStackLayout IsVisible="{Binding IsStep3Visible}" Spacing="20">
+
+                    <!-- Quick Date Buttons -->
+                    <Label
+                        Text="{x:Static res:AppResources.Period}"
+                        Style="{StaticResource FormLabel}" />
+
+                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Button
+                            Text="{x:Static res:AppResources.Today}"
+                            Command="{Binding SetQuickDateCommand}"
+                            CommandParameter="today"
+                            Padding="20,10">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="today">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonSelected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="week">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+
+                        <Button
+                            Text="{x:Static res:AppResources.OneWeek}"
+                            Command="{Binding SetQuickDateCommand}"
+                            CommandParameter="week"
+                            Padding="20,10">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="week">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonSelected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="today">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+
+                        <Button
+                            Text="{x:Static res:AppResources.OneMonth}"
+                            Command="{Binding SetQuickDateCommand}"
+                            CommandParameter="month"
+                            Padding="20,10">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonSelected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="today">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="week">
+                                    <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </HorizontalStackLayout>
+
+                    <!-- Custom Dates -->
+                    <Border Style="{StaticResource FormCard}" Padding="20">
+                        <VerticalStackLayout Spacing="16">
+
+                            <Label
+                                Text="{x:Static res:AppResources.Custom}"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label
+                                        Text="{x:Static res:AppResources.FromDate}"
+                                        Style="{StaticResource FormLabel}" />
+                                    <DatePicker
+                                        Date="{Binding FromDate}"
+                                        MinimumDate="{Binding MinimumDate}"
+                                        Format="dd/MM/yyyy" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label
+                                        Text="{x:Static res:AppResources.ToDate}"
+                                        Style="{StaticResource FormLabel}" />
+                                    <DatePicker
+                                        Date="{Binding ToDate}"
+                                        MinimumDate="{Binding FromDate}"
+                                        Format="dd/MM/yyyy" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <!-- Step 4: Summary -->
+                <VerticalStackLayout IsVisible="{Binding IsStep4Visible}" Spacing="20">
+
+                    <Border Style="{StaticResource Card}" BackgroundColor="{AppThemeBinding Light={StaticResource SummaryBannerLight}, Dark={StaticResource SummaryBannerDark}}" Padding="20">
+                        <VerticalStackLayout Spacing="16">
+
+                            <Label
+                                Text="{x:Static res:AppResources.Summary}"
+                                FontSize="20"
+                                FontAttributes="Bold"
+                                TextColor="{DynamicResource Primary}"
+                                HorizontalOptions="Center" />
+
+                            <!-- Children Section -->
+                            <VerticalStackLayout Spacing="8">
+                                <Label
+                                    Text="{x:Static res:AppResources.Children}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+
+                                <CollectionView ItemsSource="{Binding Children}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="viewmodel:SelectableChild">
+                                            <Label
+                                                IsVisible="{Binding IsSelected}"
+                                                Padding="8,4">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="• " />
+                                                        <Span Text="{Binding FullName}" />
+                                                        <Span Text=" (" />
+                                                        <Span Text="{Binding Grade}" />
+                                                        <Span Text=")" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+
+                            <!-- Authorized Person Section -->
+                            <VerticalStackLayout Spacing="8">
+                                <Label
+                                    Text="{x:Static res:AppResources.AuthorizedPerson}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+
+                                <CollectionView ItemsSource="{Binding AuthorizedPeople}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="viewmodel:SelectableAuthorizedPerson">
+                                            <Label
+                                                IsVisible="{Binding IsSelected}"
+                                                Padding="8,4">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="• " />
+                                                        <Span Text="{Binding FullName}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+
+                            <!-- Period Section -->
+                            <VerticalStackLayout Spacing="8">
+                                <Label
+                                    Text="{x:Static res:AppResources.Period}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+
+                                <Label Padding="8,4">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="• " />
+                                            <Span Text="{x:Static res:AppResources.FromDate}" />
+                                            <Span Text=": " />
+                                            <Span Text="{Binding FromDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label Padding="8,4">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="• " />
+                                            <Span Text="{x:Static res:AppResources.ToDate}" />
+                                            <Span Text=": " />
+                                            <Span Text="{Binding ToDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <!-- Error Message -->
+                <Label
+                    Style="{StaticResource ErrorMessage}"
+                    Text="{Binding ErrorMessage}"
+                    IsVisible="{Binding HasError}"
+                    Margin="0,8,0,0" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Navigation Buttons -->
+        <Grid
+            Grid.Row="2"
+            Margin="0,16,0,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
             <Button
-                Text="Crear autorización"
-                Command="{Binding CreateAuthorizationCommand}"
-                BackgroundColor="{DynamicResource Primary}"
-                TextColor="White"
-                CornerRadius="12"
-                HeightRequest="50"
-                Margin="0,20,0,0" />
+                Grid.Column="0"
+                Text="{x:Static res:AppResources.Previous}"
+                Command="{Binding PreviousStepCommand}"
+                Style="{StaticResource SecondaryButton}"
+                IsVisible="{Binding CanGoBack}"
+                VerticalOptions="Center"
+                Margin="0,0,6,0" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+            <Button
+                Text="{Binding NextButtonText}"
+                Command="{Binding NextStepCommand}"
+                Style="{StaticResource PrimaryButton}"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                VerticalOptions="Center">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanGoBack}" Value="True">
+                        <Setter Property="Grid.Column" Value="1" />
+                        <Setter Property="Margin" Value="6,0,0,0" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanGoBack}" Value="False">
+                        <Setter Property="Grid.Column" Value="0" />
+                        <Setter Property="Grid.ColumnSpan" Value="2" />
+                        <Setter Property="Margin" Value="0" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+        </Grid>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator
+            Grid.Row="1"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{DynamicResource Primary}"
+            WidthRequest="50"
+            HeightRequest="50" />
+
+    </Grid>
 </ContentPage>

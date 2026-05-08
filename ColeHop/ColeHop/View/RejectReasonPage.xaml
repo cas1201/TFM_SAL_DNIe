@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.View.RejectReasonPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:ColeHop.ViewModel"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    x:DataType="viewmodel:RejectReasonViewModel"
+    Shell.PresentationMode="ModalAnimated">
+
+    <Grid BackgroundColor="#80000000" VerticalOptions="Fill" HorizontalOptions="Fill">
+        <Border
+            Style="{StaticResource Card}"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            Margin="24"
+            Padding="24">
+            <VerticalStackLayout Spacing="16">
+
+                <Label
+                    Text="{x:Static res:AppResources.RejectChild}"
+                    Style="{StaticResource SubSectionTitle}" />
+
+                <Label
+                    Text="{Binding ChildName}"
+                    FontSize="15"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
+
+                <Label
+                    Text="{x:Static res:AppResources.EnterRejectionReason}"
+                    Style="{StaticResource FormLabel}" />
+
+                <Editor
+                    Text="{Binding Reason}"
+                    Placeholder="{x:Static res:AppResources.ReasonPlaceholder}"
+                    HeightRequest="120"
+                    FontSize="15"
+                    AutoSize="TextChanges" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button
+                        Grid.Column="0"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="{x:Static res:AppResources.Cancel}"
+                        Command="{Binding CancelCommand}" />
+                    <Button
+                        Grid.Column="1"
+                        Style="{StaticResource DangerButton}"
+                        Text="{x:Static res:AppResources.Reject}"
+                        Command="{Binding ConfirmCommand}" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

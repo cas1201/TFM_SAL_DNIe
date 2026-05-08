@@ -9,12 +9,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/CommonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Converters -->
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:PickupStatusColorConverter x:Key="PickupStatusColorConverter" />
             <converters:PickupStatusTextConverter x:Key="PickupStatusTextConverter" />
+            <converters:CollectionContainsConverter x:Key="CollectionContainsConverter" />
+            <converters:EqualityConverter x:Key="EqualityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

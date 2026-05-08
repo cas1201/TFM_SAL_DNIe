@@ -48,12 +48,12 @@ namespace ColeHop.Platforms.Android.Nfc
             PendingIntent? pendingIntent;
             if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
             {
-                // Android 12+ (API 31+)
+#pragma warning disable CA1416
                 pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.Mutable);
+#pragma warning restore CA1416
             }
             else
             {
-                // Android 11 y anteriores
                 pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
             }
 

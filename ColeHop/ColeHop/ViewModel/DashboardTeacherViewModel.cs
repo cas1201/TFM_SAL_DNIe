@@ -14,16 +14,22 @@ namespace ColeHop.ViewModel
         }
 
         [RelayCommand]
+        private async Task GoToPendingApprovalsAsync()
+        {
+            await Shell.Current.GoToAsync("pendingapprovals");
+        }
+
+        [RelayCommand]
         private async Task GoToNfcScanAsync()
         {
             await Shell.Current.GoToAsync("nfc/scan");
         }
 
         [RelayCommand]
-        private async Task LogoutAsync()
+        private async Task GoToSettingsAsync()
         {
-            // El evento AuthenticationStateChanged en AppShell se encargará de mostrar LoginPage
-            await Auth.LogoutAsync();
+            await Shell.Current.GoToAsync("settings");
         }
-    }
-}
+
+            }
+        }

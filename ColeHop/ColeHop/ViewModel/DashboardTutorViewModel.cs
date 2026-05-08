@@ -32,10 +32,11 @@ namespace ColeHop.ViewModel
         }
 
         [RelayCommand]
-        private async Task LogoutAsync()
+        private async Task GoToSettingsAsync()
         {
-            await Auth.LogoutAsync();
-            // El evento AuthenticationStateChanged en AppShell se encargará de mostrar LoginPage
+            await Shell.Current.GoToAsync("settings");
         }
+
+
     }
 }

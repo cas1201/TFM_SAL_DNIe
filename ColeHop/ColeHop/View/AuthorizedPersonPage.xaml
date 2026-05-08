@@ -1,51 +1,81 @@
 <ContentPage
     x:Class="ColeHop.View.AuthorizedPersonPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    xmlns:utils="clr-namespace:ColeHop.Utils">
 
-    <Grid RowDefinitions="*,Auto" Padding="10">
+    <AbsoluteLayout>
 
-        <CollectionView
-            Grid.Row="0"
-            ItemsSource="{Binding AuthorizedPersons}"
-            SelectionMode="None">
+        <RefreshView
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsRefreshing="{Binding IsRefreshing}"
+            Command="{Binding RefreshCommand}">
+            <CollectionView
+                ItemsSource="{Binding AuthorizedPersons}"
+                SelectionMode="None"
+                Margin="10,10,10,80">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label
-                        Text="No hay personas autorizadas"
-                        FontSize="16"
-                        TextColor="Gray"
-                        HorizontalTextAlignment="Center" />
+                        Style="{StaticResource EmptyStateTitle}"
+                        Text="{x:Static res:AppResources.NoAuthorizedPersons}" />
+                    <Label
+                        Style="{StaticResource EmptyStateSubtitle}"
+                        Text="{x:Static res:AppResources.PressButtonToAddOne}" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                        Stroke="{DynamicResource Primary}"
-                        StrokeThickness="2"
-                        Padding="16"
-                        Margin="0,6"
-                        BackgroundColor="White"
-                        StrokeShape="RoundRectangle 12">
+                    <Border Style="{StaticResource Card}">
 
-                        <VerticalStackLayout Spacing="4">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectAuthorizedPersonCommand}"
+                                CommandParameter="{Binding}" />
+                        </Border.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label
+                                    Style="{StaticResource ListItemTitle}"
+                                    Text="{Binding FullName}" />
+                                <Label
+                                    Style="{StaticResource ListItemSubtitle}"
+                                    Text="{Binding Relationship}" />
+                            </VerticalStackLayout>
+
                             <Label
-                                Text="{Binding FullName}"
-                                FontSize="18"
-                                FontAttributes="Bold"
-                                TextColor="{DynamicResource Primary}" />
-                            <Label
-                                Text="{Binding Relationship}"
-                                FontSize="14"
-                                TextColor="Gray" />
-                        </VerticalStackLayout>
+                                Grid.Column="1"
+                                FontFamily="MaterialSymbolsRounded"
+                                Text="&#xe5cc;"
+                                FontSize="28"
+                                TextColor="{DynamicResource Primary}"
+                                VerticalOptions="Center" />
+                        </Grid>
 
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        </RefreshView>
 
-    </Grid>
+        <Button
+            AbsoluteLayout.LayoutBounds="1,1,60,60"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Style="{StaticResource FabButton}"
+            Command="{Binding AddAuthorizedPersonCommand}">
+            <Button.ImageSource>
+                <FontImageSource
+                    FontFamily="MaterialSymbolsRounded"
+                    Glyph="{x:Static utils:MaterialIcon.Add}"
+                    Size="28"
+                    Color="White" />
+            </Button.ImageSource>
+        </Button>
+
+    </AbsoluteLayout>
 </ContentPage>

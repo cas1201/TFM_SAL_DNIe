@@ -1,53 +1,69 @@
 <ContentPage
     x:Class="ColeHop.View.SignupPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="20">
+        <VerticalStackLayout Style="{StaticResource PageContainer}">
 
             <Label
-                Text="Crear cuenta"
-                FontSize="28"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                Margin="0,20,0,40" />
+                Style="{StaticResource PageTitle}"
+                Text="{x:Static res:AppResources.CreateAccount}" />
 
-            <Border
-                StrokeThickness="0"
-                BackgroundColor="#F5F5F5"
-                Padding="20"
-                StrokeShape="RoundRectangle 16">
+            <Border Style="{StaticResource FormCard}">
 
-                <VerticalStackLayout Spacing="16">
+                <VerticalStackLayout Style="{StaticResource FormContainer}">
                     <Entry
-                        Placeholder="Nombre"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.Name}"
                         Text="{Binding FirstName}" />
 
                     <Entry
-                        Placeholder="Apellidos"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.LastName}"
                         Text="{Binding LastName}" />
 
                     <Entry
-                        Placeholder="Email"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.DNI}"
+                        Text="{Binding Dni}"
+                        MaxLength="9" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.Email}"
                         Keyboard="Email"
                         Text="{Binding Email}" />
 
                     <Entry
-                        Placeholder="Contraseña"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.Password}"
                         IsPassword="True"
                         Text="{Binding Password}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.School}"
+                        Text="{Binding School}" />
                 </VerticalStackLayout>
             </Border>
 
+            <Label
+                Style="{StaticResource ErrorMessage}"
+                Text="{Binding ErrorMessage}"
+                IsVisible="{Binding HasError}" />
+
             <Button
-                Text="Registrar"
-                Command="{Binding RegisterCommand}"
-                BackgroundColor="{DynamicResource Primary}"
-                TextColor="White"
-                CornerRadius="12"
-                HeightRequest="50"
-                Margin="0,10,0,0" />
+                Style="{StaticResource PrimaryButton}"
+                Text="{x:Static res:AppResources.Register}"
+                Command="{Binding RegisterCommand}" />
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                HorizontalOptions="Center"
+                Color="{DynamicResource Primary}" />
 
         </VerticalStackLayout>
     </ScrollView>

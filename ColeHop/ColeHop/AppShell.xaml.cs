@@ -7,6 +7,7 @@ namespace ColeHop
     public partial class AppShell : Shell
     {
         private readonly IAuthService _auth;
+        private bool _isDisposed;
 
         public AppShell(IAuthService auth)
         {
@@ -14,8 +15,20 @@ namespace ColeHop
             _auth = auth;
 
             RegisterRoutes();
+            _auth.AuthenticationStateChanged -= OnAuthenticationStateChanged;
             _auth.AuthenticationStateChanged += OnAuthenticationStateChanged;
             InitializeShell();
+        }
+
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+
+            if (Handler == null)
+            {
+                _isDisposed = true;
+                _auth.AuthenticationStateChanged -= OnAuthenticationStateChanged;
+            }
         }
 
         private void InitializeShell()
@@ -28,32 +41,45 @@ namespace ColeHop
             {
                 if (await _auth.TryRestoreSessionAsync())
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
+                    if (!_isDisposed)
                     {
-                        ConfigureShellForRole(_auth.CurrentRole!.Value);
-                    });
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            if (!_isDisposed && _auth.CurrentRole.HasValue)
+                            {
+                                ConfigureShellForRole(_auth.CurrentRole.Value);
+                            }
+                        });
+                    }
                 }
             });
         }
 
         private void OnAuthenticationStateChanged(object? sender, UserRole? role)
         {
+            if (_isDisposed || Shell.Current != this)
+                return;
+
             if (role.HasValue)
             {
-                // Mostrar dashboard según rol si esta logueado el usuario
                 ConfigureShellForRole(role.Value);
             }
             else
             {
-                // Logout o sesión expirada
                 ShowLoginPage();
             }
         }
 
         private void ShowLoginPage()
         {
+            if (_isDisposed)
+                return;
+
             MainThread.BeginInvokeOnMainThread(() =>
             {
+                if (_isDisposed)
+                    return;
+
                 Items.Clear();
                 var loginContent = new ShellContent
                 {
@@ -67,8 +93,14 @@ namespace ColeHop
 
         private void ConfigureShellForRole(UserRole role)
         {
+            if (_isDisposed)
+                return;
+
             MainThread.BeginInvokeOnMainThread(() =>
             {
+                if (_isDisposed)
+                    return;
+
                 Items.Clear();
 
                 switch (role)
@@ -99,11 +131,18 @@ namespace ColeHop
         private static void RegisterRoutes()
         {
             Routing.RegisterRoute("signup", typeof(SignupPage));
+            Routing.RegisterRoute("settings", typeof(SettingsPage));
             Routing.RegisterRoute("child/manage", typeof(ChildrenPage));
             Routing.RegisterRoute("authorized/manage", typeof(AuthorizedPersonPage));
             Routing.RegisterRoute("authorization/manage", typeof(AuthorizationPage));
+            Routing.RegisterRoute("addchild", typeof(AddChildPage));
+            Routing.RegisterRoute("addauthorizedperson", typeof(AddAuthorizedPersonPage));
+            Routing.RegisterRoute("childdetail", typeof(ChildDetailPage));
+            Routing.RegisterRoute("authorizedpersondetail", typeof(AuthorizedPersonDetailPage));
             Routing.RegisterRoute("nfc/scan", typeof(NfcScanPage));
             Routing.RegisterRoute("pickup/list", typeof(DailyPickupListPage));
+            Routing.RegisterRoute("pendingapprovals", typeof(PendingApprovalsPage));
+            Routing.RegisterRoute("rejectreason", typeof(RejectReasonPage));
         }
     }
 }

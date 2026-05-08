@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.View.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource PageContainer}">
+
+            <Label
+                Style="{StaticResource SectionTitle}"
+                Text="{x:Static res:AppResources.Settings}" />
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Style="{StaticResource SubTitle}"
+                        Text="{x:Static res:AppResources.Language}" />
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Button
+                            Text="{x:Static res:AppResources.Spanish}"
+                            Command="{Binding ChangeLanguageCommand}"
+                            CommandParameter="es"
+                            Style="{StaticResource SecondaryButton}"
+                            HorizontalOptions="Fill" />
+                        <Button
+                            Text="{x:Static res:AppResources.English}"
+                            Command="{Binding ChangeLanguageCommand}"
+                            CommandParameter="en"
+                            Style="{StaticResource SecondaryButton}"
+                            HorizontalOptions="Fill" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <HorizontalStackLayout Spacing="10" Padding="10">
+                    <Label
+                        Text="{x:Static res:AppResources.EnableNotifications}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Switch
+                        IsToggled="{Binding NotificationsEnabled}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        Style="{StaticResource SubTitle}"
+                        Text="{x:Static res:AppResources.About}" />
+                    <Label
+                        Text="{x:Static res:AppResources.AppVersion}" />
+                    <Label
+                        Text="{Binding AppVersion}"
+                        TextColor="{DynamicResource Gray500}" />
+                </VerticalStackLayout>
+                    </Border>
+
+                        <BoxView
+                            HeightRequest="1"
+                            Color="{DynamicResource Gray200}"
+                            Margin="0,20" />
+
+                        <Button
+                            Style="{StaticResource LogoutButton}"
+                            Text="{x:Static res:AppResources.Logout}"
+                            Command="{Binding LogoutCommand}">
+                            <Button.ImageSource>
+                                <FontImageSource
+                                    FontFamily="MaterialSymbolsRounded"
+                                    Glyph="&#xe9ba;"
+                                    Size="20"
+                                    Color="{DynamicResource Gray400}" />
+                            </Button.ImageSource>
+                        </Button>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </ContentPage>

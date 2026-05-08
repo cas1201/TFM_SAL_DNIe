@@ -1,0 +1,20 @@
+Instrucciones de codigo:
+Legible y estructurado, que mantenga coherencia con la manera de programar como si lo hiciera una persona con estilo propio.
+Utilizando mejores practicas, eliminando posibles warnings.
+Eliminar los fragmentos de codigo no necesarios.
+No poner titulo en las páginas de vista.
+Utilizar inyeccion de dependencias, communitytoolkit, iconos de google fonts.
+Elimina y no comentes nunca los archivos de las vistas.
+En archivos .cs si se crean strings que contengan valores de variables usa la forma string s = $"{valor}".
+
+Instrucciones de aplicacion:
+Manten el mismo estilo en toda la aplicacion, facil, divertido, agil, moderno, alegre. Es una aplicacion enfocada al ambito escolar.
+La paleta de colores debe de corresponderse con el estilo descrito.
+Los mensajes o alertas que aparezcan indicando mensajes deberan de mantener este estilo, no utilizar el estilo por defecto que tiene android.
+Todos los strings deberan de estar localizados utilizando AppResources.
+
+Instrucciones basicas:
+No modifiques este archivo de instrucciones ni el de contexto inicial "C:\Users\U362407\Samu\Desa\ColeHop\CONTEXTO_PROYECTO_COLEHOP.md".
+Tomar decisiones sin consultar intentando ser mas eficiente teniendo en cuenta lo especificado. Por ejemplo, no preguntes para compilar, solo compila si lo necesitas o ejecuta los comandos que necesites.
+Cuando estes llegando al maximo de uso de contexto, resume lo realizado y comienza un nuevo hilo manteniendo el contexto definido en "C:\Users\U362407\Samu\Desa\ColeHop\CONTEXTO_PROYECTO_COLEHOP.md".
+En cuanto al contenido de la aplicacion, los pasos realizados (resumido) y el contexto general se debera de ir resumiendo en un documento "C:\Users\U362407\Samu\Desa\ColeHop\RESUMEN_CODIFICACION_COLEHOP.md".

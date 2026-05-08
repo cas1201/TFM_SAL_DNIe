@@ -4,6 +4,7 @@ using ColeHop.Core.Services.Pickup.Dtos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace ColeHop.ViewModel
 {
@@ -15,7 +16,19 @@ namespace ColeHop.ViewModel
         private bool _isLoading;
 
         [ObservableProperty]
+        private bool _isRefreshing;
+
+        [ObservableProperty]
+        private string _todayDate = string.Empty;
+
+        [ObservableProperty]
         private ObservableCollection<DailyPickupItem> _pickupList = new();
+
+        [ObservableProperty]
+        private ObservableCollection<DailyPickupItem> _pendingPickups = new();
+
+        [ObservableProperty]
+        private ObservableCollection<DailyPickupItem> _completedPickups = new();
 
         [ObservableProperty]
         private DailyPickupItem? _selectedPickup;
@@ -23,6 +36,16 @@ namespace ColeHop.ViewModel
         public DailyPickupListViewModel(IAuthService auth, IPickupService pickupService) : base(auth)
         {
             _pickupService = pickupService;
+            UpdateTodayDate();
+        }
+
+        private void UpdateTodayDate()
+        {
+            var culture = new CultureInfo("es-ES");
+            var today = DateTime.Today;
+            TodayDate = today.ToString("dddd, d 'de' MMMM 'de' yyyy", culture);
+            // Capitalizar la primera letra
+            TodayDate = char.ToUpper(TodayDate[0]) + TodayDate.Substring(1);
         }
 
         public async Task InitializeAsync()
@@ -43,14 +66,27 @@ namespace ColeHop.ViewModel
             try
             {
                 IsLoading = true;
+                IsRefreshing = true;
                 var teacherId = Auth.CurrentUserId!;
                 var today = DateOnly.FromDateTime(DateTime.Today);
                 var pickups = await _pickupService.GetDailyPickupsAsync(teacherId, today);
 
                 PickupList.Clear();
+                PendingPickups.Clear();
+                CompletedPickups.Clear();
+
                 foreach (var pickup in pickups)
                 {
                     PickupList.Add(pickup);
+
+                    if (pickup.AlreadyPickedUp)
+                    {
+                        CompletedPickups.Add(pickup);
+                    }
+                    else
+                    {
+                        PendingPickups.Add(pickup);
+                    }
                 }
             }
             catch (Exception ex)
@@ -60,6 +96,7 @@ namespace ColeHop.ViewModel
             finally
             {
                 IsLoading = false;
+                IsRefreshing = false;
             }
         }
 

@@ -1,7 +1,8 @@
 <ContentPage
     x:Class="ColeHop.View.NfcScanPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24" VerticalOptions="Center">
@@ -17,7 +18,7 @@
                 IsVisible="{Binding ShowCanInput}">
 
                 <Label
-                    Text="Introduzca el CAN del DNI (6 dígitos)"
+                    Text="{x:Static res:AppResources.EnterCanPrompt}"
                     FontSize="14"
                     HorizontalTextAlignment="Center" />
 
@@ -32,7 +33,7 @@
                     HorizontalOptions="Center" />
 
                 <Button
-                    Text="Iniciar escaneo"
+                    Text="{x:Static res:AppResources.StartScan}"
                     Command="{Binding StartScanCommand}"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="White"
@@ -43,7 +44,7 @@
 
             <Border
                 StrokeThickness="0"
-                BackgroundColor="#F0F0F0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceDimLight}, Dark={StaticResource SurfaceDimDark}}"
                 Padding="32"
                 StrokeShape="RoundRectangle 16"
                 IsVisible="{Binding IsScanning}">
@@ -61,7 +62,7 @@
                         HeightRequest="48" />
 
                     <Label
-                        Text="Acerque el DNI electrónico"
+                        Text="{x:Static res:AppResources.BringDnieClose}"
                         FontSize="16"
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center" />
@@ -72,11 +73,11 @@
                 Text="{Binding ScanStatus}"
                 FontSize="16"
                 HorizontalTextAlignment="Center"
-                TextColor="Gray"
+                TextColor="{DynamicResource Gray400}"
                 Margin="0,8,0,0" />
 
             <Button
-                Text="Cancelar"
+                Text="{x:Static res:AppResources.Cancel}"
                 Command="{Binding CancelScanCommand}"
                 IsVisible="{Binding IsScanning}"
                 BackgroundColor="Transparent"

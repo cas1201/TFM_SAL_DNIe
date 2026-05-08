@@ -1,7 +1,9 @@
 <ContentPage
     x:Class="ColeHop.View.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:utils="clr-namespace:ColeHop.Utils"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
     <ScrollView>
         <VerticalStackLayout
@@ -10,7 +12,7 @@
             VerticalOptions="Center">
 
             <Label
-                Text="ColeHop"
+                Text="{x:Static res:AppResources.AppName}"
                 FontAttributes="Bold"
                 FontSize="32"
                 HorizontalOptions="Center"
@@ -18,57 +20,58 @@
                 TextColor="{DynamicResource Primary}"
                 Margin="0,20" />
 
-            <Border
-                StrokeThickness="0"
-                BackgroundColor="#F5F5F5"
-                Padding="20"
-                StrokeShape="RoundRectangle 16">
-
-                <VerticalStackLayout Spacing="16">
+            <Border Style="{StaticResource FormCard}">
+                <VerticalStackLayout Style="{StaticResource FormContainer}">
                     <Entry
-                        Placeholder="Usuario o email"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.UsernameOrEmail}"
                         Text="{Binding Username}" />
 
                     <Entry
-                        Placeholder="Contraseña"
+                        Style="{StaticResource FormEntry}"
+                        Placeholder="{x:Static res:AppResources.Password}"
                         IsPassword="True"
                         Text="{Binding Password}" />
                 </VerticalStackLayout>
             </Border>
 
             <Button
-                Text="Entrar como Profesor"
-                Command="{Binding GoToTeacherCommand}"
-                BackgroundColor="{DynamicResource Primary}"
-                TextColor="White"
-                CornerRadius="12"
-                HeightRequest="50"
-                Margin="0,10,0,0" />
+                Style="{StaticResource PrimaryButton}"
+                Text="{x:Static res:AppResources.LoginAsTeacher}"
+                Command="{Binding GoToTeacherCommand}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="MaterialSymbolsRounded"
+                        Glyph="{x:Static utils:MaterialIcon.Login}"
+                        Size="22"
+                        Color="White" />
+                </Button.ImageSource>
+            </Button>
 
             <Button
-                Text="Entrar como Tutor"
-                Command="{Binding GoToTutorCommand}"
-                BackgroundColor="White"
-                TextColor="{DynamicResource Primary}"
-                BorderColor="{DynamicResource Primary}"
-                BorderWidth="2"
-                CornerRadius="12"
-                HeightRequest="50" />
+                Style="{StaticResource OutlineMenuButton}"
+                Text="{x:Static res:AppResources.LoginAsTutor}"
+                Command="{Binding GoToTutorCommand}">
+                <Button.ImageSource>
+                    <FontImageSource
+                        FontFamily="MaterialSymbolsRounded"
+                        Glyph="{x:Static utils:MaterialIcon.Login}"
+                        Size="22"
+                        Color="{DynamicResource Primary}" />
+                </Button.ImageSource>
+            </Button>
 
-            <BoxView
-                HeightRequest="1"
-                Color="LightGray"
-                Margin="0,20" />
-
-            <Button
-                Text="Crear cuenta nueva"
-                Command="{Binding GoToSignupCommand}"
-                BackgroundColor="Transparent"
-                TextColor="Gray"
-                BorderWidth="1"
-                BorderColor="Gray"
-                CornerRadius="12"
-                HeightRequest="50" />
+            <Label
+                Text="{x:Static res:AppResources.CreateNewAccount}"
+                TextColor="{DynamicResource Gray500}"
+                FontSize="13"
+                TextDecorations="Underline"
+                HorizontalOptions="Center"
+                Margin="0,10,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToSignupCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
             <ActivityIndicator
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}" />

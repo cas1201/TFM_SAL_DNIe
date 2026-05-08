@@ -1,4 +1,6 @@
 ﻿using ColeHop.Core.Services.Auth;
+using ColeHop.Core.Services.TutorManagement;
+using ColeHop.Model.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -7,18 +9,66 @@ namespace ColeHop.ViewModel
 {
     public sealed partial class AuthorizedPersonViewModel : BaseViewModel
     {
+        private readonly ITutorManagementService _tutorManagementService;
+
         [ObservableProperty]
-        private ObservableCollection<AuthorizedPersonItem> _authorizedPersons = new();
+        private ObservableCollection<AuthorizedPerson> _authorizedPersons = new();
 
-        public AuthorizedPersonViewModel(IAuthService auth) : base(auth) { }
+        [ObservableProperty]
+        private bool _isRefreshing;
 
-        public void Initialize()
+        public AuthorizedPersonViewModel(IAuthService auth, ITutorManagementService tutorManagementService) 
+            : base(auth)
         {
-            // Datos simulados para navegación básica
-            AuthorizedPersons.Clear();
-            AuthorizedPersons.Add(new AuthorizedPersonItem("María López", "Madre"));
-            AuthorizedPersons.Add(new AuthorizedPersonItem("Carlos Pérez", "Padre"));
-            AuthorizedPersons.Add(new AuthorizedPersonItem("Laura Sánchez", "Abuela"));
+            _tutorManagementService = tutorManagementService;
+        }
+
+        public async Task InitializeAsync()
+        {
+            await LoadAuthorizedPersonsAsync();
+        }
+
+        private async Task LoadAuthorizedPersonsAsync()
+        {
+            try
+            {
+                IsBusy = true;
+                AuthorizedPersons.Clear();
+
+                var tutorId = Auth.CurrentUserId;
+                if (string.IsNullOrEmpty(tutorId))
+                    return;
+
+                var persons = await _tutorManagementService.GetAuthorizedPersonsAsync(tutorId);
+
+                foreach (var person in persons)
+                {
+                    AuthorizedPersons.Add(person);
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", $"Error al cargar personas autorizadas: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task AddAuthorizedPersonAsync()
+        {
+            await Shell.Current.GoToAsync("addauthorizedperson");
+        }
+
+        [RelayCommand]
+        private async Task SelectAuthorizedPersonAsync(AuthorizedPerson person)
+        {
+            if (person == null)
+                return;
+
+            await Shell.Current.GoToAsync($"authorizedpersondetail?id={person.Id}");
         }
 
         [RelayCommand]
@@ -26,8 +76,12 @@ namespace ColeHop.ViewModel
         {
             await Shell.Current.GoToAsync("..");
         }
-    }
 
-    // Modelo simple para la lista
-    public sealed record AuthorizedPersonItem(string FullName, string Relationship);
+        [RelayCommand]
+        public async Task RefreshAsync()
+        {
+            await LoadAuthorizedPersonsAsync();
+            IsRefreshing = false;
+        }
+    }
 }

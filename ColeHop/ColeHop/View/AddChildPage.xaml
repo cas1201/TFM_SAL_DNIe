@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.View.AddChildPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource PageContainer}">
+
+            <Border
+                Stroke="{DynamicResource Gray300}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                Padding="20"
+                Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="{x:Static res:AppResources.PersonalInfo}"
+                        Style="{StaticResource SubSectionTitle}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Name}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Name}"
+                        Placeholder="{x:Static res:AppResources.Name}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.LastName}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding LastName}"
+                        Placeholder="{x:Static res:AppResources.LastName}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Stroke="{DynamicResource Gray300}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                Padding="20"
+                Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="{x:Static res:AppResources.EducationInfo}"
+                        Style="{StaticResource SubSectionTitle}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.EducationType}" />
+
+                    <Picker
+                        Style="{StaticResource FormPicker}"
+                        Title="{x:Static res:AppResources.SelectType}"
+                        SelectedItem="{Binding EducationType}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Infantil</x:String>
+                                <x:String>Primaria</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Course}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Course}"
+                        Placeholder="Ej: 3º" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Group}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Group}"
+                        Placeholder="Ej: A" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                Style="{StaticResource ErrorMessage}"
+                Text="{Binding ErrorMessage}"
+                IsVisible="{Binding HasError}"
+                Margin="0,0,0,16" />
+
+            <Button
+                Style="{StaticResource PrimaryButton}"
+                Text="{x:Static res:AppResources.Save}"
+                Command="{Binding SaveCommand}"
+                Margin="0,0,0,8" />
+
+            <Button
+                Style="{StaticResource SecondaryButton}"
+                Text="{x:Static res:AppResources.Cancel}"
+                Command="{Binding CancelCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,5 +1,6 @@
 ﻿using ColeHop.Core.Services.Auth;
 using ColeHop.Model.Identity;
+using ColeHop.Resources.Strings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -27,7 +28,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+            await Shell.Current.DisplayAlertAsync(AppResources.Error, ex.Message, AppResources.OK);
         }
         finally
         {
@@ -47,7 +48,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+            await Shell.Current.DisplayAlertAsync(AppResources.Error, ex.Message, AppResources.OK);
         }
         finally
         {
