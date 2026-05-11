@@ -1,7 +1,7 @@
-Ôªøusing ColeHop.Core.Services.Nfc.Dtos;
-using ColeHop.Core.Services.Pickup;
-using ColeHop.Core.Services.Pickup.Dtos;
-using ColeHop.Model.Domain;
+using ColeHop.Services.Nfc;
+using ColeHop.Services.Pickup;
+using ColeHop.Services.Pickup;
+using ColeHop.Models;
 
 namespace ColeHop.Services.Pickup
 {
@@ -14,8 +14,8 @@ namespace ColeHop.Services.Pickup
             // Datos simulados para desarrollo/testing
             IReadOnlyList<DailyPickupItem> result = new List<DailyPickupItem>
             {
-                new DailyPickupItem("child-1", "Juan P√©rez", "Mar√≠a P√©rez", false),
-                new DailyPickupItem("child-2", "Luc√≠a Garc√≠a", "Carlos Garc√≠a", true)
+                new DailyPickupItem("child-1", "Juan PÈrez", "MarÌa PÈrez", false),
+                new DailyPickupItem("child-2", "LucÌa GarcÌa", "Carlos GarcÌa", true)
             };
 
             return Task.FromResult(result);
@@ -30,8 +30,8 @@ namespace ColeHop.Services.Pickup
 
         public Task<PickupAuthorizationResult> CheckAuthorizationAsync(PickupContext context, VerifiedIdentity verifiedIdentity)
         {
-            // Verificar que la persona est√° autorizada para recoger al ni√±o
-            // En producci√≥n: comparar DNI con autorizaciones en BD
+            // Verificar que la persona est· autorizada para recoger al niÒo
+            // En producciÛn: comparar DNI con autorizaciones en BD
             var result = new PickupAuthorizationResult(true, null);
             return Task.FromResult(result);
         }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.Views.ChildDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:ColeHop.ViewModels"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    x:DataType="viewmodel:ChildDetailViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Style="{StaticResource PageContainer}">
+
+            <!-- Rejection reason banner -->
+            <Border
+                Stroke="{DynamicResource Danger}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource RejectionBannerLight}, Dark={StaticResource RejectionBannerDark}}"
+                Padding="16"
+                Margin="0,0,0,16"
+                IsVisible="{Binding ShowRejectionReason}">
+                <VerticalStackLayout Spacing="6">
+                    <Label
+                        Text="{x:Static res:AppResources.RejectedRegistration}"
+                        FontAttributes="Bold"
+                        FontSize="15"
+                        TextColor="{DynamicResource Danger}" />
+                    <Label
+                        Text="{Binding RejectionReason}"
+                        FontSize="14"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Stroke="{DynamicResource Gray300}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                Padding="20"
+                Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="{x:Static res:AppResources.PersonalInfo}"
+                        Style="{StaticResource SubSectionTitle}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Name}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Name}"
+                        Placeholder="{x:Static res:AppResources.Name}"
+                        IsEnabled="{Binding IsEditable}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.LastName}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding LastName}"
+                        Placeholder="{x:Static res:AppResources.LastName}"
+                        IsEnabled="{Binding IsEditable}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                Stroke="{DynamicResource Gray300}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                Padding="20"
+                Margin="0,0,0,16">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="{x:Static res:AppResources.EducationInfo}"
+                        Style="{StaticResource SubSectionTitle}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.EducationType}" />
+
+                    <Picker
+                        Style="{StaticResource FormPicker}"
+                        Title="{x:Static res:AppResources.SelectType}"
+                        SelectedItem="{Binding EducationType}"
+                        IsEnabled="{Binding IsEditable}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Infantil</x:String>
+                                <x:String>Primaria</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Course}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Course}"
+                        Placeholder="Ej: 3º"
+                        IsEnabled="{Binding IsEditable}" />
+
+                    <Label
+                        Style="{StaticResource FormLabel}"
+                        Text="{x:Static res:AppResources.Group}" />
+
+                    <Entry
+                        Style="{StaticResource FormEntry}"
+                        Text="{Binding Group}"
+                        Placeholder="Ej: A"
+                        IsEnabled="{Binding IsEditable}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button
+                Style="{StaticResource PrimaryButton}"
+                Text="{x:Static res:AppResources.SaveChanges}"
+                Command="{Binding SaveChangesCommand}"
+                IsVisible="{Binding IsEditable}"
+                Margin="0,0,0,8" />
+
+            <Button
+                Style="{StaticResource DangerButton}"
+                Text="{x:Static res:AppResources.Delete}"
+                Command="{Binding DeleteCommand}" />
+
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="{DynamicResource Primary}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

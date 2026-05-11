@@ -1,6 +1,6 @@
-using ColeHop.Core.Services.TutorManagement;
-using ColeHop.Core.Services.TutorManagement.Dtos;
-using ColeHop.Model.Domain;
+using ColeHop.Services.TutorManagement;
+using ColeHop.Services.TutorManagement;
+using ColeHop.Models;
 
 namespace ColeHop.Services.TutorManagement
 {
@@ -12,9 +12,9 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "1",
                 Name = "Juan",
-                LastName = "García López",
+                LastName = "Garc├¡a L├│pez",
                 EducationType = "Primaria",
-                Course = "3º",
+                Course = "3┬║",
                 Group = "A",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -22,10 +22,10 @@ namespace ColeHop.Services.TutorManagement
             new Child
             {
                 Id = "2",
-                Name = "María",
-                LastName = "García López",
+                Name = "Mar├¡a",
+                LastName = "Garc├¡a L├│pez",
                 EducationType = "Primaria",
-                Course = "1º",
+                Course = "1┬║",
                 Group = "B",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -34,9 +34,9 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "3",
                 Name = "Pedro",
-                LastName = "Martínez Ruiz",
+                LastName = "Mart├¡nez Ruiz",
                 EducationType = "Infantil",
-                Course = "5 años",
+                Course = "5 a├▒os",
                 Group = "A",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -49,7 +49,7 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "1",
                 Name = "Ana",
-                LastName = "García Sánchez",
+                LastName = "Garc├¡a S├ínchez",
                 Dni = "12345678A",
                 Relationship = "Abuela",
                 Photo = Array.Empty<byte>(),
@@ -59,9 +59,9 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "2",
                 Name = "Carlos",
-                LastName = "López Fernández",
+                LastName = "L├│pez Fern├índez",
                 Dni = "87654321B",
-                Relationship = "Tío",
+                Relationship = "T├¡o",
                 Photo = Array.Empty<byte>(),
                 TutorId = "tutor1"
             },
@@ -69,7 +69,7 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "3",
                 Name = "Isabel",
-                LastName = "Ruiz Martínez",
+                LastName = "Ruiz Mart├¡nez",
                 Dni = "11223344C",
                 Relationship = "Madre",
                 Photo = Array.Empty<byte>(),

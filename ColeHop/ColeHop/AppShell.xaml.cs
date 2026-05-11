@@ -1,6 +1,6 @@
-﻿using ColeHop.Core.Services.Auth;
-using ColeHop.Model.Identity;
-using ColeHop.View;
+using ColeHop.Services.Auth;
+using ColeHop.Models;
+using ColeHop.Views;
 
 namespace ColeHop
 {
@@ -36,7 +36,7 @@ namespace ColeHop
             // Por defecto mostrar LoginPage
             ShowLoginPage();
 
-            // Luego intentar restaurar sesión en background
+            // Luego intentar restaurar sesi�n en background
             Task.Run(async () =>
             {
                 if (await _auth.TryRestoreSessionAsync())

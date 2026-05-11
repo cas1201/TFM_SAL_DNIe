@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="ColeHopSplashTheme" parent="Maui.SplashTheme">
+		<item name="android:windowBackground">@color/maui_splash_color</item>
+	</style>
+</resources>

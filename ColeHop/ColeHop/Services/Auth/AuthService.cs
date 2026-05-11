@@ -1,6 +1,6 @@
-锘縰sing ColeHop.Core.Services.Auth;
-using ColeHop.Core.Services.Auth.Dtos;
-using ColeHop.Model.Identity;
+using ColeHop.Services.Auth;
+using ColeHop.Services.Auth;
+using ColeHop.Models;
 
 namespace ColeHop.Services.Auth
 {
@@ -20,7 +20,7 @@ namespace ColeHop.Services.Auth
 
         public async Task RegisterTutorAsync(TutorRegistrationData registrationData)
         {
-            // Validaci贸n b谩sica
+            // Validaci髇 b醩ica
             if (string.IsNullOrWhiteSpace(registrationData.Email))
                 throw new InvalidOperationException("Email requerido.");
 
@@ -28,14 +28,14 @@ namespace ColeHop.Services.Auth
                 throw new InvalidOperationException("Password requerido.");
 
             // Llamada a backend / API
-            // Registro en backend: estado pendiente de aprobaci贸n
+            // Registro en backend: estado pendiente de aprobaci髇
             await Task.CompletedTask;
         }
 
         public async Task LoginAsync(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-                throw new InvalidOperationException("Credenciales inv谩lidas.");
+                throw new InvalidOperationException("Credenciales inv醠idas.");
 
             var userId = Guid.NewGuid().ToString();
             var role = UserRole.Tutor;
@@ -51,7 +51,7 @@ namespace ColeHop.Services.Auth
 
         public async Task SimulateLoginAsync(UserRole role)
         {
-            // Simular autenticaci贸n sin backend real
+            // Simular autenticaci髇 sin backend real
             var userId = Guid.NewGuid().ToString();
             var token = Guid.NewGuid().ToString();
 
@@ -69,7 +69,7 @@ namespace ColeHop.Services.Auth
         {
             try
             {
-                // Intentar recuperar sesi贸n del almacenamiento seguro
+                // Intentar recuperar sesi髇 del almacenamiento seguro
                 var userId = await SecureStorage.GetAsync(UserIdKey);
                 var token = await SecureStorage.GetAsync(TokenKey);
                 var roleValue = await SecureStorage.GetAsync(RoleKey);
@@ -80,7 +80,7 @@ namespace ColeHop.Services.Auth
                 if (!Enum.TryParse<UserRole>(roleValue, out var role))
                     return false;
 
-                // Restaurar sesi贸n
+                // Restaurar sesi髇
                 _currentSession = new AuthSession(userId, role, token);
                 return true;
             }

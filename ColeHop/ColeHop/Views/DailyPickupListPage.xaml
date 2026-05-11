@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.Views.DailyPickupListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
+
+    <RefreshView
+        IsRefreshing="{Binding IsRefreshing}"
+        Command="{Binding LoadPickupsCommand}">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="20">
+
+                <Border
+                    BackgroundColor="{DynamicResource Primary}"
+                    StrokeThickness="0"
+                    Padding="20,16"
+                    StrokeShape="RoundRectangle 12"
+                    Margin="0,0,0,10">
+                    <Label
+                        Text="{Binding TodayDate}"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center" />
+                </Border>
+
+                <ActivityIndicator
+                    IsRunning="{Binding IsLoading}"
+                    IsVisible="{Binding IsLoading}"
+                    Color="{DynamicResource Primary}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="0,40" />
+
+                <VerticalStackLayout 
+                    Spacing="24"
+                    IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            Text="{x:Static res:AppResources.PendingPickups}"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource Primary}"
+                            Margin="0,0,0,8" />
+
+                        <CollectionView
+                            ItemsSource="{Binding PendingPickups}"
+                            SelectionMode="None">
+
+                            <CollectionView.EmptyView>
+                                <VerticalStackLayout Padding="20">
+                                    <Label
+                                        Text="{x:Static res:AppResources.NoPendingPickups}"
+                                        FontSize="16"
+                                        TextColor="{DynamicResource Gray400}"
+                                        HorizontalTextAlignment="Center"
+                                        FontAttributes="Italic" />
+                                </VerticalStackLayout>
+                            </CollectionView.EmptyView>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Stroke="{DynamicResource Primary}"
+                                        StrokeThickness="2"
+                                        Padding="16"
+                                        Margin="0,0,0,8"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                                        StrokeShape="RoundRectangle 12">
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectPickupCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                                <Label
+                                                    Text="{Binding ChildName}"
+                                                    FontSize="20"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{DynamicResource Primary}" />
+
+                                                <Label
+                                                    Text="{Binding AuthorizedPersonName, StringFormat='Puede recoger: {0}'}"
+                                                    FontSize="15"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </VerticalStackLayout>
+
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="MaterialSymbolsRounded"
+                                                Text="&#xe5cc;"
+                                                FontSize="36"
+                                                TextColor="{DynamicResource Primary}"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            Text="{x:Static res:AppResources.PickedUp}"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}"
+                            Margin="0,0,0,8" />
+
+                        <CollectionView
+                            ItemsSource="{Binding CompletedPickups}"
+                            SelectionMode="None">
+
+                            <CollectionView.EmptyView>
+                                <VerticalStackLayout Padding="20">
+                                    <Label
+                                        Text="{x:Static res:AppResources.NoChildrenPickedUpYet}"
+                                        FontSize="16"
+                                        TextColor="{DynamicResource Gray400}"
+                                        HorizontalTextAlignment="Center"
+                                        FontAttributes="Italic" />
+                                </VerticalStackLayout>
+                            </CollectionView.EmptyView>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Stroke="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}"
+                                        StrokeThickness="2"
+                                        Padding="16"
+                                        Margin="0,0,0,8"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource SuccessBannerLight}, Dark={StaticResource SuccessBannerDark}}"
+                                        StrokeShape="RoundRectangle 12"
+                                        Opacity="0.7">
+
+                                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                            <Label
+                                                    Text="{Binding ChildName}"
+                                                    FontSize="20"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}" />
+
+                                            <Label
+                                                    Text="{Binding AuthorizedPersonName, StringFormat='Recogido por: {0}'}"
+                                                    FontSize="15"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </RefreshView>
+
+</ContentPage>

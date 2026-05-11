@@ -1,6 +1,6 @@
-using ColeHop.Core.Services.Teacher;
-using ColeHop.Core.Services.TutorManagement;
-using ColeHop.Model.Domain;
+using ColeHop.Services.Teacher;
+using ColeHop.Services.TutorManagement;
+using ColeHop.Models;
 
 namespace ColeHop.Services.Teacher
 {

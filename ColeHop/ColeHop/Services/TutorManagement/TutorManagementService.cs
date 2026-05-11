@@ -1,7 +1,5 @@
-﻿using ColeHop.Core.Services.TutorManagement;
-using ColeHop.Core.Services.TutorManagement.Dtos;
-using ColeHop.Model.Domain;
-using ColeHop.Utils;
+using ColeHop.Models;
+using ColeHop.Helpers;
 using System.Net.Http.Json;
 
 namespace ColeHop.Services.TutorManagement
@@ -98,7 +96,7 @@ namespace ColeHop.Services.TutorManagement
             var response = await client.PostAsJsonAsync($"api/tutors/{tutorId}/authorizations", authorizationData);
             response.EnsureSuccessStatusCode();
             var authorization = await response.Content.ReadFromJsonAsync<Authorization>();
-            return authorization ?? throw new InvalidOperationException("Error al crear autorización");
+            return authorization ?? throw new InvalidOperationException("Error al crear autorizaci�n");
         }
 
         public async Task<IReadOnlyList<Authorization>> GetAuthorizationsAsync(string tutorId)

@@ -1,16 +1,11 @@
-﻿using ColeHop.Core.Services.Auth;
-using ColeHop.Core.Services.Nfc;
-using ColeHop.Core.Services.Pickup;
-using ColeHop.Core.Services.Teacher;
-using ColeHop.Core.Services.TutorManagement;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Nfc;
 using ColeHop.Services.Pickup;
 using ColeHop.Services.Teacher;
 using ColeHop.Services.TutorManagement;
-using ColeHop.Utils;
-using ColeHop.View;
-using ColeHop.ViewModel;
+using ColeHop.Helpers;
+using ColeHop.Views;
+using ColeHop.ViewModels;
 
 #if ANDROID
 using ColeHop.Platforms.Android.Nfc;

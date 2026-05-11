@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.Views.DashboardTeacherPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:utils="clr-namespace:ColeHop.Helpers"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="16" VerticalOptions="Center">
+
+                <Button
+                    Style="{StaticResource OutlineMenuButton}"
+                    Text="{x:Static res:AppResources.DailyPickupList}"
+                    Command="{Binding GoToDailyPickupListCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="MaterialSymbolsRounded"
+                            Glyph="{x:Static utils:MaterialIcon.ListAlt}"
+                            Size="24"
+                            Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
+
+                <Button
+                    Style="{StaticResource OutlineMenuButton}"
+                    Text="{x:Static res:AppResources.PendingApprovals}"
+                    Command="{Binding GoToPendingApprovalsCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="MaterialSymbolsRounded"
+                            Glyph="{x:Static utils:MaterialIcon.HowToReg}"
+                            Size="24"
+                            Color="{DynamicResource Primary}" />
+                    </Button.ImageSource>
+                </Button>
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botón de ajustes en la esquina superior derecha -->
+        <ImageButton
+            Command="{Binding GoToSettingsCommand}"
+            WidthRequest="44"
+            HeightRequest="44"
+            CornerRadius="22"
+            BackgroundColor="{DynamicResource Primary}"
+            Padding="10"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            Margin="0,20,20,0">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialSymbolsRounded"
+                    Glyph="{x:Static utils:MaterialIcon.Settings}"
+                    Size="24"
+                    Color="White" />
+            </ImageButton.Source>
+        </ImageButton>
+    </Grid>
+</ContentPage>

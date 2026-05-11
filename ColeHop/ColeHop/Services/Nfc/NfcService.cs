@@ -1,5 +1,5 @@
-﻿using ColeHop.Core.Services.Nfc;
-using ColeHop.Core.Services.Nfc.Dtos;
+using ColeHop.Services.Nfc;
+using ColeHop.Services.Nfc;
 using ColeHop.Services.Nfc.Dnie;
 
 namespace ColeHop.Services.Nfc
@@ -24,7 +24,7 @@ namespace ColeHop.Services.Nfc
                 throw new InvalidOperationException("El dispositivo no soporta NFC.");
 
             if (!IsEnabled)
-                throw new InvalidOperationException("NFC no está activado.");
+                throw new InvalidOperationException("NFC no est� activado.");
 
             await _platformService.StartListeningAsync();
         }

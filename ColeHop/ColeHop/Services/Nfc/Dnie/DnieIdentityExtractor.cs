@@ -1,4 +1,4 @@
-﻿using ColeHop.Core.Services.Nfc.Dtos;
+using ColeHop.Services.Nfc;
 
 namespace ColeHop.Services.Nfc.Dnie
 {
