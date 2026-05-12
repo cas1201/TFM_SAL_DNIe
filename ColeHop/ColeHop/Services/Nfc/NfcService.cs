@@ -1,5 +1,3 @@
-using ColeHop.Services.Nfc;
-using ColeHop.Services.Nfc;
 using ColeHop.Services.Nfc.Dnie;
 
 namespace ColeHop.Services.Nfc
