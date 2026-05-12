@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using ColeHop.Platforms.Android.Nfc;
 
 namespace ColeHop
@@ -13,21 +14,20 @@ namespace ColeHop
         {
             base.OnCreate(savedInstanceState);
 
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop && Build.VERSION.SdkInt < BuildVersionCodes.VanillaIceCream)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop && Build.VERSION.SdkInt <= BuildVersionCodes.Q)
             {
 #pragma warning disable CA1422
                 Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#4361EE"));
 #pragma warning restore CA1422
             }
 
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+            if (OperatingSystem.IsAndroidVersionAtLeast(30) && !OperatingSystem.IsAndroidVersionAtLeast(31))
             {
-#pragma warning disable CS0618
-                if (Build.VERSION.SdkInt < BuildVersionCodes.R)
+                var controller = Window?.InsetsController;
+                if (controller != null)
                 {
-                    Window?.DecorView.SystemUiVisibility = 0;
+                    controller.SetSystemBarsAppearance((int)WindowInsetsControllerAppearance.LightStatusBars, (int)WindowInsetsControllerAppearance.LightStatusBars);
                 }
-#pragma warning restore CS0618
             }
         }
 
