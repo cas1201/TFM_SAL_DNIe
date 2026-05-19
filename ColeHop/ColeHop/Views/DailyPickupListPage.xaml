@@ -77,21 +77,41 @@
                                                 CommandParameter="{Binding .}" />
                                         </Border.GestureRecognizers>
 
-                                        <Grid ColumnDefinitions="*,Auto">
-                                            <VerticalStackLayout Grid.Column="0" Spacing="6">
-                                                <Label
-                                                    Text="{Binding ChildName}"
-                                                    FontSize="20"
-                                                    FontAttributes="Bold"
-                                                    TextColor="{DynamicResource Primary}" />
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Text="{Binding ChildName}"
+                                                FontSize="22"
+                                                FontAttributes="Bold"
+                                                TextColor="{DynamicResource Primary}" />
 
+                                            <HorizontalStackLayout
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Spacing="6"
+                                                Margin="0,8,0,0">
                                                 <Label
-                                                    Text="{Binding AuthorizedPersonName, StringFormat='Puede recoger: {0}'}"
+                                                    FontFamily="MaterialSymbolsRounded"
+                                                    Text="&#xe7fd;"
+                                                    FontSize="20"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="Recoge:"
                                                     FontSize="15"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                                            </VerticalStackLayout>
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="{Binding AuthorizedPersonName}"
+                                                    FontSize="17"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
 
                                             <Label
+                                                Grid.RowSpan="2"
                                                 Grid.Column="1"
                                                 FontFamily="MaterialSymbolsRounded"
                                                 Text="&#xe5cc;"
@@ -139,17 +159,32 @@
                                         StrokeShape="RoundRectangle 12"
                                         Opacity="0.7">
 
-                                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                        <VerticalStackLayout Spacing="6">
                                             <Label
                                                     Text="{Binding ChildName}"
-                                                    FontSize="20"
+                                                    FontSize="22"
                                                     FontAttributes="Bold"
                                                     TextColor="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}" />
 
-                                            <Label
-                                                    Text="{Binding AuthorizedPersonName, StringFormat='Recogido por: {0}'}"
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label
+                                                    FontFamily="MaterialSymbolsRounded"
+                                                    Text="&#xe7fd;"
+                                                    FontSize="20"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="Recogido por:"
                                                     FontSize="15"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="{Binding AuthorizedPersonName}"
+                                                    FontSize="17"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                    VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
                                         </VerticalStackLayout>
                                     </Border>
                                 </DataTemplate>

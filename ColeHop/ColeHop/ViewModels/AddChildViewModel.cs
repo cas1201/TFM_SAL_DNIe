@@ -1,5 +1,5 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Resources.Strings;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -32,8 +32,8 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool hasError;
 
-        public AddChildViewModel(IAuthService auth, ITutorManagementService tutorManagementService) 
-            : base(auth)
+        public AddChildViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
+            : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
         }

@@ -1,3 +1,5 @@
+using ColeHop.Resources.Strings;
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Models;
@@ -17,8 +19,8 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool _isRefreshing;
 
-        public ChildrenViewModel(IAuthService auth, ITutorManagementService tutorManagementService) 
-            : base(auth)
+        public ChildrenViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
+            : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
         }
@@ -48,7 +50,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync("Error", $"Error al cargar hijos: {ex.Message}", "OK");
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingChildren, ex.Message));
             }
             finally
             {

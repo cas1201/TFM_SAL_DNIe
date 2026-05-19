@@ -1154,5 +1154,131 @@ namespace ColeHop.Resources.Strings {
                 return ResourceManager.GetString("ReasonPlaceholder", resourceCulture);
             }
         }
+
+        public static string NfcNotSupported {
+            get {
+                return ResourceManager.GetString("NfcNotSupported", resourceCulture);
+            }
+        }
+
+        public static string NfcDisabledWarning {
+            get {
+                return ResourceManager.GetString("NfcDisabledWarning", resourceCulture);
+            }
+        }
+
+        public static string ChildNotSpecified {
+            get {
+                return ResourceManager.GetString("ChildNotSpecified", resourceCulture);
+            }
+        }
+
+        public static string CanMustBe6Digits {
+            get {
+                return ResourceManager.GetString("CanMustBe6Digits", resourceCulture);
+            }
+        }
+
+        public static string InvalidPickupContext {
+            get {
+                return ResourceManager.GetString("InvalidPickupContext", resourceCulture);
+            }
+        }
+
+        public static string TimeoutExpired {
+            get {
+                return ResourceManager.GetString("TimeoutExpired", resourceCulture);
+            }
+        }
+
+        public static string DniNotDetectedTimeout {
+            get {
+                return ResourceManager.GetString("DniNotDetectedTimeout", resourceCulture);
+            }
+        }
+
+        public static string VerificationError {
+            get {
+                return ResourceManager.GetString("VerificationError", resourceCulture);
+            }
+        }
+
+        public static string NoActivePickupContext {
+            get {
+                return ResourceManager.GetString("NoActivePickupContext", resourceCulture);
+            }
+        }
+
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+
+        public static string NotAuthorized {
+            get {
+                return ResourceManager.GetString("NotAuthorized", resourceCulture);
+            }
+        }
+
+        public static string PickupAuthorized {
+            get {
+                return ResourceManager.GetString("PickupAuthorized", resourceCulture);
+            }
+        }
+
+        public static string PersonCanPickupChild {
+            get {
+                return ResourceManager.GetString("PersonCanPickupChild", resourceCulture);
+            }
+        }
+
+        public static string UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
+            }
+        }
+
+        public static string CouldNotLoadPickups {
+            get {
+                return ResourceManager.GetString("CouldNotLoadPickups", resourceCulture);
+            }
+        }
+
+        public static string ChildAlreadyPickedUp {
+            get {
+                return ResourceManager.GetString("ChildAlreadyPickedUp", resourceCulture);
+            }
+        }
+
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+
+        public static string LanguageChangedRestart {
+            get {
+                return ResourceManager.GetString("LanguageChangedRestart", resourceCulture);
+            }
+        }
+
+        public static string ErrorLoadingAuthorizedPersons {
+            get {
+                return ResourceManager.GetString("ErrorLoadingAuthorizedPersons", resourceCulture);
+            }
+        }
+
+        public static string ErrorLoadingChildren {
+            get {
+                return ResourceManager.GetString("ErrorLoadingChildren", resourceCulture);
+            }
+        }
     }
 }

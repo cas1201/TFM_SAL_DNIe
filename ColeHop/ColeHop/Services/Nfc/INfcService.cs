@@ -9,7 +9,7 @@ namespace ColeHop.Services.Nfc
 
         Task StartAsync();
         Task StopAsync();
-        Task BeginDnieReadingAsync(string can, CancellationToken cancellationToken);
+        Task BeginDnieReadingAsync(string can, CancellationToken cancellationToken, IProgress<string>? progress = null);
 
         event EventHandler<VerifiedIdentity> IdentityVerified;
     }

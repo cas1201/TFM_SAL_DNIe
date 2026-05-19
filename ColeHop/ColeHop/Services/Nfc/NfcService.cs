@@ -32,7 +32,7 @@ namespace ColeHop.Services.Nfc
             await _platformService.StopListeningAsync();
         }
 
-        public async Task BeginDnieReadingAsync(string can, CancellationToken cancellationToken)
+        public async Task BeginDnieReadingAsync(string can, CancellationToken cancellationToken, IProgress<string>? progress = null)
         {
             await StartAsync();
 
@@ -42,8 +42,9 @@ namespace ColeHop.Services.Nfc
                 System.Diagnostics.Debug.WriteLine("NFC: Esperando que el usuario acerque el DNI...");
                 await _platformService.WaitForTagAsync(cancellationToken);
                 System.Diagnostics.Debug.WriteLine("NFC: DNI detectado, iniciando lectura...");
+                progress?.Report("DNI detectado. Mantenga el DNI en el lector hasta que se complete la comprobación.");
 
-                var session = new DnieSession(_platformService, can);
+                var session = new DnieSession(_platformService, can, progress);
                 var identity = await session.ExecuteAsync(cancellationToken);
                 IdentityVerified?.Invoke(this, identity);
             }

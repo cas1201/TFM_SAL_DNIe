@@ -14,4 +14,8 @@ public static class MaterialIcon
     public const string Logout = "\ue9ba";
     public const string PersonAdd = "\ue7fe";
     public const string Settings = "\ue8b8";
+    public const string Nfc = "\ue1ee";
+    public const string Contactless = "\uea71";
+    public const string CheckCircle = "\ue86c";
+    public const string PhoneAndroid = "\ue324";
 }

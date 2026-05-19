@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Teacher;
 using ColeHop.Models;
@@ -17,8 +18,8 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool _isRefreshing;
 
-        public PendingApprovalsViewModel(IAuthService auth, ITeacherService teacherService)
-            : base(auth)
+        public PendingApprovalsViewModel(IAuthService auth, IAlertService alertService, ITeacherService teacherService)
+            : base(auth, alertService)
         {
             _teacherService = teacherService;
         }

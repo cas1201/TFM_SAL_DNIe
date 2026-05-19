@@ -1,5 +1,5 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Models;
 using ColeHop.Resources.Strings;
@@ -66,8 +66,8 @@ namespace ColeHop.ViewModels
 
         public double StepProgress => CurrentStep / (double)TotalSteps;
 
-        public AuthorizationViewModel(IAuthService auth, ITutorManagementService tutorManagementService)
-            : base(auth)
+        public AuthorizationViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService)
+            : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
             UpdateNavigationState();
@@ -256,7 +256,7 @@ namespace ColeHop.ViewModels
                 );
 
                 await _tutorManagementService.CreateAuthorizationAsync(tutorId, authorizationData);
-                await Shell.Current.DisplayAlertAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)

@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Nfc;
 using ColeHop.Services.Pickup;
@@ -34,8 +35,8 @@ namespace ColeHop
                     Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("UnderlineEntry", (handler, view) =>
                     {
                         var editText = handler.PlatformView;
-                        var density = editText.Context.Resources!.DisplayMetrics!.Density;
-                        var primaryColor = (Color)Application.Current!.Resources["Primary"];
+                        var density = editText.Context?.Resources?.DisplayMetrics?.Density ?? 1;
+                        var primaryColor = (Color)(Application.Current?.Resources["Primary"] ?? Colors.Black);
                         var androidColor = new Android.Graphics.Color(
                             (byte)(primaryColor.Red * 255),
                             (byte)(primaryColor.Green * 255),
@@ -47,8 +48,11 @@ namespace ColeHop
 
                         var layers = new Android.Graphics.Drawables.LayerDrawable([transparent, line]);
                         var lineHeight = (int)System.Math.Max(1, 1.5 * density);
-                        layers.SetLayerHeight(1, lineHeight);
-                        layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        if (OperatingSystem.IsAndroidVersionAtLeast(23))
+                        {
+                            layers.SetLayerHeight(1, lineHeight);
+                            layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        }
 
                         editText.Background = layers;
                     });
@@ -56,8 +60,8 @@ namespace ColeHop
                     Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("UnderlinePicker", (handler, view) =>
                     {
                         var picker = handler.PlatformView;
-                        var density = picker.Context.Resources!.DisplayMetrics!.Density;
-                        var primaryColor = (Color)Application.Current!.Resources["Primary"];
+                        var density = picker.Context?.Resources?.DisplayMetrics?.Density ?? 1;
+                        var primaryColor = (Color)(Application.Current?.Resources["Primary"] ?? Colors.Black);
                         var androidColor = new Android.Graphics.Color(
                             (byte)(primaryColor.Red * 255),
                             (byte)(primaryColor.Green * 255),
@@ -69,8 +73,11 @@ namespace ColeHop
 
                         var layers = new Android.Graphics.Drawables.LayerDrawable([transparent, line]);
                         var lineHeight = (int)System.Math.Max(1, 1.5 * density);
-                        layers.SetLayerHeight(1, lineHeight);
-                        layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        if (OperatingSystem.IsAndroidVersionAtLeast(23))
+                        {
+                            layers.SetLayerHeight(1, lineHeight);
+                            layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        }
 
                         picker.Background = layers;
                     });
@@ -78,8 +85,8 @@ namespace ColeHop
                     Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("UnderlineDatePicker", (handler, view) =>
                     {
                         var datePicker = handler.PlatformView;
-                        var density = datePicker.Context.Resources!.DisplayMetrics!.Density;
-                        var primaryColor = (Color)Application.Current!.Resources["Primary"];
+                        var density = datePicker.Context?.Resources?.DisplayMetrics?.Density ?? 1;
+                        var primaryColor = (Color)(Application.Current?.Resources["Primary"] ?? Colors.Black);
                         var androidColor = new Android.Graphics.Color(
                             (byte)(primaryColor.Red * 255),
                             (byte)(primaryColor.Green * 255),
@@ -91,8 +98,11 @@ namespace ColeHop
 
                         var layers = new Android.Graphics.Drawables.LayerDrawable([transparent, line]);
                         var lineHeight = (int)System.Math.Max(1, 1.5 * density);
-                        layers.SetLayerHeight(1, lineHeight);
-                        layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        if (OperatingSystem.IsAndroidVersionAtLeast(23))
+                        {
+                            layers.SetLayerHeight(1, lineHeight);
+                            layers.SetLayerGravity(1, Android.Views.GravityFlags.Bottom);
+                        }
 
                         datePicker.Background = layers;
                     });
@@ -100,14 +110,25 @@ namespace ColeHop
                 });
 
             #region Services
+            // Alert
+            builder.Services.AddSingleton<IAlertService, AlertService>();
+
             // Auth
-            builder.Services.AddSingleton<IAuthService, AuthService>();
+#if DEBUG
+            builder.Services.AddSingleton<IAuthService, MockAuthService>();
+#else
+            builder.Services.AddSingleton<IAuthService, HttpAuthService>();
+#endif
 
             // Shell
             builder.Services.AddTransient<AppShell>();
 
             // Pickup
-            builder.Services.AddSingleton<IPickupService, PickupService>();
+#if DEBUG
+            builder.Services.AddSingleton<IPickupService, MockPickupService>();
+#else
+            builder.Services.AddSingleton<IPickupService, HttpPickupService>();
+#endif
 
             // TutorManagement
             builder.Services.AddSingleton<HttpClient>(sp =>

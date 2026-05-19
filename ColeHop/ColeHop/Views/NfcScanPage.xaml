@@ -2,7 +2,8 @@
     x:Class="ColeHop.Views.NfcScanPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:res="clr-namespace:ColeHop.Resources.Strings">
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
+    xmlns:helpers="clr-namespace:ColeHop.Helpers">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24" VerticalOptions="Center">
@@ -23,6 +24,7 @@
                     HorizontalTextAlignment="Center" />
 
                 <Entry
+                    x:Name="CanEntry"
                     Text="{Binding Can}"
                     Placeholder="000000"
                     Keyboard="Numeric"
@@ -34,7 +36,7 @@
 
                 <Button
                     Text="{x:Static res:AppResources.StartScan}"
-                    Command="{Binding StartScanCommand}"
+                    Clicked="OnStartScanClicked"
                     BackgroundColor="{DynamicResource Primary}"
                     TextColor="White"
                     CornerRadius="12"
@@ -50,10 +52,41 @@
                 IsVisible="{Binding IsScanning}">
 
                 <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
-                    <Image
-                        Source="dotnet_bot.png"
-                        WidthRequest="120"
-                        HeightRequest="120" />
+
+                    <!-- Icono NFC (esperando) -->
+                    <Label
+                        Text="{x:Static helpers:MaterialIcon.Contactless}"
+                        FontFamily="MaterialSymbolsRounded"
+                        FontSize="80"
+                        TextColor="{DynamicResource Primary}"
+                        HorizontalTextAlignment="Center"
+                        IsVisible="{Binding DniDetected, Converter={StaticResource InvertedBoolConverter}}" />
+
+                    <!-- Icono éxito (detectado) -->
+                    <Label
+                        Text="{x:Static helpers:MaterialIcon.CheckCircle}"
+                        FontFamily="MaterialSymbolsRounded"
+                        FontSize="80"
+                        TextColor="{DynamicResource Success}"
+                        HorizontalTextAlignment="Center"
+                        IsVisible="{Binding DniDetected}" />
+
+                    <!-- Instrucciones de posicionamiento (antes de detectar) -->
+                    <Label
+                        Text="Coloque la parte trasera del DNIe&#10;sobre la parte superior del teléfono"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        TextColor="{DynamicResource Gray400}"
+                        IsVisible="{Binding DniDetected, Converter={StaticResource InvertedBoolConverter}}" />
+
+                    <!-- Mensaje de mantener (después de detectar) -->
+                    <Label
+                        Text="Mantenga el DNI en el lector&#10;hasta que se complete la comprobación"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Center"
+                        TextColor="{DynamicResource Success}"
+                        IsVisible="{Binding DniDetected}" />
 
                     <ActivityIndicator
                         IsRunning="{Binding IsScanning}"
@@ -65,7 +98,8 @@
                         Text="{x:Static res:AppResources.BringDnieClose}"
                         FontSize="16"
                         FontAttributes="Bold"
-                        HorizontalTextAlignment="Center" />
+                        HorizontalTextAlignment="Center"
+                        IsVisible="{Binding DniDetected, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>
             </Border>
 

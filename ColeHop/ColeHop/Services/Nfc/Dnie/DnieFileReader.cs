@@ -132,6 +132,7 @@ namespace ColeHop.Services.Nfc.Dnie
                 throw new InvalidOperationException(result.ErrorMessage ?? "Error NFC durante lectura.");
 
             var raw = result.RawData;
+
             if (raw.Length < 2)
                 throw new InvalidOperationException("Respuesta NFC demasiado corta.");
 

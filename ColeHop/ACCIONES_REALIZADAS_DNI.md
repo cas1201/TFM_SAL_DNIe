@@ -154,3 +154,4 @@ Compilacion exitosa sin errores ni warnings.
 2. **Logging extensivo**: Cada fase tiene logs de Debug para facilitar depuracion durante testing.
 3. **Compatibilidad retroactiva**: `VerifiedIdentity.Dni` y `.FullName` siguen existiendo, por lo que el resto del codigo (ViewModels, PickupService) no requiere cambios.
 4. **BouncyCastle**: Se usa para todo el crypto (AES, CMAC, ECDH, CMS). No se anadieron dependencias nuevas.
+

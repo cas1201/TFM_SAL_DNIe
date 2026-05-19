@@ -1,5 +1,5 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Resources.Strings;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -27,8 +27,8 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private string _relationship = string.Empty;
 
-        public AuthorizedPersonDetailViewModel(IAuthService auth, ITutorManagementService tutorManagementService) 
-            : base(auth)
+        public AuthorizedPersonDetailViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
+            : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
         }
@@ -68,7 +68,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync("Error", $"Error al cargar datos: {ex.Message}", "OK");
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingData, ex.Message));
             }
             finally
             {
@@ -81,13 +81,13 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, AppResources.LastNameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.LastNameRequired, AppResources.OK);
                 return;
             }
 
@@ -99,15 +99,15 @@ namespace ColeHop.ViewModels
                 if (string.IsNullOrEmpty(tutorId))
                     return;
 
-                var updatedData = new AuthorizedPersonData(Name, LastName, Dni, Relationship, Array.Empty<byte>());
+                var updatedData = new AuthorizedPersonData(Name, LastName, Dni, Relationship);
                 await _tutorManagementService.UpdateAuthorizedPersonAsync(tutorId, PersonId, updatedData);
 
-                await Shell.Current.DisplayAlertAsync(AppResources.Success, AppResources.PersonUpdatedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.PersonUpdatedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
             }
             finally
             {
@@ -118,7 +118,7 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private async Task DeleteAsync()
         {
-            var confirm = await Shell.Current.DisplayAlertAsync(
+            var confirm = await Alert.ShowConfirmAsync(
                 AppResources.ConfirmDeletion,
                 $"{AppResources.ConfirmDeletePerson.Replace("{0}", Name).Replace("{1}", LastName)}",
                 AppResources.Delete,
@@ -137,12 +137,12 @@ namespace ColeHop.ViewModels
 
                 await _tutorManagementService.RemoveAuthorizedPersonAsync(tutorId, PersonId);
 
-                await Shell.Current.DisplayAlertAsync(AppResources.Success, AppResources.PersonDeletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.PersonDeletedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
             }
             finally
             {

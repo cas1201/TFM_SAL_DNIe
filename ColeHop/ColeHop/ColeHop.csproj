@@ -67,10 +67,10 @@
 
 	<!-- NuGet packages -->
 	<ItemGroup>
-	  <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-	  <PackageReference Update="Microsoft.Maui.Controls" Version="10.0.51" />
-	</ItemGroup>
+		<PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Update="Microsoft.Maui.Controls" Version="10.0.51" />
+	  </ItemGroup>
 	
 	<!-- XAML files -->
 	<ItemGroup>
@@ -126,6 +126,9 @@
 		<AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher_background.png" />
 		<AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
 		<AndroidResource Include="Platforms\Android\Resources\mipmap-xxxhdpi\ic_launcher_monochrome.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Resources\Raw\" />
 	</ItemGroup>
 
 </Project>

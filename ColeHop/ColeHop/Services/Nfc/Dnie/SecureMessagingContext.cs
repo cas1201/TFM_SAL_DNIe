@@ -5,17 +5,18 @@ using Org.BouncyCastle.Security;
 
 namespace ColeHop.Services.Nfc.Dnie
 {
-    public sealed class SecureMessagingContext
+    public sealed class SecureMessagingContext : IDisposable
     {
         private readonly byte[] _kEnc;
         private readonly byte[] _kMac;
         private readonly byte[] _ssc;
+        private bool _disposed;
 
-        public SecureMessagingContext(byte[] kEnc, byte[] kMac)
+        public SecureMessagingContext(byte[] kEnc, byte[] kMac, byte[] initialSsc)
         {
             _kEnc = kEnc;
             _kMac = kMac;
-            _ssc = new byte[16];
+            _ssc = (byte[])initialSsc.Clone();
         }
 
         public byte[] ProtectApdu(byte[] plainApdu)
@@ -88,9 +89,20 @@ namespace ColeHop.Services.Nfc.Dnie
             // Construir APDU protegida
             var protectedApdu = new List<byte>
             {
-                (byte)(cla | 0x0C), ins, p1, p2,
-                (byte)doList.Count
+                (byte)(cla | 0x0C), ins, p1, p2
             };
+
+            if (doList.Count > 255)
+            {
+                protectedApdu.Add(0x00);
+                protectedApdu.Add((byte)(doList.Count >> 8));
+                protectedApdu.Add((byte)(doList.Count & 0xFF));
+            }
+            else
+            {
+                protectedApdu.Add((byte)doList.Count);
+            }
+
             protectedApdu.AddRange(doList);
             protectedApdu.Add(0x00);
 
@@ -256,6 +268,16 @@ namespace ColeHop.Services.Nfc.Dnie
             var output = new byte[mac.GetMacSize()];
             mac.DoFinal(output, 0);
             return output;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            Array.Clear(_kEnc);
+            Array.Clear(_kMac);
+            Array.Clear(_ssc);
         }
     }
 }

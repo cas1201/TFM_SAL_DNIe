@@ -473,4 +473,69 @@
   <data name="ReasonPlaceholder" xml:space="preserve">
 	<value>Motivo...</value>
   </data>
+
+  <!-- NFC/Pickup Messages -->
+  <data name="NfcNotSupported" xml:space="preserve">
+	<value>NFC no soportado</value>
+  </data>
+  <data name="NfcDisabledWarning" xml:space="preserve">
+	<value>NFC desactivado. Actívelo para continuar.</value>
+  </data>
+  <data name="ChildNotSpecified" xml:space="preserve">
+	<value>No se ha especificado el niño a recoger</value>
+  </data>
+  <data name="CanMustBe6Digits" xml:space="preserve">
+	<value>El CAN debe tener 6 dígitos</value>
+  </data>
+  <data name="InvalidPickupContext" xml:space="preserve">
+	<value>Contexto de recogida no válido</value>
+  </data>
+  <data name="TimeoutExpired" xml:space="preserve">
+	<value>Tiempo agotado</value>
+  </data>
+  <data name="DniNotDetectedTimeout" xml:space="preserve">
+	<value>No se detectó el DNI en 10 segundos. Por favor, intente de nuevo.</value>
+  </data>
+  <data name="VerificationError" xml:space="preserve">
+	<value>Error de verificación</value>
+  </data>
+  <data name="NoActivePickupContext" xml:space="preserve">
+	<value>No hay contexto de recogida activo</value>
+  </data>
+  <data name="AccessDenied" xml:space="preserve">
+	<value>Acceso denegado</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+	<value>No autorizado</value>
+  </data>
+  <data name="PickupAuthorized" xml:space="preserve">
+	<value>Recogida autorizada</value>
+  </data>
+  <data name="PersonCanPickupChild" xml:space="preserve">
+	<value>{0} puede recoger a {1}</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+	<value>Acceso no autorizado</value>
+  </data>
+  <data name="CouldNotLoadPickups" xml:space="preserve">
+	<value>No se pudieron cargar las recogidas: {0}</value>
+  </data>
+  <data name="ChildAlreadyPickedUp" xml:space="preserve">
+	<value>Este niño ya ha sido recogido hoy</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+	<value>Información</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+	<value>Aviso</value>
+  </data>
+  <data name="LanguageChangedRestart" xml:space="preserve">
+	<value>Idioma cambiado. Reinicia la aplicación para aplicar los cambios.</value>
+  </data>
+  <data name="ErrorLoadingAuthorizedPersons" xml:space="preserve">
+	<value>Error al cargar personas autorizadas: {0}</value>
+  </data>
+  <data name="ErrorLoadingChildren" xml:space="preserve">
+	<value>Error al cargar hijos: {0}</value>
+  </data>
 </root>

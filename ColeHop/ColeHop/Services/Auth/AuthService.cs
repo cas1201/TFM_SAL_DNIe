@@ -1,10 +1,8 @@
-using ColeHop.Services.Auth;
-using ColeHop.Services.Auth;
 using ColeHop.Models;
 
 namespace ColeHop.Services.Auth
 {
-    public sealed class AuthService : IAuthService
+    public sealed class MockAuthService : IAuthService
     {
         private const string UserIdKey = "auth_user_id";
         private const string RoleKey = "auth_user_role";

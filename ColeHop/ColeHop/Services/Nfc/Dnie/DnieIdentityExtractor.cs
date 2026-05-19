@@ -81,7 +81,10 @@ namespace ColeHop.Services.Nfc.Dnie
 
         private static ParsedMrz ParseTd1Mrz(string mrz)
         {
-            // DNIe espanol usa formato TD1: 3 lineas de 30 caracteres
+            // DNIe español usa formato TD1 (ICAO 9303): 3 líneas de 30 caracteres
+            // Línea 1: Tipo(2) + País(3) + NumDocumento(9) + Check(1) + DatosOpcionales(15)
+            // Línea 2: FechaNac(6) + Check(1) + Sexo(1) + FechaExp(6) + Check(1) + Nacionalidad(3) + Opcionales(11) + CheckGlobal(1)
+            // Línea 3: APELLIDOS<<NOMBRE<<<...
             const int lineLength = 30;
 
             var cleanMrz = mrz.Replace("\n", "").Replace("\r", "");
@@ -95,18 +98,25 @@ namespace ColeHop.Services.Nfc.Dnie
                 ? cleanMrz[(lineLength * 2)..(lineLength * 3)]
                 : string.Empty;
 
-            // Linea 1: IDESP + apellidos << nombres
-            var namesSection = line1[5..];
-            var (surnames, givenNames) = ParseNames(namesSection, line3);
+            // Línea 1: número de soporte en posiciones [5..14], DNI real en datos opcionales [15..24]
+            var supportNumber = line1[5..14].TrimEnd('<');
+            var optionalData1 = line1[15..].TrimEnd('<');
+            // En el DNIe español, el número de DNI (8 dígitos + letra) está en los datos opcionales de la línea 1
+            var documentNumber = ExtractDniFromOptionalData(optionalData1, supportNumber);
 
-            // Linea 2: documento(9) + check(1) + nacionalidad(3) + nacimiento(6) + check(1) + sexo(1) + expiracion(6) + check(1) + ...
-            var documentNumber = line2[..9].TrimEnd('<');
-            var nationality = line2[10..13];
-            var dateOfBirth = ParseDate(line2[13..19]);
-            var sex = line2[20] == 'M' ? "Masculino" : line2[20] == 'F' ? "Femenino" : "No especificado";
-            var expirationDate = ParseDate(line2[21..27]);
+            // Línea 2: fecha nacimiento [0..6], sexo [7], expiración [8..14], nacionalidad [15..18]
+            var dateOfBirth = ParseDate(line2[..6]);
+            var sex = line2[7] == 'M' ? "Masculino" : line2[7] == 'F' ? "Femenino" : "No especificado";
+            var expirationDate = ParseDate(line2[8..14]);
+            var nationality = line2[15..18].TrimEnd('<');
 
-            System.Diagnostics.Debug.WriteLine($"[Identity] Extraido: {givenNames} {surnames} - {documentNumber}");
+            // Línea 3: APELLIDOS<<NOMBRE
+            var (surnames, givenNames) = ParseNamesFromLine3(line3);
+
+            System.Diagnostics.Debug.WriteLine($"[Identity] MRZ Line1: {line1}");
+            System.Diagnostics.Debug.WriteLine($"[Identity] MRZ Line2: {line2}");
+            System.Diagnostics.Debug.WriteLine($"[Identity] MRZ Line3: {line3}");
+            System.Diagnostics.Debug.WriteLine($"[Identity] Soporte: {supportNumber}, DNI: {documentNumber}");
 
             return new ParsedMrz
             {
@@ -120,13 +130,12 @@ namespace ColeHop.Services.Nfc.Dnie
             };
         }
 
-        private static (string surnames, string givenNames) ParseNames(string namesSection, string line3)
+        private static (string surnames, string givenNames) ParseNamesFromLine3(string line3)
         {
-            var fullNames = namesSection;
-            if (!string.IsNullOrEmpty(line3))
-                fullNames += line3;
+            if (string.IsNullOrEmpty(line3))
+                return (string.Empty, string.Empty);
 
-            var parts = fullNames.Split("<<", StringSplitOptions.RemoveEmptyEntries);
+            var parts = line3.Split("<<", StringSplitOptions.RemoveEmptyEntries);
 
             if (parts.Length < 2)
             {
@@ -138,6 +147,34 @@ namespace ColeHop.Services.Nfc.Dnie
             var givenNames = parts[1].Replace('<', ' ').Trim();
 
             return (surnames, givenNames);
+        }
+
+        private static string ExtractDniFromOptionalData(string optionalData, string supportNumber)
+        {
+            // En el DNIe español, los datos opcionales de la línea 1 contienen el número de DNI
+            // Formato: 8 dígitos + 1 letra (ej: "12345678Z")
+            // Buscar patrón de DNI español en los datos opcionales
+            if (!string.IsNullOrEmpty(optionalData))
+            {
+                // Eliminar dígitos de control al final y buscar patrón DNI (8 dígitos + letra)
+                var clean = optionalData.TrimEnd('<');
+                for (int i = 0; i <= clean.Length - 9; i++)
+                {
+                    var candidate = clean[i..(i + 9)];
+                    if (candidate.Length == 9 &&
+                        char.IsDigit(candidate[0]) && char.IsDigit(candidate[1]) &&
+                        char.IsDigit(candidate[2]) && char.IsDigit(candidate[3]) &&
+                        char.IsDigit(candidate[4]) && char.IsDigit(candidate[5]) &&
+                        char.IsDigit(candidate[6]) && char.IsDigit(candidate[7]) &&
+                        char.IsLetter(candidate[8]))
+                    {
+                        return candidate;
+                    }
+                }
+            }
+
+            // Fallback: devolver número de soporte si no se encuentra el DNI
+            return supportNumber;
         }
 
         private static DateTime ParseDate(string yymmdd)

@@ -1,5 +1,4 @@
 using ColeHop.Services.TutorManagement;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Models;
 
 namespace ColeHop.Services.TutorManagement
@@ -11,10 +10,10 @@ namespace ColeHop.Services.TutorManagement
             new Child
             {
                 Id = "1",
-                Name = "Juan",
-                LastName = "Garc├¡a L├│pez",
+                Name = "Hugo",
+                LastName = "Martín Delgado",
                 EducationType = "Primaria",
-                Course = "3┬║",
+                Course = "3º",
                 Group = "A",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -22,10 +21,10 @@ namespace ColeHop.Services.TutorManagement
             new Child
             {
                 Id = "2",
-                Name = "Mar├¡a",
-                LastName = "Garc├¡a L├│pez",
+                Name = "María",
+                LastName = "García López",
                 EducationType = "Primaria",
-                Course = "1┬║",
+                Course = "1º",
                 Group = "B",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -34,9 +33,9 @@ namespace ColeHop.Services.TutorManagement
             {
                 Id = "3",
                 Name = "Pedro",
-                LastName = "Mart├¡nez Ruiz",
+                LastName = "Martínez Ruiz",
                 EducationType = "Infantil",
-                Course = "5 a├▒os",
+                Course = "5 años",
                 Group = "A",
                 TutorId = "tutor1",
                 ApprovalStatus = ApprovalStatus.Approved
@@ -48,31 +47,28 @@ namespace ColeHop.Services.TutorManagement
             new AuthorizedPerson
             {
                 Id = "1",
-                Name = "Ana",
-                LastName = "Garc├¡a S├ínchez",
-                Dni = "12345678A",
-                Relationship = "Abuela",
-                Photo = Array.Empty<byte>(),
+                Name = "Samuel",
+                LastName = "Aragonés Lozano",
+                Dni = "53907905E",
+                Relationship = "Padre",
                 TutorId = "tutor1"
             },
             new AuthorizedPerson
             {
                 Id = "2",
                 Name = "Carlos",
-                LastName = "L├│pez Fern├índez",
+                LastName = "López Fernández",
                 Dni = "87654321B",
-                Relationship = "T├¡o",
-                Photo = Array.Empty<byte>(),
+                Relationship = "Tío",
                 TutorId = "tutor1"
             },
             new AuthorizedPerson
             {
                 Id = "3",
                 Name = "Isabel",
-                LastName = "Ruiz Mart├¡nez",
+                LastName = "Ruiz Martínez",
                 Dni = "11223344C",
                 Relationship = "Madre",
-                Photo = Array.Empty<byte>(),
                 TutorId = "tutor1"
             }
         };
@@ -84,7 +80,7 @@ namespace ColeHop.Services.TutorManagement
                 Id = "1",
                 FromDate = DateOnly.FromDateTime(DateTime.Today),
                 ToDate = DateOnly.FromDateTime(DateTime.Today.AddDays(30)),
-                ChildIds = new List<string> { "1", "2" },
+                ChildIds = new List<string> { "1", "2", "3" },
                 AuthorizedPersonId = "1",
                 TutorId = "tutor1",
                 IsActive = true
@@ -155,7 +151,6 @@ namespace ColeHop.Services.TutorManagement
                 LastName = personData.LastName,
                 Dni = personData.Dni,
                 Relationship = personData.Relationship,
-                Photo = personData.Photo,
                 TutorId = tutorId
             };
 
@@ -181,7 +176,6 @@ namespace ColeHop.Services.TutorManagement
                     LastName = updatedData.LastName,
                     Dni = updatedData.Dni,
                     Relationship = updatedData.Relationship,
-                    Photo = updatedData.Photo,
                     TutorId = tutorId
                 });
             }

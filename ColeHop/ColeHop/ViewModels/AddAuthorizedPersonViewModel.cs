@@ -1,5 +1,5 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Resources.Strings;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -30,8 +30,8 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool hasError;
 
-        public AddAuthorizedPersonViewModel(IAuthService auth, ITutorManagementService tutorManagementService) 
-            : base(auth)
+        public AddAuthorizedPersonViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
+            : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
         }
@@ -55,8 +55,7 @@ namespace ColeHop.ViewModels
                     Name.Trim(), 
                     LastName.Trim(), 
                     Dni.Trim().ToUpper(), 
-                    Relationship.Trim(),
-                    []);
+                    Relationship.Trim());
 
                 await _tutorManagementService.AddAuthorizedPersonAsync(tutorId, personData);
 

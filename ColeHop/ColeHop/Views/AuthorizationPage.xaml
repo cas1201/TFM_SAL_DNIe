@@ -124,7 +124,7 @@
                     <!-- Children Cards -->
                     <CollectionView ItemsSource="{Binding Children}">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodel:SelectableChild">
+                            <DataTemplate x:DataType="model:SelectableChild">
                                 <Border
                                     Margin="0,4"
                                     Padding="16"
@@ -186,7 +186,7 @@
 
                     <CollectionView ItemsSource="{Binding AuthorizedPeople}">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodel:SelectableAuthorizedPerson">
+                            <DataTemplate x:DataType="model:SelectableAuthorizedPerson">
                                 <Border
                                     Margin="0,4"
                                     Padding="20"
@@ -407,7 +407,7 @@
 
                                 <CollectionView ItemsSource="{Binding Children}">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="viewmodel:SelectableChild">
+                                        <DataTemplate x:DataType="model:SelectableChild">
                                             <Label
                                                 IsVisible="{Binding IsSelected}"
                                                 Padding="8,4">
@@ -436,7 +436,7 @@
 
                                 <CollectionView ItemsSource="{Binding AuthorizedPeople}">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="viewmodel:SelectableAuthorizedPerson">
+                                        <DataTemplate x:DataType="model:SelectableAuthorizedPerson">
                                             <Label
                                                 IsVisible="{Binding IsSelected}"
                                                 Padding="8,4">

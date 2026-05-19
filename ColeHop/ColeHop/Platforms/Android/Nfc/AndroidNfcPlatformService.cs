@@ -228,8 +228,9 @@ namespace ColeHop.Platforms.Android.Nfc
                 }
 
                 System.Diagnostics.Debug.WriteLine("NFC: Conectando a tag ISO-DEP...");
+                _isoDep.Timeout = 5000; // 5 segundos para operaciones PACE y Secure Messaging
                 _isoDep.Connect();
-                System.Diagnostics.Debug.WriteLine("NFC: Conectado exitosamente");
+                System.Diagnostics.Debug.WriteLine($"NFC: Conectado exitosamente (timeout: {_isoDep.Timeout}ms)");
 
                 // Señalar que el tag fue detectado y conectado
                 _tagDetectedTcs?.TrySetResult(true);

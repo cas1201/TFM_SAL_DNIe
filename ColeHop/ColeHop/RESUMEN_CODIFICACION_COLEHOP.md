@@ -74,3 +74,25 @@ Compilación exitosa sin errores.
 
 ### Estado
 Compilación exitosa sin errores.
+## Sesion 5 - Seguridad, UX y Documentacion (Acciones 14, 15, 16)
+
+### Seguridad y Produccion (Accion 14)
+- PaceSession implementa IDisposable: limpia KEnc y KMac con Array.Clear al finalizar.
+- SecureMessagingContext implementa IDisposable: limpia _kEnc, _kMac y _ssc.
+- DnieSession usa using para ambos, garantizando limpieza automatica de claves de sesion.
+- NfcScanViewModel.CleanupAsync() limpia el CAN de memoria.
+- Rate limiting: maximo 5 intentos fallidos de lectura NFC, con delay progresivo tras superarlos.
+
+### UX y Polish (Accion 15)
+- Indicadores de progreso por fase: DnieSession reporta via IProgress (PACE, SM, Lectura, Validacion, Extraccion).
+- INfcService.BeginDnieReadingAsync y NfcService propagan el progreso hasta NfcScanViewModel.ScanStatus.
+- NfcScanPage.xaml: reemplazado dotnet_bot.png por icono Material Symbols Contactless.
+- Instrucciones visuales de posicionamiento del DNI sobre el telefono.
+
+### Documentacion y Mantenimiento (Accion 16)
+- Eliminado AboutAssets.txt.
+- dotnet_bot.png ya no se referencia en el codigo.
+- Verificado que no hay TODOs sin contexto en el codigo fuente.
+- Iconos Nfc, Contactless y PhoneAndroid en MaterialIcon.cs.
+
+**Archivos modificados:** PaceSession.cs, SecureMessagingContext.cs, DnieSession.cs, INfcService.cs, NfcService.cs, NfcScanViewModel.cs, NfcScanPage.xaml, MaterialIcon.cs

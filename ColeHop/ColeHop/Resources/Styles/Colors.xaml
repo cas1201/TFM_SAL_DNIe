@@ -48,6 +48,16 @@
     <Color x:Key="TextSecondaryLight">#555</Color>
     <Color x:Key="TextSecondaryDark">#AAAAAA</Color>
 
+    <!-- Popup icon background colors -->
+    <Color x:Key="DangerBgLight">#FFEBEE</Color>
+    <Color x:Key="DangerBgDark">#3D1F1F</Color>
+    <Color x:Key="SuccessBgLight">#E8F5E9</Color>
+    <Color x:Key="SuccessBgDark">#1A2E1F</Color>
+    <Color x:Key="WarningBgLight">#FFF8E1</Color>
+    <Color x:Key="WarningBgDark">#3D3A1F</Color>
+    <Color x:Key="InfoBgLight">#E0E7FF</Color>
+    <Color x:Key="InfoBgDark">#1F1F3D</Color>
+
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

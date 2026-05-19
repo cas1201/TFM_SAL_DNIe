@@ -1,5 +1,5 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
-using ColeHop.Services.TutorManagement;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Models;
 using ColeHop.Resources.Strings;
@@ -40,7 +40,7 @@ namespace ColeHop.ViewModels
         public bool IsEditable => true;
         public bool ShowRejectionReason => ApprovalStatus == ApprovalStatus.Rejected && !string.IsNullOrEmpty(RejectionReason);
 
-        public ChildDetailViewModel(IAuthService auth, ITutorManagementService tutorManagementService) : base(auth)
+        public ChildDetailViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) : base(auth, alertService)
         {
             _tutorManagementService = tutorManagementService;
         }
@@ -86,7 +86,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, $"{AppResources.ErrorLoadingData}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorLoadingData}: {ex.Message}", AppResources.OK);
             }
             finally
             {
@@ -99,7 +99,7 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
                 return;
             }
 
@@ -114,12 +114,12 @@ namespace ColeHop.ViewModels
                 var updatedData = new ChildData(Name, LastName, EducationType, Course, Group);
                 await _tutorManagementService.UpdateChildAsync(tutorId, ChildId, updatedData);
 
-                await Shell.Current.DisplayAlertAsync(AppResources.Success, AppResources.ChildUpdatedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.ChildUpdatedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
             }
             finally
             {
@@ -130,7 +130,7 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private async Task DeleteAsync()
         {
-            var confirm = await Shell.Current.DisplayAlertAsync(
+            var confirm = await Alert.ShowConfirmAsync(
                 AppResources.ConfirmDeletion,
                 $"{AppResources.ConfirmDeleteChild.Replace("{0}", Name)}",
                 AppResources.Delete,
@@ -149,12 +149,12 @@ namespace ColeHop.ViewModels
 
                 await _tutorManagementService.RemoveChildAsync(tutorId, ChildId);
 
-                await Shell.Current.DisplayAlertAsync(AppResources.Success, AppResources.ChildDeletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.ChildDeletedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
             }
             finally
             {

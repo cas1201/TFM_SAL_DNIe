@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Models;
 using ColeHop.Resources.Strings;
@@ -14,7 +15,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
     [ObservableProperty]
     private string _password = string.Empty;
 
-    public LoginViewmodel(IAuthService auth) : base(auth) { }
+    public LoginViewmodel(IAuthService auth, IAlertService alertService) : base(auth, alertService) { }
 
     [RelayCommand]
     private async Task GoToTeacherAsync()
@@ -28,7 +29,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlertAsync(AppResources.Error, ex.Message, AppResources.OK);
+            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK);
         }
         finally
         {
@@ -48,7 +49,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlertAsync(AppResources.Error, ex.Message, AppResources.OK);
+            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK);
         }
         finally
         {

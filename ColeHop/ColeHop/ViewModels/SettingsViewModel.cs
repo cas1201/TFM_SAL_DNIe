@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,7 +17,7 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private string _appVersion = "1.0.0";
 
-        public SettingsViewModel(IAuthService auth) : base(auth)
+        public SettingsViewModel(IAuthService auth, IAlertService alertService) : base(auth, alertService)
         {
             _selectedLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
         }
@@ -29,9 +30,9 @@ namespace ColeHop.ViewModels
             CultureInfo.CurrentCulture = culture;
             CultureInfo.CurrentUICulture = culture;
 
-            await Shell.Current.DisplayAlertAsync(
+            await Alert.ShowAsync(
                 Resources.Strings.AppResources.Success,
-                "Language changed. Restart app to apply changes.",
+                Resources.Strings.AppResources.LanguageChangedRestart,
                 Resources.Strings.AppResources.OK);
         }
 

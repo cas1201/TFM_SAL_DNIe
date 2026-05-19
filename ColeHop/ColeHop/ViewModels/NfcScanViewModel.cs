@@ -1,7 +1,7 @@
+using ColeHop.Resources.Strings;
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Nfc;
-using ColeHop.Services.Nfc;
-using ColeHop.Services.Pickup;
 using ColeHop.Services.Pickup;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,6 +16,14 @@ namespace ColeHop.ViewModels
         private readonly IPickupService _pickupService;
         private CancellationTokenSource? _scanCts;
         private PickupContext? _currentContext;
+        private int _failedAttempts;
+        private const int MaxAttempts = 5;
+        private const int BaseLockoutSeconds = 5;
+        private bool _isNavigatingAway;
+        private bool _userCancelled;
+        private bool _identityHandled;
+
+        public bool IsNavigatingAway => _isNavigatingAway;
 
         [ObservableProperty]
         private string _childId = string.Empty;
@@ -27,7 +35,7 @@ namespace ColeHop.ViewModels
         private bool _isScanning;
 
         [ObservableProperty]
-        private string _scanStatus = "Esperando DNI electr�nico...";
+        private string _scanStatus = "Esperando DNI electrónico...";
 
         [ObservableProperty]
         private string _can = string.Empty;
@@ -35,34 +43,46 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool _showCanInput = true;
 
-        public NfcScanViewModel(IAuthService auth, INfcService nfcService, IPickupService pickupService) : base(auth)
+        [ObservableProperty]
+        private bool _dniDetected;
+
+        public NfcScanViewModel(IAuthService auth, IAlertService alertService, INfcService nfcService, IPickupService pickupService) : base(auth, alertService)
         {
             _nfcService = nfcService;
             _pickupService = pickupService;
-            _nfcService.IdentityVerified += OnIdentityVerified;
         }
 
         public async Task InitializeAsync()
         {
+            if (_isNavigatingAway)
+                return;
+
+            _identityHandled = false;
+            _nfcService.IdentityVerified -= OnIdentityVerified;
+            _nfcService.IdentityVerified += OnIdentityVerified;
+
             if (!_nfcService.IsSupported)
             {
+                _isNavigatingAway = true;
                 ScanStatus = "Este dispositivo no soporta NFC";
-                await Shell.Current.DisplayAlertAsync("Error", "NFC no soportado", "OK");
+                await Alert.ShowAsync(AppResources.Error, AppResources.NfcNotSupported);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
 
             if (!_nfcService.IsEnabled)
             {
+                _isNavigatingAway = true;
                 ScanStatus = "Por favor, active NFC en los ajustes";
-                await Shell.Current.DisplayAlertAsync("Aviso", "NFC desactivado. Act�velo para continuar.", "OK");
+                await Alert.ShowAsync(AppResources.Warning, AppResources.NfcDisabledWarning);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
 
             if (string.IsNullOrEmpty(ChildId))
             {
-                await Shell.Current.DisplayAlertAsync("Error", "No se ha especificado el ni�o a recoger", "OK");
+                _isNavigatingAway = true;
+                await Alert.ShowAsync(AppResources.Error, AppResources.ChildNotSpecified);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -76,8 +96,9 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
+                _isNavigatingAway = true;
                 ScanStatus = "Error al iniciar recogida";
-                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+                await Alert.ShowAsync(AppResources.Error, ex.Message);
                 await Shell.Current.GoToAsync("..");
             }
         }
@@ -87,66 +108,138 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Can) || Can.Length != 6)
             {
-                await Shell.Current.DisplayAlertAsync("Error", "El CAN debe tener 6 d�gitos", "OK");
+                await Alert.ShowAsync(AppResources.Error, AppResources.CanMustBe6Digits);
                 return;
             }
 
             if (_currentContext == null)
             {
-                await Shell.Current.DisplayAlertAsync("Error", "Contexto de recogida no v�lido", "OK");
+                await Alert.ShowAsync(AppResources.Error, AppResources.InvalidPickupContext);
                 return;
             }
 
             try
             {
+                if (_failedAttempts >= MaxAttempts)
+                {
+                    var lockoutSeconds = BaseLockoutSeconds * (_failedAttempts - MaxAttempts + 1);
+                    ScanStatus = $"Demasiados intentos. Espere {lockoutSeconds}s...";
+                    await Task.Delay(TimeSpan.FromSeconds(lockoutSeconds));
+                }
+
                 IsScanning = true;
                 ShowCanInput = false;
-                ScanStatus = "Acerque el DNI electr�nico al lector... (10 segundos)";
+                DniDetected = false;
+                _userCancelled = false;
+                ScanStatus = "Acerque el DNI electrónico al lector...";
 
-                // Crear CancellationTokenSource con timeout de 10 segundos
                 _scanCts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-                await _nfcService.BeginDnieReadingAsync(Can, _scanCts.Token);
+                var progress = new Progress<string>(phase =>
+                {
+                    ScanStatus = phase;
+                    if (phase.Contains("DNI detectado", StringComparison.OrdinalIgnoreCase))
+                        DniDetected = true;
+                });
+                await _nfcService.BeginDnieReadingAsync(Can, _scanCts.Token, progress);
+
+                _failedAttempts = 0;
             }
             catch (OperationCanceledException)
             {
-                // Verificar si fue timeout o cancelaci�n manual
-                if (_scanCts?.IsCancellationRequested == true && _scanCts.Token.IsCancellationRequested)
+                if (_userCancelled || _isNavigatingAway)
                 {
-                    // Fue timeout
+                    // Cancelación por el usuario o navegación hacia atrás: no mostrar error
+                    ScanStatus = "Escaneo cancelado";
+                    await EnsureNfcStoppedAsync();
+                }
+                else
+                {
+                    // Timeout real
+                    _failedAttempts++;
                     IsScanning = false;
                     ShowCanInput = true;
                     ScanStatus = "Tiempo de espera agotado. Intente de nuevo.";
                     await EnsureNfcStoppedAsync();
-                    await Shell.Current.DisplayAlertAsync(
-                        "Tiempo agotado", 
-                        "No se detect� el DNI en 10 segundos. Por favor, intente de nuevo.", 
-                        "OK");
-                }
-                else
-                {
-                    // Fue cancelaci�n manual
-                    ScanStatus = "Escaneo cancelado";
-                    await EnsureNfcStoppedAsync();
+                    await Alert.ShowAsync(
+                        AppResources.TimeoutExpired,
+                        AppResources.DniNotDetectedTimeout);
                 }
             }
             catch (Exception ex)
             {
+                _failedAttempts++;
                 IsScanning = false;
                 ShowCanInput = true;
-                ScanStatus = $"Error: {ex.Message}";
+                var friendlyMessage = GetFriendlyErrorMessage(ex);
+                ScanStatus = $"Error: {friendlyMessage}";
                 await EnsureNfcStoppedAsync();
-                await Shell.Current.DisplayAlertAsync("Error de verificaci�n", ex.Message, "OK");
+                await Alert.ShowAsync(AppResources.VerificationError, friendlyMessage);
             }
         }
 
         [RelayCommand]
         private async Task CancelScanAsync()
         {
+            _userCancelled = true;
             _scanCts?.Cancel();
             IsScanning = false;
             ShowCanInput = true;
             ScanStatus = "Escaneo cancelado";
             await EnsureNfcStoppedAsync();
+        }
+
+        private static string GetFriendlyErrorMessage(Exception ex)
+        {
+            var message = ex.Message ?? string.Empty;
+
+            // PACE errors - typically CAN related
+            if (message.Contains("SW=6988", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("SW=6982", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("SW=6300", StringComparison.OrdinalIgnoreCase))
+                return "El código CAN introducido no es correcto. Revise los 6 dígitos que aparecen en la parte inferior derecha del anverso de su DNI.";
+
+            if (message.Contains("SW=6A82", StringComparison.OrdinalIgnoreCase))
+                return "No se ha podido acceder a los datos del DNI. Asegúrese de que el documento es un DNI electrónico válido.";
+
+            if (message.Contains("SW=6999", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("SW=6F00", StringComparison.OrdinalIgnoreCase))
+                return "Se ha producido un error de comunicación con el DNI. Vuelva a acercar el documento y manténgalo quieto durante la lectura.";
+
+            if (message.Contains("SW=", StringComparison.OrdinalIgnoreCase) &&
+                message.Contains("PACE", StringComparison.OrdinalIgnoreCase))
+                return "Error al establecer la conexión segura con el DNI. Verifique que el CAN es correcto y vuelva a intentarlo.";
+
+            if (message.Contains("SW=", StringComparison.OrdinalIgnoreCase))
+                return "Error de comunicación con el DNI electrónico. Mantenga el documento pegado al teléfono sin moverlo e inténtelo de nuevo.";
+
+            // NFC / IO errors
+            if (message.Contains("TagLost", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("Tag was lost", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("IOException", StringComparison.OrdinalIgnoreCase))
+                return "Se ha perdido la conexión con el DNI. Mantenga el documento pegado al teléfono sin moverlo durante toda la lectura.";
+
+            if (message.Contains("transceive", StringComparison.OrdinalIgnoreCase))
+                return "Error de comunicación NFC. Asegúrese de que el DNI está bien posicionado sobre el lector NFC del teléfono.";
+
+            // BouncyCastle / crypto errors
+            if (message.Contains("Org.BouncyCastle", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("cipher", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("mac", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("decrypt", StringComparison.OrdinalIgnoreCase) ||
+                ex.GetType().FullName?.Contains("BouncyCastle") == true)
+                return "Error al verificar la seguridad del documento. El CAN podría ser incorrecto o el DNI se movió durante la lectura. Inténtelo de nuevo.";
+
+            // Secure messaging
+            if (message.Contains("SecureMessaging", StringComparison.OrdinalIgnoreCase) ||
+                message.Contains("Respuesta NFC demasiado corta", StringComparison.OrdinalIgnoreCase))
+                return "La comunicación segura con el DNI se ha interrumpido. Vuelva a acercar el documento e inténtelo de nuevo.";
+
+            // Generic NFC
+            if (message.Contains("NFC", StringComparison.OrdinalIgnoreCase))
+                return "Error en la lectura NFC. Asegúrese de que el DNI está bien posicionado y no lo mueva durante el proceso.";
+
+            // Fallback
+            return "Se ha producido un error al leer el DNI. Compruebe que el CAN es correcto, mantenga el documento quieto sobre el teléfono e inténtelo de nuevo.";
         }
 
         private async Task EnsureNfcStoppedAsync()
@@ -157,25 +250,29 @@ namespace ColeHop.ViewModels
             }
             catch
             {
-                // Ignorar errores al detener NFC
             }
         }
 
         public async Task CleanupAsync()
         {
-            // Cancelar cualquier escaneo en curso
+            _userCancelled = true;
+            _nfcService.IdentityVerified -= OnIdentityVerified;
             _scanCts?.Cancel();
             _scanCts?.Dispose();
             _scanCts = null;
 
-            // Desactivar foreground dispatch NFC
-            try
+            // Limpiar CAN de memoria
+            Can = string.Empty;
+
+            if (!_isNavigatingAway)
             {
-                await _nfcService.StopAsync();
-            }
-            catch
-            {
-                // Ignorar errores al detener NFC durante cleanup
+                try
+                {
+                    await _nfcService.StopAsync();
+                }
+                catch
+                {
+                }
             }
 
             IsScanning = false;
@@ -183,49 +280,65 @@ namespace ColeHop.ViewModels
 
         private async void OnIdentityVerified(object? sender, VerifiedIdentity verifiedIdentity)
         {
+            // Evitar múltiples ejecuciones
+            if (_identityHandled || _isNavigatingAway)
+                return;
+            _identityHandled = true;
+
+            // Desuscribir inmediatamente para evitar re-entradas
+            _nfcService.IdentityVerified -= OnIdentityVerified;
+
+            if (!MainThread.IsMainThread)
+            {
+                MainThread.BeginInvokeOnMainThread(async () => await HandleIdentityVerifiedAsync(verifiedIdentity));
+                return;
+            }
+
+            await HandleIdentityVerifiedAsync(verifiedIdentity);
+        }
+
+        private async Task HandleIdentityVerifiedAsync(VerifiedIdentity verifiedIdentity)
+        {
             try
             {
                 ScanStatus = $"Identidad verificada: {verifiedIdentity.FullName}";
+                IsScanning = false;
+                await EnsureNfcStoppedAsync();
 
                 if (_currentContext == null)
                 {
-                    await EnsureNfcStoppedAsync();
-                    await Shell.Current.DisplayAlertAsync("Error", "No hay contexto de recogida activo", "OK");
+                    await Alert.ShowAsync(AppResources.Error, AppResources.NoActivePickupContext);
                     return;
                 }
 
                 var authResult = await _pickupService.CheckAuthorizationAsync(_currentContext, verifiedIdentity);
 
+                _isNavigatingAway = true;
+
                 if (!authResult.IsAuthorized)
                 {
-                    IsScanning = false;
                     ScanStatus = $"Acceso denegado: {authResult.DenialReason}";
-                    await EnsureNfcStoppedAsync();
-                    await Shell.Current.DisplayAlertAsync("Acceso denegado", authResult.DenialReason ?? "No autorizado", "OK");
-                    await Shell.Current.GoToAsync("..");
-                    return;
+                    await Alert.ShowAsync("Recogida no autorizada", authResult.DenialReason ?? AppResources.NotAuthorized);
+                }
+                else
+                {
+                    var teacherId = Auth.CurrentUserId!;
+                    await _pickupService.ConfirmPickupAsync(teacherId, _currentContext, verifiedIdentity);
+                    ScanStatus = "Recogida confirmada correctamente";
+                    await Alert.ShowAsync(
+                        AppResources.PickupAuthorized,
+                        $"{verifiedIdentity.GivenNames} {verifiedIdentity.Surnames} con DNI {verifiedIdentity.DocumentNumber} puede recoger a {ChildName}");
                 }
 
-                var teacherId = Auth.CurrentUserId!;
-                var log = await _pickupService.ConfirmPickupAsync(teacherId, _currentContext, verifiedIdentity);
-
-                IsScanning = false;
-                ScanStatus = "Recogida confirmada correctamente";
-                await EnsureNfcStoppedAsync();
-
-                await Shell.Current.DisplayAlertAsync(
-                    "Recogida autorizada",
-                    $"{verifiedIdentity.FullName} puede recoger a {ChildName}",
-                    "OK");
-
-                await Shell.Current.GoToAsync("../..");
+                // Navegar de vuelta
+                await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
                 IsScanning = false;
                 ScanStatus = $"Error: {ex.Message}";
                 await EnsureNfcStoppedAsync();
-                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+                await Alert.ShowAsync(AppResources.Error, ex.Message);
             }
         }
     }

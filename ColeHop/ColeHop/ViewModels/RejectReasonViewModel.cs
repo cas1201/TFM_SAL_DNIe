@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Teacher;
 using ColeHop.Resources.Strings;
@@ -21,7 +22,7 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private string _reason = string.Empty;
 
-        public RejectReasonViewModel(IAuthService auth, ITeacherService teacherService) : base(auth)
+        public RejectReasonViewModel(IAuthService auth, IAlertService alertService, ITeacherService teacherService) : base(auth, alertService)
         {
             _teacherService = teacherService;
         }
@@ -31,7 +32,7 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Reason))
             {
-                await Shell.Current.DisplayAlertAsync(
+                await Alert.ShowAsync(
                     AppResources.Error,
                     AppResources.EnterRejectionReason,
                     AppResources.OK);

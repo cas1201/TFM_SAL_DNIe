@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using CommunityToolkit.Mvvm.Input;
 
@@ -5,7 +6,7 @@ namespace ColeHop.ViewModels
 {
     public sealed partial class DashboardTutorViewModel : BaseViewModel
     {
-        public DashboardTutorViewModel(IAuthService auth) : base(auth) { }
+        public DashboardTutorViewModel(IAuthService auth, IAlertService alertService) : base(auth, alertService) { }
 
         [RelayCommand]
         private async Task GoToChildrenAsync()

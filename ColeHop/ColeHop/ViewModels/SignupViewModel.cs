@@ -1,4 +1,4 @@
-using ColeHop.Services.Auth;
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Resources.Strings;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,7 +33,7 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private bool _hasError;
 
-        public SignupViewModel(IAuthService auth) : base(auth) { }
+        public SignupViewModel(IAuthService auth, IAlertService alertService) : base(auth, alertService) { }
 
         [RelayCommand]
         private async Task RegisterAsync()
@@ -57,7 +57,7 @@ namespace ColeHop.ViewModels
                 );
 
                 await Auth.RegisterTutorAsync(registrationData);
-                await Shell.Current.DisplayAlertAsync(AppResources.Registration, AppResources.RegistrationCompletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Registration, AppResources.RegistrationCompletedSuccessfully, AppResources.OK);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)

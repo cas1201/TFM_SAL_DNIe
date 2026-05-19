@@ -1,3 +1,4 @@
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,10 +11,12 @@ namespace ColeHop.ViewModels
         private bool isBusy;
 
         protected readonly IAuthService Auth;
+        protected readonly IAlertService Alert;
 
-        protected BaseViewModel(IAuthService auth)
+        protected BaseViewModel(IAuthService auth, IAlertService alertService)
         {
             Auth = auth;
+            Alert = alertService;
         }
 
         public UserRole? CurrentRole => Auth.CurrentRole;

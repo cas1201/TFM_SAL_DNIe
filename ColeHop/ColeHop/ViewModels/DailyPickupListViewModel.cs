@@ -1,4 +1,6 @@
 using ColeHop.Models;
+using ColeHop.Resources.Strings;
+using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Pickup;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,7 +35,7 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private DailyPickupItem? _selectedPickup;
 
-        public DailyPickupListViewModel(IAuthService auth, IPickupService pickupService) : base(auth)
+        public DailyPickupListViewModel(IAuthService auth, IAlertService alertService, IPickupService pickupService) : base(auth, alertService)
         {
             _pickupService = pickupService;
             UpdateTodayDate();
@@ -52,7 +54,7 @@ namespace ColeHop.ViewModels
         {
             if (CurrentRole != UserRole.Teacher || string.IsNullOrEmpty(Auth.CurrentUserId))
             {
-                await Shell.Current.DisplayAlertAsync("Error", "Acceso no autorizado", "OK");
+                await Alert.ShowAsync(AppResources.Error, AppResources.UnauthorizedAccess);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -91,7 +93,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync("Error", $"No se pudieron cargar las recogidas: {ex.Message}", "OK");
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.CouldNotLoadPickups, ex.Message));
             }
             finally
             {
@@ -105,7 +107,7 @@ namespace ColeHop.ViewModels
         {
             if (pickup.AlreadyPickedUp)
             {
-                await Shell.Current.DisplayAlertAsync("Información", "Este niño ya ha sido recogido hoy", "OK");
+                await Alert.ShowAsync(AppResources.Information, AppResources.ChildAlreadyPickedUp);
                 return;
             }
 
