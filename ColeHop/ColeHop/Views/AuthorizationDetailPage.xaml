@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.Views.AuthorizationDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:ColeHop.ViewModels"
+    x:DataType="viewmodel:AuthorizationDetailViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <Label
+                Text="Detalle de autorización"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="{DynamicResource Primary}" />
+
+            <!-- Persona autorizada -->
+            <Border
+                StrokeThickness="1"
+                Stroke="{DynamicResource Gray300}"
+                StrokeShape="RoundRectangle 12"
+                Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        Text="Persona autorizada"
+                        FontSize="13"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label
+                        Text="{Binding PersonName}"
+                        FontSize="18"
+                        FontAttributes="Bold" />
+                    <Label
+                        Text="{Binding Relationship}"
+                        FontSize="14"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Menores -->
+            <Border
+                StrokeThickness="1"
+                Stroke="{DynamicResource Gray300}"
+                StrokeShape="RoundRectangle 12"
+                Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        Text="Menores"
+                        FontSize="13"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding ChildrenList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel:ChildPickupStatus">
+                                <HorizontalStackLayout Spacing="8" Padding="0,2">
+                                    <Label
+                                        Text="{Binding Name}"
+                                        FontSize="16"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontFamily="MaterialSymbolsRounded"
+                                        Text="&#xe86c;"
+                                        FontSize="18"
+                                        TextColor="{DynamicResource Success}"
+                                        IsVisible="{Binding IsPickedUp}"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Fechas -->
+            <Border
+                StrokeThickness="1"
+                Stroke="{DynamicResource Gray300}"
+                StrokeShape="RoundRectangle 12"
+                Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label
+                        Text="Periodo de validez"
+                        FontSize="13"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label FontSize="16">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Desde: " />
+                                    <Span Text="{Binding FromDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label FontSize="16">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Hasta: " />
+                                    <Span Text="{Binding ToDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botones -->
+            <VerticalStackLayout Spacing="12" Margin="0,12,0,0">
+                <Button
+                    Text="Editar"
+                    Command="{Binding EditCommand}"
+                    Style="{StaticResource PrimaryButton}" />
+
+                <!-- Eliminar -->
+                <Button
+                    Text="Eliminar autorización"
+                    Command="{Binding DeleteCommand}"
+                    BackgroundColor="{StaticResource Danger}"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

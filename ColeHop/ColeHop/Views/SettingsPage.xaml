@@ -5,80 +5,122 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
-    <ScrollView>
-        <VerticalStackLayout Style="{StaticResource PageContainer}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Style="{StaticResource PageContainer}">
 
-            <Label
-                Style="{StaticResource SectionTitle}"
-                Text="{x:Static res:AppResources.Settings}" />
+                <Label
+                    Style="{StaticResource SectionTitle}"
+                    Text="{x:Static res:AppResources.Settings}" />
 
-            <Border Style="{StaticResource Card}">
-                <VerticalStackLayout Spacing="15">
-                    <Label
-                        Style="{StaticResource SubTitle}"
-                        Text="{x:Static res:AppResources.Language}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label
+                            Style="{StaticResource SubTitle}"
+                            Text="{x:Static res:AppResources.Language}" />
 
-                    <HorizontalStackLayout Spacing="10">
-                        <Button
-                            Text="{x:Static res:AppResources.Spanish}"
-                            Command="{Binding ChangeLanguageCommand}"
-                            CommandParameter="es"
-                            Style="{StaticResource SecondaryButton}"
-                            HorizontalOptions="Fill" />
-                        <Button
-                            Text="{x:Static res:AppResources.English}"
-                            Command="{Binding ChangeLanguageCommand}"
-                            CommandParameter="en"
-                            Style="{StaticResource SecondaryButton}"
-                            HorizontalOptions="Fill" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <Border Style="{StaticResource Card}">
-                <HorizontalStackLayout Spacing="10" Padding="10">
-                    <Label
-                        Text="{x:Static res:AppResources.EnableNotifications}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start" />
-                    <Switch
-                        IsToggled="{Binding NotificationsEnabled}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
-            </Border>
-
-            <Border Style="{StaticResource Card}">
-                <VerticalStackLayout Spacing="10">
-                    <Label
-                        Style="{StaticResource SubTitle}"
-                        Text="{x:Static res:AppResources.About}" />
-                    <Label
-                        Text="{x:Static res:AppResources.AppVersion}" />
-                    <Label
-                        Text="{Binding AppVersion}"
-                        TextColor="{DynamicResource Gray500}" />
-                </VerticalStackLayout>
-                    </Border>
-
-                        <BoxView
-                            HeightRequest="1"
-                            Color="{DynamicResource Gray200}"
-                            Margin="0,20" />
-
-                        <Button
-                            Style="{StaticResource LogoutButton}"
-                            Text="{x:Static res:AppResources.Logout}"
-                            Command="{Binding LogoutCommand}">
-                            <Button.ImageSource>
-                                <FontImageSource
-                                    FontFamily="MaterialSymbolsRounded"
-                                    Glyph="&#xe9ba;"
-                                    Size="20"
-                                    Color="{DynamicResource Gray400}" />
-                            </Button.ImageSource>
-                        </Button>
-
+                        <HorizontalStackLayout Spacing="10">
+                            <Button
+                                Text="{x:Static res:AppResources.Spanish}"
+                                Command="{Binding ChangeLanguageCommand}"
+                                CommandParameter="es"
+                                Style="{StaticResource SecondaryButton}"
+                                Opacity="{Binding IsSpanishSelected, Converter={StaticResource BoolToOpacityConverter}}"
+                                BorderWidth="{Binding IsSpanishSelected, Converter={StaticResource BoolToBorderWidthConverter}}"
+                                BorderColor="{DynamicResource Primary}"
+                                HorizontalOptions="Fill" />
+                            <Button
+                                Text="{x:Static res:AppResources.English}"
+                                Command="{Binding ChangeLanguageCommand}"
+                                CommandParameter="en"
+                                Style="{StaticResource SecondaryButton}"
+                                Opacity="{Binding IsEnglishSelected, Converter={StaticResource BoolToOpacityConverter}}"
+                                BorderWidth="{Binding IsEnglishSelected, Converter={StaticResource BoolToBorderWidthConverter}}"
+                                BorderColor="{DynamicResource Primary}"
+                                HorizontalOptions="Fill" />
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
-                </ScrollView>
+                </Border>
 
-            </ContentPage>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label
+                            Style="{StaticResource SubTitle}"
+                            Text="{x:Static res:AppResources.Theme}" />
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Button
+                                Text="{x:Static res:AppResources.Light}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="Light"
+                                Style="{StaticResource SecondaryButton}"
+                                Opacity="{Binding IsLightSelected, Converter={StaticResource BoolToOpacityConverter}}"
+                                BorderWidth="{Binding IsLightSelected, Converter={StaticResource BoolToBorderWidthConverter}}"
+                                BorderColor="{DynamicResource Primary}"
+                                HorizontalOptions="Fill" />
+                            <Button
+                                Text="{x:Static res:AppResources.Dark}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="Dark"
+                                Style="{StaticResource SecondaryButton}"
+                                Opacity="{Binding IsDarkSelected, Converter={StaticResource BoolToOpacityConverter}}"
+                                BorderWidth="{Binding IsDarkSelected, Converter={StaticResource BoolToBorderWidthConverter}}"
+                                BorderColor="{DynamicResource Primary}"
+                                HorizontalOptions="Fill" />
+                            <Button
+                                Text="{x:Static res:AppResources.System}"
+                                Command="{Binding ChangeThemeCommand}"
+                                CommandParameter="System"
+                                Style="{StaticResource SecondaryButton}"
+                                Opacity="{Binding IsSystemThemeSelected, Converter={StaticResource BoolToOpacityConverter}}"
+                                BorderWidth="{Binding IsSystemThemeSelected, Converter={StaticResource BoolToBorderWidthConverter}}"
+                                BorderColor="{DynamicResource Primary}"
+                                HorizontalOptions="Fill" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <HorizontalStackLayout Spacing="10" Padding="10">
+                        <Label
+                            Text="{x:Static res:AppResources.EnableNotifications}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Switch
+                            IsToggled="{Binding NotificationsEnabled}"
+                            OnColor="{DynamicResource Primary}"
+                            ThumbColor="{AppThemeBinding Light={StaticResource Gray500}, Dark=White}"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <BoxView
+                    HeightRequest="1"
+                    Color="{DynamicResource Gray200}"
+                    Margin="0,20" />
+
+                <Button
+                    Style="{StaticResource LogoutButton}"
+                    Text="{x:Static res:AppResources.Logout}"
+                    Command="{Binding LogoutCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="MaterialSymbolsRounded"
+                            Glyph="&#xe9ba;"
+                            Size="20"
+                            Color="{DynamicResource Gray400}" />
+                    </Button.ImageSource>
+                </Button>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Label
+            Grid.Row="1"
+            Text="{Binding VersionDisplay}"
+            TextColor="{DynamicResource Gray500}"
+            HorizontalOptions="Center"
+            Margin="0,10" />
+    </Grid>
+
+</ContentPage>

@@ -19,6 +19,8 @@
             <converters:PickupStatusTextConverter x:Key="PickupStatusTextConverter" />
             <converters:CollectionContainsConverter x:Key="CollectionContainsConverter" />
             <converters:EqualityConverter x:Key="EqualityConverter" />
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converters:BoolToBorderWidthConverter x:Key="BoolToBorderWidthConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

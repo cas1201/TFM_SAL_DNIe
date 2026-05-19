@@ -16,5 +16,7 @@ namespace ColeHop.Models
 
         public string Id => Person.Id;
         public string FullName => Person.FullName;
+        public string Dni => Person.Dni;
+        public string Relationship => Person.Relationship;
     }
 }

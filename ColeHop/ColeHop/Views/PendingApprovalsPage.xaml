@@ -13,8 +13,11 @@
         IsRefreshing="{Binding IsRefreshing}"
         Command="{Binding RefreshCommand}">
 
-        <Grid>
-            <CollectionView ItemsSource="{Binding PendingChildren}" Margin="16">
+        <Grid RowDefinitions="Auto,*">
+            <Label Grid.Row="0" Margin="16,20,16,0"
+                   Style="{StaticResource SectionTitle}"
+                   Text="{x:Static res:AppResources.PendingApprovals}" />
+            <CollectionView Grid.Row="1" ItemsSource="{Binding PendingChildren}" Margin="16">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8" Padding="0,40">
                         <Label
@@ -26,8 +29,9 @@
                     <DataTemplate x:DataType="model:Child">
                         <Border
                             Style="{StaticResource Card}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryTintLight}, Dark={StaticResource TertiaryTintDark}}"
                             Margin="0,6">
-                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12">
+                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="12">
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="0"
@@ -41,10 +45,22 @@
                                     Text="{Binding Grade}"
                                     FontSize="13"
                                     TextColor="{DynamicResource Gray600}" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Text="{Binding TutorFullName, StringFormat='Tutor: {0}'}"
+                                    FontSize="13"
+                                    TextColor="{DynamicResource Gray600}" />
+                                <Label
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Text="{Binding TutorDni, StringFormat='DNI: {0}'}"
+                                    FontSize="13"
+                                    TextColor="{DynamicResource Gray600}" />
 
                                 <ImageButton
                                     Grid.Row="0"
-                                    Grid.RowSpan="2"
+                                    Grid.RowSpan="4"
                                     Grid.Column="1"
                                     WidthRequest="40"
                                     HeightRequest="40"
@@ -64,7 +80,7 @@
 
                                 <ImageButton
                                     Grid.Row="0"
-                                    Grid.RowSpan="2"
+                                    Grid.RowSpan="4"
                                     Grid.Column="2"
                                     WidthRequest="40"
                                     HeightRequest="40"

@@ -174,6 +174,8 @@ namespace ColeHop
             builder.Services.AddTransient<ChildrenViewModel>();
             builder.Services.AddTransient<AuthorizedPersonViewModel>();
             builder.Services.AddTransient<AuthorizationViewModel>();
+            builder.Services.AddTransient<AuthorizationListViewModel>();
+            builder.Services.AddTransient<AuthorizationDetailViewModel>();
             builder.Services.AddTransient<AddChildViewModel>();
             builder.Services.AddTransient<AddAuthorizedPersonViewModel>();
             builder.Services.AddTransient<ChildDetailViewModel>();
@@ -200,6 +202,8 @@ namespace ColeHop
             builder.Services.AddTransient<ChildrenPage>();
             builder.Services.AddTransient<AuthorizedPersonPage>();
             builder.Services.AddTransient<AuthorizationPage>();
+            builder.Services.AddTransient<AuthorizationListPage>();
+            builder.Services.AddTransient<AuthorizationDetailPage>();
             builder.Services.AddTransient<AddChildPage>();
             builder.Services.AddTransient<AddAuthorizedPersonPage>();
             builder.Services.AddTransient<ChildDetailPage>();

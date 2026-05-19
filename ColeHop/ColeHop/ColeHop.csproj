@@ -86,6 +86,12 @@
 	  <MauiXaml Update="Views\AddChildPage.xaml">
 		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AuthorizationDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AuthorizationListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AuthorizedPersonDetailPage.xaml">
 		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

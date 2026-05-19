@@ -33,7 +33,6 @@
                 <Editor
                     Text="{Binding Reason}"
                     Placeholder="{x:Static res:AppResources.ReasonPlaceholder}"
-                    HeightRequest="120"
                     FontSize="15"
                     AutoSize="TextChanges" />
 

@@ -106,6 +106,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Versión: .
+        /// </summary>
+        public static string VersionString {
+            get {
+                return ResourceManager.GetString("VersionString", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Busca una cadena traducida similar a Autorización.
         /// </summary>
         public static string Authorization {

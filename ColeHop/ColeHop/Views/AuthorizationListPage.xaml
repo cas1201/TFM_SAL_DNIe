@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ColeHop.Views.AuthorizationListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:ColeHop.ViewModels"
+    xmlns:utils="clr-namespace:ColeHop.Helpers"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    x:DataType="viewmodel:AuthorizationListViewModel">
+
+    <Grid>
+        <RefreshView
+            IsRefreshing="{Binding IsLoading}"
+            Command="{Binding LoadAuthorizationsCommand}">
+
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="16">
+
+                    <!-- Título -->
+                    <Label
+                        Text="Autorizaciones activas"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource Primary}"
+                        Margin="0,8,0,0" />
+
+                    <!-- Empty state -->
+                    <VerticalStackLayout
+                        IsVisible="{Binding IsEmpty}"
+                        Padding="20,40"
+                        Spacing="12">
+                        <Label
+                            FontFamily="MaterialSymbolsRounded"
+                            Text="&#xe14f;"
+                            FontSize="64"
+                            TextColor="{DynamicResource Gray400}"
+                            HorizontalOptions="Center" />
+                        <Label
+                            Text="No hay autorizaciones activas"
+                            FontSize="18"
+                            TextColor="{DynamicResource Gray400}"
+                            HorizontalTextAlignment="Center" />
+                        <Label
+                            Text="Pulse el botón + para crear una nueva autorización"
+                            FontSize="14"
+                            TextColor="{DynamicResource Gray400}"
+                            HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Lista de autorizaciones -->
+                    <CollectionView
+                        ItemsSource="{Binding ActiveAuthorizations}"
+                        SelectionMode="None">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel:AuthorizationDisplayItem">
+                                <Border
+                                    Stroke="{DynamicResource Primary}"
+                                    StrokeThickness="1"
+                                    Padding="16"
+                                    Margin="0,0,0,8"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessTintLight}, Dark={StaticResource SuccessTintDark}}"
+                                    StrokeShape="RoundRectangle 12">
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AuthorizationListViewModel}}, Path=OpenAuthorizationCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+
+                                    <VerticalStackLayout Spacing="8">
+                                        <!-- Persona autorizada -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label
+                                                FontFamily="MaterialSymbolsRounded"
+                                                Text="&#xe7fd;"
+                                                FontSize="22"
+                                                TextColor="{DynamicResource Primary}"
+                                                VerticalOptions="Center" />
+                                            <VerticalStackLayout>
+                                                <Label
+                                                    Text="{Binding PersonName}"
+                                                    FontSize="18"
+                                                    FontAttributes="Bold"
+                                                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+                                                <Label
+                                                    Text="{Binding Relationship}"
+                                                    FontSize="13"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Menores -->
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                FontFamily="MaterialSymbolsRounded"
+                                                Text="&#xe86e;"
+                                                FontSize="18"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                VerticalOptions="Start" />
+                                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ChildrenList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate x:DataType="x:String">
+                                                        <Label
+                                                            Text="{Binding .}"
+                                                            FontSize="14"
+                                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Fechas -->
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label
+                                                FontFamily="MaterialSymbolsRounded"
+                                                Text="&#xebcc;"
+                                                FontSize="18"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Text="{Binding DateRange}"
+                                                FontSize="14"
+                                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Estado completada -->
+                                        <Border
+                                            IsVisible="{Binding IsCompleted}"
+                                            BackgroundColor="{DynamicResource Success}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8"
+                                            Padding="10,6"
+                                            HorizontalOptions="Start"
+                                            Margin="0,4,0,0">
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label
+                                                    FontFamily="MaterialSymbolsRounded"
+                                                    Text="&#xe86c;"
+                                                    FontSize="16"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="{Binding ProgressText, StringFormat='Completada ({0})'}"
+                                                    FontSize="13"
+                                                    FontAttributes="Bold"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+
+                                        <!-- Progreso parcial -->
+                                        <Border
+                                            IsVisible="{Binding HasPartialProgress}"
+                                            BackgroundColor="{DynamicResource Warning}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8"
+                                            Padding="10,6"
+                                            HorizontalOptions="Start"
+                                            Margin="0,4,0,0">
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label
+                                                    FontFamily="MaterialSymbolsRounded"
+                                                    Text="&#xe86c;"
+                                                    FontSize="16"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Text="{Binding ProgressText, StringFormat='Recogidos: {0}'}"
+                                                    FontSize="13"
+                                                    FontAttributes="Bold"
+                                                    TextColor="White"
+                                                    VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </RefreshView>
+
+        <!-- FAB -->
+        <ImageButton
+            Command="{Binding CreateAuthorizationCommand}"
+            WidthRequest="56"
+            HeightRequest="56"
+            CornerRadius="28"
+            BackgroundColor="{DynamicResource Primary}"
+            Padding="14"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="0,0,20,20">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialSymbolsRounded"
+                    Glyph="&#xe145;"
+                    Size="28"
+                    Color="White" />
+            </ImageButton.Source>
+        </ImageButton>
+    </Grid>
+
+</ContentPage>

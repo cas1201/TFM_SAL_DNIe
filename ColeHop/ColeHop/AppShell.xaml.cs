@@ -134,7 +134,9 @@ namespace ColeHop
             Routing.RegisterRoute("settings", typeof(SettingsPage));
             Routing.RegisterRoute("child/manage", typeof(ChildrenPage));
             Routing.RegisterRoute("authorized/manage", typeof(AuthorizedPersonPage));
-            Routing.RegisterRoute("authorization/manage", typeof(AuthorizationPage));
+            Routing.RegisterRoute("authorization/manage", typeof(AuthorizationListPage));
+            Routing.RegisterRoute("authorization/create", typeof(AuthorizationPage));
+            Routing.RegisterRoute("authorization/detail", typeof(AuthorizationDetailPage));
             Routing.RegisterRoute("addchild", typeof(AddChildPage));
             Routing.RegisterRoute("addauthorizedperson", typeof(AddAuthorizedPersonPage));
             Routing.RegisterRoute("childdetail", typeof(ChildDetailPage));

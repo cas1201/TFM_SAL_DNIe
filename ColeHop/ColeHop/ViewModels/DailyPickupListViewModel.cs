@@ -24,6 +24,12 @@ namespace ColeHop.ViewModels
         private string _todayDate = string.Empty;
 
         [ObservableProperty]
+        private bool _hasNoPendingPickups;
+
+        [ObservableProperty]
+        private bool _hasNoCompletedPickups;
+
+        [ObservableProperty]
         private ObservableCollection<DailyPickupItem> _pickupList = new();
 
         [ObservableProperty]
@@ -97,6 +103,8 @@ namespace ColeHop.ViewModels
             }
             finally
             {
+                HasNoPendingPickups = PendingPickups.Count == 0;
+                HasNoCompletedPickups = CompletedPickups.Count == 0;
                 IsLoading = false;
                 IsRefreshing = false;
             }

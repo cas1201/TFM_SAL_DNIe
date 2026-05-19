@@ -9,9 +9,15 @@ using System.Collections.ObjectModel;
 
 namespace ColeHop.ViewModels
 {
+    [QueryProperty(nameof(AuthorizationId), "authorizationId")]
     public sealed partial class AuthorizationViewModel : BaseViewModel
     {
         private readonly ITutorManagementService _tutorManagementService;
+
+        [ObservableProperty]
+        private string _authorizationId = string.Empty;
+
+        private bool IsEditing => !string.IsNullOrEmpty(AuthorizationId);
 
         [ObservableProperty]
         private int _currentStep = 1;
@@ -23,7 +29,7 @@ namespace ColeHop.ViewModels
         private DateTime _fromDate = DateTime.Today;
 
         [ObservableProperty]
-        private DateTime _toDate = DateTime.Today.AddDays(7);
+        private DateTime _toDate = DateTime.Today;
 
         [ObservableProperty]
         private DateTime _minimumDate = DateTime.Today;
@@ -35,7 +41,7 @@ namespace ColeHop.ViewModels
         private ObservableCollection<SelectableAuthorizedPerson> _authorizedPeople = new();
 
         [ObservableProperty]
-        private string _selectedQuickDate = "";
+        private string _selectedQuickDate = "today";
 
         [ObservableProperty]
         private string _errorMessage = string.Empty;
@@ -112,6 +118,29 @@ namespace ColeHop.ViewModels
                 foreach (var person in authorizedPeople)
                 {
                     AuthorizedPeople.Add(new SelectableAuthorizedPerson(person));
+                }
+
+                // If editing, pre-select existing authorization data
+                if (IsEditing)
+                {
+                    var authorizations = await _tutorManagementService.GetAuthorizationsAsync(tutorId);
+                    var auth = authorizations.FirstOrDefault(a => a.Id == AuthorizationId);
+                    if (auth != null)
+                    {
+                        foreach (var child in Children)
+                        {
+                            child.IsSelected = auth.ChildIds.Contains(child.Id);
+                        }
+
+                        var selectedPerson = AuthorizedPeople.FirstOrDefault(p => p.Id == auth.AuthorizedPersonId);
+                        if (selectedPerson != null)
+                        {
+                            selectedPerson.IsSelected = true;
+                        }
+
+                        FromDate = auth.FromDate.ToDateTime(TimeOnly.MinValue);
+                        ToDate = auth.ToDate.ToDateTime(TimeOnly.MinValue);
+                    }
                 }
             }
             catch (Exception ex)
@@ -255,8 +284,16 @@ namespace ColeHop.ViewModels
                     DateOnly.FromDateTime(ToDate)
                 );
 
-                await _tutorManagementService.CreateAuthorizationAsync(tutorId, authorizationData);
-                await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK);
+                if (IsEditing)
+                {
+                    await _tutorManagementService.UpdateAuthorizationAsync(tutorId, AuthorizationId, authorizationData);
+                    await Alert.ShowAsync(AppResources.Authorization, "Autorización actualizada correctamente", AppResources.OK);
+                }
+                else
+                {
+                    await _tutorManagementService.CreateAuthorizationAsync(tutorId, authorizationData);
+                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK);
+                }
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)

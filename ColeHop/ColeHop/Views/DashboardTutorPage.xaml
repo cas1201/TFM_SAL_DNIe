@@ -7,63 +7,74 @@
     xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
     <Grid>
+        <!-- Logo pegado arriba -->
+        <Image Source="logo.png" HeightRequest="80" Aspect="AspectFit" HorizontalOptions="Center"
+               VerticalOptions="Start" Margin="0,24,0,0" />
+
         <ScrollView>
-            <VerticalStackLayout Padding="20" Spacing="16" VerticalOptions="Center">
+            <Grid Padding="24" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="16"
+                  VerticalOptions="Center">
 
-                <Button
-                    Style="{StaticResource OutlineMenuButton}"
-                    Text="{x:Static res:AppResources.MyChildren}"
-                    Command="{Binding GoToChildrenCommand}">
-                    <Button.ImageSource>
-                        <FontImageSource
-                            FontFamily="MaterialSymbolsRounded"
-                            Glyph="{x:Static utils:MaterialIcon.Child}"
-                            Size="24"
-                            Color="{DynamicResource Primary}" />
-                    </Button.ImageSource>
-                </Button>
+                <!-- Card: Hijos -->
+                <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 16" Stroke="Transparent"
+                        BackgroundColor="{StaticResource Primary}"
+                        Shadow="{StaticResource CardShadow}" Padding="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToChildrenCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Padding="24" Spacing="12" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSymbolsRounded" Text="{x:Static utils:MaterialIcon.Child}"
+                               FontSize="44" HorizontalOptions="Center" TextColor="White" />
+                        <Label Text="{x:Static res:AppResources.MyChildren}"
+                               FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
 
-                <Button
-                    Style="{StaticResource OutlineMenuButton}"
-                    Text="{x:Static res:AppResources.AuthorizedPersonsMenu}"
-                    Command="{Binding GoToAuthorizedPersonsCommand}">
-                    <Button.ImageSource>
-                        <FontImageSource
-                            FontFamily="MaterialSymbolsRounded"
-                            Glyph="{x:Static utils:MaterialIcon.Group}"
-                            Size="24"
-                            Color="{DynamicResource Primary}" />
-                    </Button.ImageSource>
-                </Button>
+                <!-- Card: Personas autorizadas -->
+                <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 16" Stroke="Transparent"
+                        BackgroundColor="{StaticResource Tertiary}"
+                        Shadow="{StaticResource CardShadow}" Padding="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToAuthorizedPersonsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Padding="24" Spacing="12" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSymbolsRounded" Text="{x:Static utils:MaterialIcon.Group}"
+                               FontSize="44" HorizontalOptions="Center" TextColor="White" />
+                        <Label Text="{x:Static res:AppResources.AuthorizedPersonsMenu}"
+                               FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
 
-                <Button
-                    Style="{StaticResource OutlineMenuButton}"
-                    Text="{x:Static res:AppResources.AuthorizationCalendar}"
-                    Command="{Binding GoToAuthorizationCalendarCommand}">
-                    <Button.ImageSource>
-                        <FontImageSource
-                            FontFamily="MaterialSymbolsRounded"
-                            Glyph="{x:Static utils:MaterialIcon.CalendarMonth}"
-                            Size="24"
-                            Color="{DynamicResource Primary}" />
-                    </Button.ImageSource>
-                </Button>
+                <!-- Card: Calendario (colspan 2) -->
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 16" Stroke="Transparent"
+                        BackgroundColor="{StaticResource Success}"
+                        Shadow="{StaticResource CardShadow}" Padding="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToAuthorizationCalendarCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Padding="24" Spacing="12" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSymbolsRounded" Text="{x:Static utils:MaterialIcon.CalendarMonth}"
+                               FontSize="44" HorizontalOptions="Center" TextColor="White" />
+                        <Label Text="{x:Static res:AppResources.AuthorizationCalendar}"
+                               FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
 
-
-            </VerticalStackLayout>
+            </Grid>
         </ScrollView>
 
-        <!-- Botón de ajustes en la esquina superior derecha -->
+        <!-- FAB Ajustes - esquina inferior derecha -->
         <ImageButton
             Command="{Binding GoToSettingsCommand}"
-            WidthRequest="44"
-            HeightRequest="44"
-            CornerRadius="22"
+            WidthRequest="56"
+            HeightRequest="56"
+            CornerRadius="28"
             BackgroundColor="{DynamicResource Primary}"
-            Padding="10"
+            Padding="12"
             HorizontalOptions="End"
-            VerticalOptions="Start"
-            Margin="0,20,20,0">
+            VerticalOptions="End"
+            Margin="0,0,20,20"
+            Shadow="{StaticResource CardShadow}">
             <ImageButton.Source>
                 <FontImageSource
                     FontFamily="MaterialSymbolsRounded"

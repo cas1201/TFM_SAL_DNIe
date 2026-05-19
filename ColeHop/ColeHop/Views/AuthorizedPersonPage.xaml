@@ -17,6 +17,13 @@
                 SelectionMode="None"
                 Margin="10,10,10,80">
 
+            <CollectionView.Header>
+                <Label
+                    Style="{StaticResource SectionTitle}"
+                    Text="{x:Static res:AppResources.AuthorizedPersonsMenu}"
+                    Margin="0,10,0,10" />
+            </CollectionView.Header>
+
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label
@@ -30,7 +37,8 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource Card}">
+                    <Border Style="{StaticResource Card}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryTintLight}, Dark={StaticResource TertiaryTintDark}}">
 
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer 
@@ -43,6 +51,9 @@
                                 <Label
                                     Style="{StaticResource ListItemTitle}"
                                     Text="{Binding FullName}" />
+                                <Label
+                                    Style="{StaticResource ListItemSubtitle}"
+                                    Text="{Binding Dni}" />
                                 <Label
                                     Style="{StaticResource ListItemSubtitle}"
                                     Text="{Binding Relationship}" />

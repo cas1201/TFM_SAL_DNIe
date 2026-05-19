@@ -17,6 +17,8 @@ namespace ColeHop.Services.Teacher
         {
             var allChildren = await _tutorService.GetChildrenAsync("tutor1");
             return allChildren.Where(c => c.IsPending).ToList();
+            // Nota: En producción, el backend devuelve TutorName, TutorLastName y TutorDni
+            // junto con cada solicitud pendiente.
         }
 
         public async Task ApproveChildAsync(string teacherId, string childId)

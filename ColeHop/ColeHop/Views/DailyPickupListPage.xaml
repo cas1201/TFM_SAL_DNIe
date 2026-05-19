@@ -3,6 +3,7 @@
     x:Class="ColeHop.Views.DailyPickupListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:utils="clr-namespace:ColeHop.Helpers"
     xmlns:res="clr-namespace:ColeHop.Resources.Strings">
 
     <RefreshView
@@ -16,14 +17,15 @@
                     BackgroundColor="{DynamicResource Primary}"
                     StrokeThickness="0"
                     Padding="20,16"
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 16"
+                    Shadow="{StaticResource CardShadow}"
                     Margin="0,0,0,10">
                     <Label
                         Text="{Binding TodayDate}"
-                        FontSize="24"
+                        FontSize="22"
                         FontAttributes="Bold"
-                        TextColor="White"
-                        HorizontalTextAlignment="Center" />
+                        HorizontalTextAlignment="Center"
+                        TextColor="White" />
                 </Border>
 
                 <ActivityIndicator
@@ -46,20 +48,18 @@
                             TextColor="{DynamicResource Primary}"
                             Margin="0,0,0,8" />
 
+                        <Label
+                            Text="{x:Static res:AppResources.NoPendingPickups}"
+                            FontSize="16"
+                            TextColor="{DynamicResource Gray400}"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Italic"
+                            IsVisible="{Binding HasNoPendingPickups}"
+                            Margin="0,10" />
+
                         <CollectionView
                             ItemsSource="{Binding PendingPickups}"
                             SelectionMode="None">
-
-                            <CollectionView.EmptyView>
-                                <VerticalStackLayout Padding="20">
-                                    <Label
-                                        Text="{x:Static res:AppResources.NoPendingPickups}"
-                                        FontSize="16"
-                                        TextColor="{DynamicResource Gray400}"
-                                        HorizontalTextAlignment="Center"
-                                        FontAttributes="Italic" />
-                                </VerticalStackLayout>
-                            </CollectionView.EmptyView>
 
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -68,7 +68,7 @@
                                         StrokeThickness="2"
                                         Padding="16"
                                         Margin="0,0,0,8"
-                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTintLight}, Dark={StaticResource PrimaryTintDark}}"
                                         StrokeShape="RoundRectangle 12">
 
                                         <Border.GestureRecognizers>
@@ -84,6 +84,7 @@
                                                 Text="{Binding ChildName}"
                                                 FontSize="22"
                                                 FontAttributes="Bold"
+                                                LineBreakMode="WordWrap"
                                                 TextColor="{DynamicResource Primary}" />
 
                                             <HorizontalStackLayout
@@ -133,20 +134,18 @@
                             TextColor="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}"
                             Margin="0,0,0,8" />
 
+                        <Label
+                            Text="{x:Static res:AppResources.NoChildrenPickedUpYet}"
+                            FontSize="16"
+                            TextColor="{DynamicResource Gray400}"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Italic"
+                            IsVisible="{Binding HasNoCompletedPickups}"
+                            Margin="0,10" />
+
                         <CollectionView
                             ItemsSource="{Binding CompletedPickups}"
                             SelectionMode="None">
-
-                            <CollectionView.EmptyView>
-                                <VerticalStackLayout Padding="20">
-                                    <Label
-                                        Text="{x:Static res:AppResources.NoChildrenPickedUpYet}"
-                                        FontSize="16"
-                                        TextColor="{DynamicResource Gray400}"
-                                        HorizontalTextAlignment="Center"
-                                        FontAttributes="Italic" />
-                                </VerticalStackLayout>
-                            </CollectionView.EmptyView>
 
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
@@ -164,6 +163,7 @@
                                                     Text="{Binding ChildName}"
                                                     FontSize="22"
                                                     FontAttributes="Bold"
+                                                    LineBreakMode="WordWrap"
                                                     TextColor="{AppThemeBinding Light={StaticResource SuccessGreen}, Dark={StaticResource SuccessGreenDark}}" />
 
                                             <HorizontalStackLayout Spacing="6">
@@ -182,6 +182,7 @@
                                                     Text="{Binding AuthorizedPersonName}"
                                                     FontSize="17"
                                                     FontAttributes="Bold"
+                                                    LineBreakMode="WordWrap"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                                     VerticalOptions="Center" />
                                             </HorizontalStackLayout>

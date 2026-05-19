@@ -191,6 +191,9 @@
   <data name="AppVersion" xml:space="preserve">
 	<value>App Version</value>
   </data>
+  <data name="VersionString" xml:space="preserve">
+	<value>Version: </value>
+  </data>
   <data name="Developer" xml:space="preserve">
 	<value>Developer</value>
   </data>

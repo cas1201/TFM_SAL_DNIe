@@ -9,12 +9,16 @@
         public string Course { get; init; } = default!;
         public string Group { get; init; } = default!;
         public string TutorId { get; init; } = default!;
+        public string TutorName { get; init; } = string.Empty;
+        public string TutorLastName { get; init; } = string.Empty;
+        public string TutorDni { get; init; } = string.Empty;
         public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Pending;
         public string? RejectionReason { get; set; }
         public bool IsApproved => ApprovalStatus == ApprovalStatus.Approved;
         public bool IsRejected => ApprovalStatus == ApprovalStatus.Rejected;
         public bool IsPending => ApprovalStatus == ApprovalStatus.Pending;
         public string FullName => $"{Name} {LastName}";
+        public string TutorFullName => $"{TutorName} {TutorLastName}";
         public string Grade => $"{EducationType} - {Course} {Group}";
     }
 }
