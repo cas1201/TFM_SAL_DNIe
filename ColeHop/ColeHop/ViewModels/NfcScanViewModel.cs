@@ -35,7 +35,7 @@ namespace ColeHop.ViewModels
         private bool _isScanning;
 
         [ObservableProperty]
-        private string _scanStatus = "Esperando DNI electrónico...";
+        private string _scanStatus = AppResources.WaitingForDni;
 
         [ObservableProperty]
         private string _can = string.Empty;
@@ -64,7 +64,7 @@ namespace ColeHop.ViewModels
             if (!_nfcService.IsSupported)
             {
                 _isNavigatingAway = true;
-                ScanStatus = "Este dispositivo no soporta NFC";
+                ScanStatus = AppResources.NfcNotSupportedDevice;
                 await Alert.ShowAsync(AppResources.Error, AppResources.NfcNotSupported);
                 await Shell.Current.GoToAsync("..");
                 return;
@@ -73,7 +73,7 @@ namespace ColeHop.ViewModels
             if (!_nfcService.IsEnabled)
             {
                 _isNavigatingAway = true;
-                ScanStatus = "Por favor, active NFC en los ajustes";
+                ScanStatus = AppResources.EnableNfcInSettings;
                 await Alert.ShowAsync(AppResources.Warning, AppResources.NfcDisabledWarning);
                 await Shell.Current.GoToAsync("..");
                 return;
@@ -92,12 +92,12 @@ namespace ColeHop.ViewModels
                 var teacherId = Auth.CurrentUserId!;
                 var today = DateOnly.FromDateTime(DateTime.Today);
                 _currentContext = await _pickupService.StartPickupAsync(teacherId, ChildId, today);
-                ScanStatus = $"Listo para escanear DNI para recoger a {ChildName}";
+                ScanStatus = string.Format(AppResources.ReadyToScanForChild, ChildName);
             }
             catch (Exception ex)
             {
                 _isNavigatingAway = true;
-                ScanStatus = "Error al iniciar recogida";
+                ScanStatus = AppResources.ErrorStartingPickup;
                 await Alert.ShowAsync(AppResources.Error, ex.Message);
                 await Shell.Current.GoToAsync("..");
             }
@@ -123,7 +123,7 @@ namespace ColeHop.ViewModels
                 if (_failedAttempts >= MaxAttempts)
                 {
                     var lockoutSeconds = BaseLockoutSeconds * (_failedAttempts - MaxAttempts + 1);
-                    ScanStatus = $"Demasiados intentos. Espere {lockoutSeconds}s...";
+                    ScanStatus = string.Format(AppResources.TooManyAttemptsWait, lockoutSeconds);
                     await Task.Delay(TimeSpan.FromSeconds(lockoutSeconds));
                 }
 
@@ -131,7 +131,7 @@ namespace ColeHop.ViewModels
                 ShowCanInput = false;
                 DniDetected = false;
                 _userCancelled = false;
-                ScanStatus = "Acerque el DNI electrónico al lector...";
+                ScanStatus = AppResources.ApproachDniToReader;
 
                 _scanCts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
                 var progress = new Progress<string>(phase =>

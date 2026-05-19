@@ -541,4 +541,37 @@
   <data name="ErrorLoadingChildren" xml:space="preserve">
 	<value>Error loading children: {0}</value>
   </data>
+  <data name="WaitingForDni" xml:space="preserve">
+	<value>Waiting for electronic ID...</value>
+  </data>
+  <data name="NfcNotSupportedDevice" xml:space="preserve">
+	<value>This device does not support NFC</value>
+  </data>
+  <data name="EnableNfcInSettings" xml:space="preserve">
+	<value>Please enable NFC in settings</value>
+  </data>
+  <data name="ReadyToScanForChild" xml:space="preserve">
+	<value>Ready to scan ID to pick up {0}</value>
+  </data>
+  <data name="ErrorStartingPickup" xml:space="preserve">
+	<value>Error starting pickup</value>
+  </data>
+  <data name="TooManyAttemptsWait" xml:space="preserve">
+	<value>Too many attempts. Wait {0}s...</value>
+  </data>
+  <data name="ApproachDniToReader" xml:space="preserve">
+	<value>Hold the electronic ID near the reader...</value>
+  </data>
+  <data name="AuthorizationNotFound" xml:space="preserve">
+	<value>Authorization not found</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+	<value>Unknown</value>
+  </data>
+  <data name="DeleteAuthorization" xml:space="preserve">
+	<value>Delete authorization</value>
+  </data>
+  <data name="ConfirmDeleteAuthorization" xml:space="preserve">
+	<value>Are you sure you want to delete this authorization?</value>
+  </data>
 </root>

@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ColeHop.ViewModels;
 
-public sealed partial class LoginViewmodel : BaseViewModel
+public sealed partial class LoginViewModel : BaseViewModel
 {
     [ObservableProperty]
     private string _username = string.Empty;
@@ -15,7 +15,7 @@ public sealed partial class LoginViewmodel : BaseViewModel
     [ObservableProperty]
     private string _password = string.Empty;
 
-    public LoginViewmodel(IAuthService auth, IAlertService alertService) : base(auth, alertService) { }
+    public LoginViewModel(IAuthService auth, IAlertService alertService) : base(auth, alertService) { }
 
     [RelayCommand]
     private async Task GoToTeacherAsync()
@@ -23,9 +23,8 @@ public sealed partial class LoginViewmodel : BaseViewModel
         try
         {
             IsBusy = true;
-            // Simulación de login como profesor
+            // Login como profesor
             await Auth.SimulateLoginAsync(UserRole.Teacher);
-            // El evento AuthenticationStateChanged en AppShell se encargará de la navegación
         }
         catch (Exception ex)
         {
@@ -43,9 +42,8 @@ public sealed partial class LoginViewmodel : BaseViewModel
         try
         {
             IsBusy = true;
-            // Simulación de login como tutor
+            // Login como tutor
             await Auth.SimulateLoginAsync(UserRole.Tutor);
-            // El evento AuthenticationStateChanged en AppShell se encargará de la navegación
         }
         catch (Exception ex)
         {

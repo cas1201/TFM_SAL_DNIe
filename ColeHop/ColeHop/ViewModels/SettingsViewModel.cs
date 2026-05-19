@@ -52,7 +52,7 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private async Task ChangeLanguageAsync(string languageCode)
         {
-            // Capture alert strings in current language before switching
+            // Capturar textos antes de cambiar idioma
             var successText = Resources.Strings.AppResources.Success;
             var messageText = Resources.Strings.AppResources.LanguageChangedRestart;
             var okText = Resources.Strings.AppResources.OK;

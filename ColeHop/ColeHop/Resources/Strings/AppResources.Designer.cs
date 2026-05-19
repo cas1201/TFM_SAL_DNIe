@@ -1289,5 +1289,71 @@ namespace ColeHop.Resources.Strings {
                 return ResourceManager.GetString("ErrorLoadingChildren", resourceCulture);
             }
         }
+
+        public static string WaitingForDni {
+            get {
+                return ResourceManager.GetString("WaitingForDni", resourceCulture);
+            }
+        }
+
+        public static string NfcNotSupportedDevice {
+            get {
+                return ResourceManager.GetString("NfcNotSupportedDevice", resourceCulture);
+            }
+        }
+
+        public static string EnableNfcInSettings {
+            get {
+                return ResourceManager.GetString("EnableNfcInSettings", resourceCulture);
+            }
+        }
+
+        public static string ReadyToScanForChild {
+            get {
+                return ResourceManager.GetString("ReadyToScanForChild", resourceCulture);
+            }
+        }
+
+        public static string ErrorStartingPickup {
+            get {
+                return ResourceManager.GetString("ErrorStartingPickup", resourceCulture);
+            }
+        }
+
+        public static string TooManyAttemptsWait {
+            get {
+                return ResourceManager.GetString("TooManyAttemptsWait", resourceCulture);
+            }
+        }
+
+        public static string ApproachDniToReader {
+            get {
+                return ResourceManager.GetString("ApproachDniToReader", resourceCulture);
+            }
+        }
+
+        public static string AuthorizationNotFound {
+            get {
+                return ResourceManager.GetString("AuthorizationNotFound", resourceCulture);
+            }
+        }
+
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+
+        public static string DeleteAuthorization {
+            get {
+                return ResourceManager.GetString("DeleteAuthorization", resourceCulture);
+            }
+        }
+
+        public static string ConfirmDeleteAuthorization {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteAuthorization", resourceCulture);
+            }
+        }
     }
 }

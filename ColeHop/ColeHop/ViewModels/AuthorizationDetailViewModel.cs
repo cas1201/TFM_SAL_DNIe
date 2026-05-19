@@ -9,12 +9,6 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ColeHop.ViewModels
 {
-    public sealed class ChildPickupStatus
-    {
-        public string Name { get; init; } = default!;
-        public bool IsPickedUp { get; init; }
-    }
-
     [QueryProperty(nameof(AuthorizationId), "authorizationId")]
     public sealed partial class AuthorizationDetailViewModel : BaseViewModel
     {
@@ -61,7 +55,7 @@ namespace ColeHop.ViewModels
 
             if (_authorization == null)
             {
-                await Alert.ShowAsync(AppResources.Error, "Autorización no encontrada");
+                await Alert.ShowAsync(AppResources.Error, AppResources.AuthorizationNotFound);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -70,13 +64,13 @@ namespace ColeHop.ViewModels
             var children = await _tutorManagementService.GetChildrenAsync(tutorId);
 
             var person = persons.FirstOrDefault(p => p.Id == _authorization.AuthorizedPersonId);
-            PersonName = person?.FullName ?? "Desconocido";
+            PersonName = person?.FullName ?? AppResources.Unknown;
             Relationship = person?.Relationship ?? "";
 
             var today = DateOnly.FromDateTime(DateTime.Today);
             var isToday = _authorization.FromDate <= today && _authorization.ToDate >= today;
 
-            // Obtener recogidas del día para marcar menores recogidos
+            // Recogidas del día
             HashSet<string> pickedUpChildIds = [];
             if (isToday)
             {
@@ -112,9 +106,9 @@ namespace ColeHop.ViewModels
         private async Task DeleteAsync()
         {
             var confirmed = await Alert.ShowConfirmAsync(
-                "Eliminar autorización",
-                "¿Está seguro de que desea eliminar esta autorización?",
-                "Eliminar",
+                AppResources.DeleteAuthorization,
+                AppResources.ConfirmDeleteAuthorization,
+                AppResources.Delete,
                 AppResources.Cancel);
 
             if (!confirmed) return;

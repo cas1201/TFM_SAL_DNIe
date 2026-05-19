@@ -6,11 +6,9 @@
     xmlns:res="clr-namespace:ColeHop.Resources.Strings"
     xmlns:utils="clr-namespace:ColeHop.Helpers">
 
-    <AbsoluteLayout>
+    <Grid>
 
         <RefreshView
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
             IsRefreshing="{Binding IsRefreshing}"
             Command="{Binding RefreshCommand}">
             <CollectionView
@@ -109,9 +107,9 @@
         </RefreshView>
 
         <Button
-            AbsoluteLayout.LayoutBounds="1,1,60,60"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
             Style="{StaticResource FabButton}"
+            HorizontalOptions="End"
+            VerticalOptions="End"
             Command="{Binding AddChildCommand}">
             <Button.ImageSource>
                 <FontImageSource
@@ -122,5 +120,5 @@
             </Button.ImageSource>
         </Button>
 
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

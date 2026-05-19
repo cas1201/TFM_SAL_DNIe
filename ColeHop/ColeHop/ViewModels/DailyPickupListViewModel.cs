@@ -52,7 +52,6 @@ namespace ColeHop.ViewModels
             var culture = new CultureInfo("es-ES");
             var today = DateTime.Today;
             TodayDate = today.ToString("dddd, d 'de' MMMM 'de' yyyy", culture);
-            // Capitalizar la primera letra
             TodayDate = char.ToUpper(TodayDate[0]) + TodayDate.Substring(1);
         }
 

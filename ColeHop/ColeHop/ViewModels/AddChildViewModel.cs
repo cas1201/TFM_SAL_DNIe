@@ -12,25 +12,25 @@ namespace ColeHop.ViewModels
         private readonly ITutorManagementService _tutorManagementService;
 
         [ObservableProperty]
-        private string name = string.Empty;
+        private string _name = string.Empty;
 
         [ObservableProperty]
-        private string lastName = string.Empty;
+        private string _lastName = string.Empty;
 
         [ObservableProperty]
-        private string educationType = "Primaria";
+        private string _educationType = "Primaria";
 
         [ObservableProperty]
-        private string course = string.Empty;
+        private string _course = string.Empty;
 
         [ObservableProperty]
-        private string group = string.Empty;
+        private string _group = string.Empty;
 
         [ObservableProperty]
-        private string errorMessage = string.Empty;
+        private string _errorMessage = string.Empty;
 
         [ObservableProperty]
-        private bool hasError;
+        private bool _hasError;
 
         public AddChildViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
             : base(auth, alertService)
@@ -85,35 +85,35 @@ namespace ColeHop.ViewModels
             if (string.IsNullOrWhiteSpace(Name))
             {
                 HasError = true;
-                ErrorMessage = "El nombre es obligatorio";
+                ErrorMessage = AppResources.NameRequired;
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
                 HasError = true;
-                ErrorMessage = "Los apellidos son obligatorios";
+                ErrorMessage = AppResources.LastNameRequired;
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(EducationType))
             {
                 HasError = true;
-                ErrorMessage = "El tipo de enseñanza es obligatorio";
+                ErrorMessage = AppResources.EducationTypeRequired;
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(Course))
             {
                 HasError = true;
-                ErrorMessage = "El curso es obligatorio";
+                ErrorMessage = AppResources.CourseRequired;
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(Group))
             {
                 HasError = true;
-                ErrorMessage = "El grupo es obligatorio";
+                ErrorMessage = AppResources.GroupRequired;
                 return false;
             }
 

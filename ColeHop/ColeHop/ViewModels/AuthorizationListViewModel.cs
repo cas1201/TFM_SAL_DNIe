@@ -1,4 +1,5 @@
 using ColeHop.Models;
+using ColeHop.Resources.Strings;
 using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using ColeHop.Services.Pickup;
@@ -50,7 +51,7 @@ namespace ColeHop.ViewModels
 
                 var today = DateOnly.FromDateTime(DateTime.Today);
 
-                // Obtener recogidas del día para marcar autorizaciones completadas
+                // Recogidas del día
                 var todayPickups = await _pickupService.GetPickupHistoryAsync(tutorId, new PickupHistoryQuery(today, today, null));
                 var pickedUpChildIds = todayPickups.Select(p => p.ChildId).ToHashSet();
 
@@ -77,7 +78,7 @@ namespace ColeHop.ViewModels
                     ActiveAuthorizations.Add(new AuthorizationDisplayItem
                     {
                         Id = auth.Id,
-                        PersonName = person?.FullName ?? "Desconocido",
+                        PersonName = person?.FullName ?? AppResources.Unknown,
                         Relationship = person?.Relationship ?? "",
                         ChildrenNames = string.Join(", ", childNames),
                         ChildrenList = childNames,
@@ -110,23 +111,5 @@ namespace ColeHop.ViewModels
         {
             await Shell.Current.GoToAsync($"authorization/detail?authorizationId={item.Id}");
         }
-    }
-
-    public sealed class AuthorizationDisplayItem
-    {
-        public string Id { get; init; } = default!;
-        public string PersonName { get; init; } = default!;
-        public string Relationship { get; init; } = default!;
-        public string ChildrenNames { get; init; } = default!;
-        public List<string> ChildrenList { get; init; } = [];
-        public DateOnly FromDate { get; init; }
-        public DateOnly ToDate { get; init; }
-        public string DateRange { get; init; } = default!;
-        public bool IsToday { get; init; }
-        public bool IsCompleted { get; init; }
-        public int PickedUpCount { get; init; }
-        public int TotalChildren { get; init; }
-        public bool HasPartialProgress => IsToday && PickedUpCount > 0 && !IsCompleted;
-        public string ProgressText => $"{PickedUpCount}/{TotalChildren}";
     }
 }

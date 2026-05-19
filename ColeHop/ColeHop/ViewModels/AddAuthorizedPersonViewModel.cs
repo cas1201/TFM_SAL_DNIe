@@ -13,22 +13,22 @@ namespace ColeHop.ViewModels
         private readonly ITutorManagementService _tutorManagementService;
 
         [ObservableProperty]
-        private string name = string.Empty;
+        private string _name = string.Empty;
 
         [ObservableProperty]
-        private string lastName = string.Empty;
+        private string _lastName = string.Empty;
 
         [ObservableProperty]
-        private string dni = string.Empty;
+        private string _dni = string.Empty;
 
         [ObservableProperty]
-        private string relationship = string.Empty;
+        private string _relationship = string.Empty;
 
         [ObservableProperty]
-        private string errorMessage = string.Empty;
+        private string _errorMessage = string.Empty;
 
         [ObservableProperty]
-        private bool hasError;
+        private bool _hasError;
 
         public AddAuthorizedPersonViewModel(IAuthService auth, IAlertService alertService, ITutorManagementService tutorManagementService) 
             : base(auth, alertService)
@@ -64,7 +64,7 @@ namespace ColeHop.ViewModels
             catch (Exception ex)
             {
                 HasError = true;
-                ErrorMessage = $"Error al guardar: {ex.Message}";
+                ErrorMessage = $"{AppResources.ErrorSaving}: {ex.Message}";
             }
             finally
             {

@@ -58,7 +58,7 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Margin" Value="0,0,50,50" />
+        <Setter Property="Margin" Value="0,0,30,30" />
         <Setter Property="Shadow">
             <Shadow 
                 Brush="Black" 

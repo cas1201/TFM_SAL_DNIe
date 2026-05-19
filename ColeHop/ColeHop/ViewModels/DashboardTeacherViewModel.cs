@@ -31,6 +31,5 @@ namespace ColeHop.ViewModels
         {
             await Shell.Current.GoToAsync("settings");
         }
-
-            }
-        }
+    }
+}

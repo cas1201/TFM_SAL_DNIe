@@ -63,25 +63,19 @@
             </Grid>
         </ScrollView>
 
-        <!-- FAB Ajustes - esquina inferior derecha -->
-        <ImageButton
-            Command="{Binding GoToSettingsCommand}"
-            WidthRequest="56"
-            HeightRequest="56"
-            CornerRadius="28"
-            BackgroundColor="{DynamicResource Primary}"
-            Padding="12"
+        <!-- FAB Ajustes -->
+        <Button
+            Style="{StaticResource FabButton}"
             HorizontalOptions="End"
             VerticalOptions="End"
-            Margin="0,0,20,20"
-            Shadow="{StaticResource CardShadow}">
-            <ImageButton.Source>
+            Command="{Binding GoToSettingsCommand}">
+            <Button.ImageSource>
                 <FontImageSource
                     FontFamily="MaterialSymbolsRounded"
                     Glyph="{x:Static utils:MaterialIcon.Settings}"
-                    Size="24"
+                    Size="28"
                     Color="White" />
-            </ImageButton.Source>
-        </ImageButton>
+            </Button.ImageSource>
+        </Button>
     </Grid>
 </ContentPage>

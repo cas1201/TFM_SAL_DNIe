@@ -163,7 +163,7 @@ namespace ColeHop
 
             #region ViewModels
             // Auth
-            builder.Services.AddTransient<LoginViewmodel>();
+            builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<SignupViewModel>();
 
             // Settings

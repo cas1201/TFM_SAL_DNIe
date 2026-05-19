@@ -541,4 +541,37 @@
   <data name="ErrorLoadingChildren" xml:space="preserve">
 	<value>Error al cargar hijos: {0}</value>
   </data>
+  <data name="WaitingForDni" xml:space="preserve">
+	<value>Esperando DNI electrónico...</value>
+  </data>
+  <data name="NfcNotSupportedDevice" xml:space="preserve">
+	<value>Este dispositivo no soporta NFC</value>
+  </data>
+  <data name="EnableNfcInSettings" xml:space="preserve">
+	<value>Por favor, active NFC en los ajustes</value>
+  </data>
+  <data name="ReadyToScanForChild" xml:space="preserve">
+	<value>Listo para escanear DNI para recoger a {0}</value>
+  </data>
+  <data name="ErrorStartingPickup" xml:space="preserve">
+	<value>Error al iniciar recogida</value>
+  </data>
+  <data name="TooManyAttemptsWait" xml:space="preserve">
+	<value>Demasiados intentos. Espere {0}s...</value>
+  </data>
+  <data name="ApproachDniToReader" xml:space="preserve">
+	<value>Acerque el DNI electrónico al lector...</value>
+  </data>
+  <data name="AuthorizationNotFound" xml:space="preserve">
+	<value>Autorización no encontrada</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+	<value>Desconocido</value>
+  </data>
+  <data name="DeleteAuthorization" xml:space="preserve">
+	<value>Eliminar autorización</value>
+  </data>
+  <data name="ConfirmDeleteAuthorization" xml:space="preserve">
+	<value>¿Está seguro de que desea eliminar esta autorización?</value>
+  </data>
 </root>

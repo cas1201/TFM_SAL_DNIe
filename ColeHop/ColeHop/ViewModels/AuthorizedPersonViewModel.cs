@@ -80,7 +80,7 @@ namespace ColeHop.ViewModels
         }
 
         [RelayCommand]
-        public async Task RefreshAsync()
+        private async Task RefreshAsync()
         {
             await LoadAuthorizedPersonsAsync();
             IsRefreshing = false;

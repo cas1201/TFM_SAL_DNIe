@@ -56,14 +56,10 @@ namespace ColeHop.ViewModels
 
                 if (person != null)
                 {
-                    // Parseamos el FullName para extraer nombre y apellidos
-                    var fullNameParts = person.FullName.Split(' ', 2);
-                    Name = fullNameParts.Length > 0 ? fullNameParts[0] : "";
-                    LastName = fullNameParts.Length > 1 ? fullNameParts[1] : "";
-
-                    // Por ahora usamos valores por defecto ya que el modelo AuthorizedPerson solo tiene FullName
-                    Dni = "N/A";
-                    Relationship = "N/A";
+                    Name = person.Name;
+                    LastName = person.LastName;
+                    Dni = person.Dni;
+                    Relationship = person.Relationship;
                 }
             }
             catch (Exception ex)
