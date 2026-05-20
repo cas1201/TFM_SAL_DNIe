@@ -52,10 +52,6 @@
     <!-- Card tint backgrounds (light versions of dashboard button colors) -->
     <Color x:Key="PrimaryTintLight">#E8EEFF</Color>
     <Color x:Key="PrimaryTintDark">#1F2A4D</Color>
-    <Color x:Key="TertiaryTintLight">#FDE8F3</Color>
-    <Color x:Key="TertiaryTintDark">#3D1F2E</Color>
-    <Color x:Key="SuccessTintLight">#E6FAF5</Color>
-    <Color x:Key="SuccessTintDark">#1A2E28</Color>
 
     <!-- Popup icon background colors -->
     <Color x:Key="ErrorBgLight">#FFEBEE</Color>

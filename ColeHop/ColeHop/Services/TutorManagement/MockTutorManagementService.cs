@@ -31,14 +31,17 @@ namespace ColeHop.Services.TutorManagement
             },
             new Child
             {
-                Id = "3",
-                Name = "Pedro",
-                LastName = "Martínez Ruiz",
+                Id = "4",
+                Name = "Lucía",
+                LastName = "Martín Delgado",
                 EducationType = "Infantil",
-                Course = "5 años",
-                Group = "A",
+                Course = "3 años",
+                Group = "B",
                 TutorId = "tutor1",
-                ApprovalStatus = ApprovalStatus.Approved
+                TutorName = "Samuel",
+                TutorLastName = "Aragonés Lozano",
+                TutorDni = "53907905E",
+                ApprovalStatus = ApprovalStatus.Pending
             }
         };
 
@@ -56,19 +59,10 @@ namespace ColeHop.Services.TutorManagement
             new AuthorizedPerson
             {
                 Id = "2",
-                Name = "Carlos",
-                LastName = "López Fernández",
-                Dni = "87654321B",
-                Relationship = "Tío",
-                TutorId = "tutor1"
-            },
-            new AuthorizedPerson
-            {
-                Id = "3",
-                Name = "Isabel",
-                LastName = "Ruiz Martínez",
-                Dni = "11223344C",
-                Relationship = "Madre",
+                Name = "Ana",
+                LastName = "Delgado Ruiz",
+                Dni = "44556677D",
+                Relationship = "Abuela",
                 TutorId = "tutor1"
             }
         };
@@ -80,8 +74,18 @@ namespace ColeHop.Services.TutorManagement
                 Id = "1",
                 FromDate = DateOnly.FromDateTime(DateTime.Today),
                 ToDate = DateOnly.FromDateTime(DateTime.Today.AddDays(30)),
-                ChildIds = new List<string> { "1", "2", "3" },
+                ChildIds = new List<string> { "1", "2" },
                 AuthorizedPersonId = "1",
+                TutorId = "tutor1",
+                IsActive = true
+            },
+            new Authorization
+            {
+                Id = "2",
+                FromDate = DateOnly.FromDateTime(DateTime.Today),
+                ToDate = DateOnly.FromDateTime(DateTime.Today.AddDays(14)),
+                ChildIds = new List<string> { "4" },
+                AuthorizedPersonId = "2",
                 TutorId = "tutor1",
                 IsActive = true
             }
@@ -98,6 +102,9 @@ namespace ColeHop.Services.TutorManagement
                 Course = childData.Course,
                 Group = childData.Group,
                 TutorId = tutorId,
+                TutorName = "Samuel",
+                TutorLastName = "Aragonés Lozano",
+                TutorDni = "53907905E",
                 ApprovalStatus = ApprovalStatus.Pending
             };
 

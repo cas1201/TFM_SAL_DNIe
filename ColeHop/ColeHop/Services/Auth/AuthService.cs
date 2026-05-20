@@ -13,6 +13,8 @@ namespace ColeHop.Services.Auth
         public bool IsAuthenticated => _currentSession != null;
         public UserRole? CurrentRole => _currentSession?.Role;
         public string? CurrentUserId => _currentSession?.UserId;
+        public string? CurrentUserName => _currentSession?.FullName;
+        public string? CurrentUserDni => _currentSession?.Dni;
 
         public event EventHandler<UserRole?>? AuthenticationStateChanged;
 
@@ -35,7 +37,7 @@ namespace ColeHop.Services.Auth
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
                 throw new InvalidOperationException("Credenciales inválidas.");
 
-            var userId = Guid.NewGuid().ToString();
+            var userId = "tutor1";
             var role = UserRole.Tutor;
             var token = Guid.NewGuid().ToString();
 
@@ -43,21 +45,20 @@ namespace ColeHop.Services.Auth
             await SecureStorage.SetAsync(RoleKey, role.ToString());
             await SecureStorage.SetAsync(TokenKey, token);
 
-            _currentSession = new AuthSession(userId, role, token);
+            _currentSession = new AuthSession(userId, role, token, "Samuel Aragonés Lozano", "53907905E");
             AuthenticationStateChanged?.Invoke(this, role);
         }
 
         public async Task SimulateLoginAsync(UserRole role)
         {
-            // Simular autenticación sin backend real
-            var userId = Guid.NewGuid().ToString();
+            var userId = "tutor1";
             var token = Guid.NewGuid().ToString();
 
             await SecureStorage.SetAsync(UserIdKey, userId);
             await SecureStorage.SetAsync(RoleKey, role.ToString());
             await SecureStorage.SetAsync(TokenKey, token);
 
-            _currentSession = new AuthSession(userId, role, token);
+            _currentSession = new AuthSession(userId, role, token, "Samuel Aragonés Lozano", "53907905E");
 
             // Notificar cambio de estado. AppShell escucha este evento
             AuthenticationStateChanged?.Invoke(this, role);
@@ -79,7 +80,7 @@ namespace ColeHop.Services.Auth
                     return false;
 
                 // Restaurar sesión
-                _currentSession = new AuthSession(userId, role, token);
+                _currentSession = new AuthSession(userId, role, token, "Samuel Aragonés Lozano", "53907905E");
                 return true;
             }
             catch

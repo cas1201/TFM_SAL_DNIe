@@ -36,7 +36,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{StaticResource Card}"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryTintLight}, Dark={StaticResource TertiaryTintDark}}">
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTintLight}, Dark={StaticResource PrimaryTintDark}}">
 
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer 

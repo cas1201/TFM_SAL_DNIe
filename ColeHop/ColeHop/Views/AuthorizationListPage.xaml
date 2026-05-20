@@ -61,7 +61,7 @@
                                     StrokeThickness="1"
                                     Padding="16"
                                     Margin="0,0,0,8"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessTintLight}, Dark={StaticResource SuccessTintDark}}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTintLight}, Dark={StaticResource PrimaryTintDark}}"
                                     StrokeShape="RoundRectangle 12">
 
                                     <Border.GestureRecognizers>

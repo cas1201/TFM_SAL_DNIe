@@ -279,7 +279,7 @@
                                 <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="week">
                                     <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
                                 </DataTrigger>
-                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="custom">
                                     <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
                                 </DataTrigger>
                             </Button.Triggers>
@@ -300,19 +300,19 @@
                                 <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="today">
                                     <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
                                 </DataTrigger>
-                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="custom">
                                     <Setter Property="Style" Value="{StaticResource PeriodButtonUnselected}" />
                                 </DataTrigger>
                             </Button.Triggers>
                         </Button>
 
                         <Button
-                            Text="{x:Static res:AppResources.OneMonth}"
+                            Text="{x:Static res:AppResources.Custom}"
                             Command="{Binding SetQuickDateCommand}"
-                            CommandParameter="month"
+                            CommandParameter="custom"
                             Padding="20,10">
                             <Button.Triggers>
-                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="month">
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="custom">
                                     <Setter Property="Style" Value="{StaticResource PeriodButtonSelected}" />
                                 </DataTrigger>
                                 <DataTrigger TargetType="Button" Binding="{Binding SelectedQuickDate}" Value="">
@@ -329,14 +329,8 @@
                     </HorizontalStackLayout>
 
                     <!-- Custom Dates -->
-                    <Border Style="{StaticResource FormCard}" Padding="20">
+                    <Border Style="{StaticResource FormCard}" Padding="20" Opacity="{Binding IsCustomDateEnabled, Converter={StaticResource BoolToOpacityConverter}}">
                         <VerticalStackLayout Spacing="16">
-
-                            <Label
-                                Text="{x:Static res:AppResources.Custom}"
-                                FontSize="16"
-                                FontAttributes="Bold"
-                                TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
 
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                                 <VerticalStackLayout Grid.Column="0">
@@ -346,6 +340,7 @@
                                     <DatePicker
                                         Date="{Binding FromDate}"
                                         MinimumDate="{Binding MinimumDate}"
+                                        IsEnabled="{Binding IsCustomDateEnabled}"
                                         Format="dd/MM/yyyy" />
                                 </VerticalStackLayout>
 
@@ -356,6 +351,7 @@
                                     <DatePicker
                                         Date="{Binding ToDate}"
                                         MinimumDate="{Binding FromDate}"
+                                        IsEnabled="{Binding IsCustomDateEnabled}"
                                         Format="dd/MM/yyyy" />
                                 </VerticalStackLayout>
                             </Grid>

@@ -143,6 +143,15 @@ namespace ColeHop.ViewModels
                 if (string.IsNullOrEmpty(tutorId))
                     return;
 
+                // Check if child is linked to an active authorization
+                var authorizations = await _tutorManagementService.GetAuthorizationsAsync(tutorId);
+                var hasActiveAuth = authorizations.Any(a => a.IsActive && a.ChildIds.Contains(ChildId));
+                if (hasActiveAuth)
+                {
+                    await Alert.ShowAsync(AppResources.Error, AppResources.ChildLinkedToActiveAuthorization, AppResources.OK, AlertIcon.Error);
+                    return;
+                }
+
                 await _tutorManagementService.RemoveChildAsync(tutorId, ChildId);
 
                 await Alert.ShowAsync(AppResources.Success, AppResources.ChildDeletedSuccessfully, AppResources.OK, AlertIcon.Success);

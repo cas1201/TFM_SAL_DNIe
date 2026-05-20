@@ -608,7 +608,25 @@ namespace ColeHop.Resources.Strings {
                 return ResourceManager.GetString("EndDateMustBeAfterStartDate", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a La fecha de inicio no puede ser anterior al día de hoy.
+        /// </summary>
+        public static string StartDateCannotBeInPast {
+            get {
+                return ResourceManager.GetString("StartDateCannotBeInPast", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se puede eliminar este hijo porque está vinculado a una autorización activa.
+        /// </summary>
+        public static string ChildLinkedToActiveAuthorization {
+            get {
+                return ResourceManager.GetString("ChildLinkedToActiveAuthorization", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Busca una cadena traducida similar a Inglés.
         /// </summary>

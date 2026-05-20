@@ -4,7 +4,6 @@ using ColeHop.Services.Nfc;
 using ColeHop.Services.Pickup;
 using ColeHop.Services.Teacher;
 using ColeHop.Services.TutorManagement;
-using ColeHop.Helpers;
 using ColeHop.Views;
 using ColeHop.ViewModels;
 
@@ -114,40 +113,17 @@ namespace ColeHop
             builder.Services.AddSingleton<IAlertService, AlertService>();
 
             // Auth
-#if DEBUG
             builder.Services.AddSingleton<IAuthService, MockAuthService>();
-#else
-            builder.Services.AddSingleton<IAuthService, HttpAuthService>();
-#endif
 
             // Shell
             builder.Services.AddTransient<AppShell>();
 
             // Pickup
-#if DEBUG
             builder.Services.AddSingleton<IPickupService, MockPickupService>();
-#else
-            builder.Services.AddSingleton<IPickupService, HttpPickupService>();
-#endif
 
             // TutorManagement
-            builder.Services.AddSingleton<HttpClient>(sp =>
-            {
-                var httpClient = new HttpClient
-                {
-                    BaseAddress = new Uri(ApiConfig.BaseUrl)
-                };
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                return httpClient;
-            });
-            builder.Services.AddSingleton<JwtStorage>();
-
-#if DEBUG
             builder.Services.AddSingleton<ITutorManagementService, MockTutorManagementService>();
             builder.Services.AddSingleton<ITeacherService, MockTeacherService>();
-#else
-            builder.Services.AddSingleton<ITutorManagementService, HttpTutorManagementService>();
-#endif
 
             // Nfc
             builder.Services.AddSingleton<NfcService>();

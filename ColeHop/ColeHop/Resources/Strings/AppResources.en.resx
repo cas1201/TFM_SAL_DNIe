@@ -315,6 +315,12 @@
   <data name="EndDateMustBeAfterStartDate" xml:space="preserve">
     <value>End date must be after start date</value>
   </data>
+  <data name="StartDateCannotBeInPast" xml:space="preserve">
+    <value>Start date cannot be before today</value>
+  </data>
+  <data name="ChildLinkedToActiveAuthorization" xml:space="preserve">
+    <value>Cannot delete this child because they are linked to an active authorization. Please modify or remove the authorization first.</value>
+  </data>
   <data name="ErrorSaving" xml:space="preserve">
     <value>Error saving: {0}</value>
   </data>

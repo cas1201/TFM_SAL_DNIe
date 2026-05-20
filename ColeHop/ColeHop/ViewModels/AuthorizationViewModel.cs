@@ -44,6 +44,9 @@ namespace ColeHop.ViewModels
         private string _selectedQuickDate = "today";
 
         [ObservableProperty]
+        private bool _isCustomDateEnabled;
+
+        [ObservableProperty]
         private string _errorMessage = string.Empty;
 
         [ObservableProperty]
@@ -175,14 +178,32 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private void SetQuickDate(string period)
         {
+            if (period == "custom")
+            {
+                if (SelectedQuickDate == "custom")
+                {
+                    // Deselect custom, go back to today
+                    SelectedQuickDate = "today";
+                    IsCustomDateEnabled = false;
+                    FromDate = DateTime.Today;
+                    ToDate = DateTime.Today;
+                }
+                else
+                {
+                    SelectedQuickDate = "custom";
+                    IsCustomDateEnabled = true;
+                }
+                return;
+            }
+
             SelectedQuickDate = period;
+            IsCustomDateEnabled = false;
             FromDate = DateTime.Today;
 
             ToDate = period switch
             {
                 "today" => DateTime.Today,
                 "week" => DateTime.Today.AddDays(7),
-                "month" => DateTime.Today.AddMonths(1),
                 _ => ToDate
             };
         }
@@ -210,7 +231,13 @@ namespace ColeHop.ViewModels
 
             if (CurrentStep == 3)
             {
-                // Validar fechas antes de pasar al resumen
+                if (FromDate.Date < DateTime.Today)
+                {
+                    HasError = true;
+                    ErrorMessage = AppResources.StartDateCannotBeInPast;
+                    return;
+                }
+
                 if (ToDate < FromDate)
                 {
                     HasError = true;
@@ -326,6 +353,13 @@ namespace ColeHop.ViewModels
             {
                 HasError = true;
                 ErrorMessage = AppResources.SelectAuthorizedPerson;
+                return false;
+            }
+
+            if (FromDate.Date < DateTime.Today)
+            {
+                HasError = true;
+                ErrorMessage = AppResources.StartDateCannotBeInPast;
                 return false;
             }
 

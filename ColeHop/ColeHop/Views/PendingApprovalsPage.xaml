@@ -29,7 +29,7 @@
                     <DataTemplate x:DataType="model:Child">
                         <Border
                             Style="{StaticResource Card}"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource TertiaryTintLight}, Dark={StaticResource TertiaryTintDark}}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTintLight}, Dark={StaticResource PrimaryTintDark}}"
                             Margin="0,6">
                             <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="12">
                                 <Label

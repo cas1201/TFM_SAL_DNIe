@@ -315,6 +315,12 @@
   <data name="EndDateMustBeAfterStartDate" xml:space="preserve">
     <value>La fecha de fin debe ser posterior a la fecha de inicio</value>
   </data>
+  <data name="StartDateCannotBeInPast" xml:space="preserve">
+    <value>La fecha de inicio no puede ser anterior al día de hoy</value>
+  </data>
+  <data name="ChildLinkedToActiveAuthorization" xml:space="preserve">
+    <value>No se puede eliminar este hijo porque está vinculado a una autorización activa. Modifique o elimine primero la autorización.</value>
+  </data>
   <data name="ErrorSaving" xml:space="preserve">
     <value>Error al guardar: {0}</value>
   </data>

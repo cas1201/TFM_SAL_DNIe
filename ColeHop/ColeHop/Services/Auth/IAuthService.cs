@@ -7,6 +7,8 @@ namespace ColeHop.Services.Auth
         bool IsAuthenticated { get; }
         UserRole? CurrentRole { get; }
         string? CurrentUserId { get; }
+        string? CurrentUserName { get; }
+        string? CurrentUserDni { get; }
 
         event EventHandler<UserRole?>? AuthenticationStateChanged;
 
