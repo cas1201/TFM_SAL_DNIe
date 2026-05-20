@@ -49,9 +49,10 @@ namespace ColeHop.ViewModels
 
         private void UpdateTodayDate()
         {
-            var culture = new CultureInfo("es-ES");
+            var culture = CultureInfo.CurrentUICulture;
             var today = DateTime.Today;
-            TodayDate = today.ToString("dddd, d 'de' MMMM 'de' yyyy", culture);
+            var format = Resources.Strings.AppResources.DateFormatLong;
+            TodayDate = today.ToString(format, culture);
             TodayDate = char.ToUpper(TodayDate[0]) + TodayDate.Substring(1);
         }
 

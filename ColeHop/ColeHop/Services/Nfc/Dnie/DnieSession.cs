@@ -18,17 +18,17 @@ namespace ColeHop.Services.Nfc.Dnie
             System.Diagnostics.Debug.WriteLine("[DNIe] Iniciando sesion de lectura...");
 
             // Fase 1: Establecer canal seguro con PACE
-            _progress?.Report("Estableciendo canal seguro (PACE)...");
+            _progress?.Report(Resources.Strings.AppResources.NfcEstablishingSecureChannel);
             using var paceSession = new PaceSession(_platformService);
             await paceSession.EstablishSecureChannelAsync(_can, cancellationToken);
 
             // Fase 2: Crear contexto de Secure Messaging
-            _progress?.Report("Canal seguro activo. Preparando lectura...");
+            _progress?.Report(Resources.Strings.AppResources.NfcSecureChannelReading);
             using var smContext = new SecureMessagingContext(paceSession.KEnc, paceSession.KMac, paceSession.InitialSsc);
             System.Diagnostics.Debug.WriteLine("[DNIe] Secure Messaging activo");
 
             // Fase 3: Leer Data Groups
-            _progress?.Report("Leyendo datos del DNIe...");
+            _progress?.Report(Resources.Strings.AppResources.NfcReadingDnieData);
             var fileReader = new DnieFileReader(_platformService, smContext);
             var dgs = await fileReader.ReadDataGroupsAsync(cancellationToken);
             var sod = await fileReader.ReadSodAsync(cancellationToken);

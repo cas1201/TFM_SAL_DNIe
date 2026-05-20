@@ -99,7 +99,7 @@
                                                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                                     VerticalOptions="Center" />
                                                 <Label
-                                                    Text="Recoge:"
+                                                    Text="{x:Static res:AppResources.PicksUp}"
                                                     FontSize="15"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                                     VerticalOptions="Center" />
@@ -174,7 +174,7 @@
                                                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                                     VerticalOptions="Center" />
                                                 <Label
-                                                    Text="Recogido por:"
+                                                    Text="{x:Static res:AppResources.PickedUpBy}"
                                                     FontSize="15"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                                     VerticalOptions="Center" />

@@ -2,7 +2,6 @@ using ColeHop.Services.Alert;
 using ColeHop.Services.Auth;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
 
 namespace ColeHop.ViewModels
 {
@@ -52,18 +51,24 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private async Task ChangeLanguageAsync(string languageCode)
         {
-            // Capturar textos antes de cambiar idioma
-            var successText = Resources.Strings.AppResources.Success;
-            var messageText = Resources.Strings.AppResources.LanguageChangedRestart;
-            var okText = Resources.Strings.AppResources.OK;
+            if (languageCode == SelectedLanguage)
+                return;
+
+            var title = Resources.Strings.AppResources.Success;
+            var message = Resources.Strings.AppResources.LanguageChangedRestart;
+            var accept = Resources.Strings.AppResources.OK;
+            var cancel = Resources.Strings.AppResources.Cancel;
+
+            var confirmed = await Alert.ShowConfirmAsync(title, message, accept, cancel);
+            if (!confirmed)
+                return;
 
             SelectedLanguage = languageCode;
             Preferences.Set("app_language", languageCode);
-            var culture = new CultureInfo(languageCode);
-            CultureInfo.CurrentCulture = culture;
-            CultureInfo.CurrentUICulture = culture;
 
-            await Alert.ShowAsync(successText, messageText, okText);
+            // Aplicar cultura y recrear toda la UI
+            App.ApplyLanguage(languageCode);
+            App.RestartUI();
         }
 
         [RelayCommand]

@@ -7,6 +7,7 @@
     xmlns:models="clr-namespace:ColeHop.Models"
     xmlns:utils="clr-namespace:ColeHop.Helpers"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
     x:DataType="viewmodel:AuthorizationListViewModel">
 
     <Grid>
@@ -19,7 +20,7 @@
 
                     <!-- Título -->
                     <Label
-                        Text="Autorizaciones activas"
+                        Text="{x:Static res:AppResources.ActiveAuthorizations}"
                         FontSize="24"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource Primary}"
@@ -37,12 +38,12 @@
                             TextColor="{DynamicResource Gray400}"
                             HorizontalOptions="Center" />
                         <Label
-                            Text="No hay autorizaciones activas"
+                            Text="{x:Static res:AppResources.NoActiveAuthorizations}"
                             FontSize="18"
                             TextColor="{DynamicResource Gray400}"
                             HorizontalTextAlignment="Center" />
                         <Label
-                            Text="Pulse el botón + para crear una nueva autorización"
+                            Text="{x:Static res:AppResources.PressButtonToAddAuthorization}"
                             FontSize="14"
                             TextColor="{DynamicResource Gray400}"
                             HorizontalTextAlignment="Center" />
@@ -168,7 +169,7 @@
                                                     TextColor="White"
                                                     VerticalOptions="Center" />
                                                 <Label
-                                                    Text="{Binding ProgressText, StringFormat='Recogidos: {0}'}"
+                                                    Text="{Binding ProgressText}"
                                                     FontSize="13"
                                                     FontAttributes="Bold"
                                                     TextColor="White"

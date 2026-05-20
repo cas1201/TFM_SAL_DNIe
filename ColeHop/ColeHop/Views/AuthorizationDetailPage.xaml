@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodel="clr-namespace:ColeHop.ViewModels"
+    xmlns:res="clr-namespace:ColeHop.Resources.Strings"
     x:DataType="viewmodel:AuthorizationDetailViewModel">
 
     <ScrollView>
@@ -11,7 +12,7 @@
 
             <!-- Header -->
             <Label
-                Text="Detalle de autorización"
+                Text="{x:Static res:AppResources.AuthorizationDetail}"
                 FontSize="24"
                 FontAttributes="Bold"
                 TextColor="{DynamicResource Primary}" />
@@ -24,7 +25,7 @@
                 Padding="16">
                 <VerticalStackLayout Spacing="8">
                     <Label
-                        Text="Persona autorizada"
+                        Text="{x:Static res:AppResources.AuthorizedPerson}"
                         FontSize="13"
                         TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                     <Label
@@ -46,7 +47,7 @@
                 Padding="16">
                 <VerticalStackLayout Spacing="8">
                     <Label
-                        Text="Menores"
+                        Text="{x:Static res:AppResources.Minors}"
                         FontSize="13"
                         TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding ChildrenList}">
@@ -79,7 +80,7 @@
                 Padding="16">
                 <VerticalStackLayout Spacing="12">
                     <Label
-                        Text="Periodo de validez"
+                        Text="{x:Static res:AppResources.ValidityPeriod}"
                         FontSize="13"
                         TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
 
@@ -87,7 +88,7 @@
                         <Label FontSize="16">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Desde: " />
+                                    <Span Text="{x:Static res:AppResources.From}" />
                                     <Span Text="{Binding FromDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
                                 </FormattedString>
                             </Label.FormattedText>
@@ -95,7 +96,7 @@
                         <Label FontSize="16">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span Text="Hasta: " />
+                                    <Span Text="{x:Static res:AppResources.To}" />
                                     <Span Text="{Binding ToDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" />
                                 </FormattedString>
                             </Label.FormattedText>
@@ -107,13 +108,13 @@
             <!-- Botones -->
             <VerticalStackLayout Spacing="12" Margin="0,12,0,0">
                 <Button
-                    Text="Editar"
+                    Text="{x:Static res:AppResources.Edit}"
                     Command="{Binding EditCommand}"
                     Style="{StaticResource PrimaryButton}" />
 
                 <!-- Eliminar -->
                 <Button
-                    Text="Eliminar autorización"
+                    Text="{x:Static res:AppResources.DeleteAuthorization}"
                     Command="{Binding DeleteCommand}"
                     BackgroundColor="{StaticResource Danger}"
                     TextColor="White"

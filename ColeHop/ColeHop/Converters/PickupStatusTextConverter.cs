@@ -1,3 +1,4 @@
+using ColeHop.Resources.Strings;
 using System.Globalization;
 
 namespace ColeHop.Converters
@@ -8,10 +9,10 @@ namespace ColeHop.Converters
         {
             if (value is bool alreadyPickedUp)
             {
-                return alreadyPickedUp ? "✓ Ya recogido" : "Pendiente de recogida";
+                return alreadyPickedUp ? AppResources.AlreadyPickedUp : AppResources.PendingPickup;
             }
 
-            return "Estado desconocido";
+            return AppResources.UnknownStatus;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

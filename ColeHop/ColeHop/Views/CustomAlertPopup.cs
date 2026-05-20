@@ -13,10 +13,15 @@ namespace ColeHop.Views
             { "éxito", "\ue86c" },
             { "success", "\ue86c" },
             { "información", "\ue88e" },
+            { "information", "\ue88e" },
             { "info", "\ue88e" },
             { "acceso denegado", "\ue899" },
+            { "access denied", "\ue899" },
+            { "not authorized", "\ue5cd" },
             { "no autorizada", "\ue5cd" },
             { "tiempo agotado", "\ue425" },
+            { "timeout", "\ue425" },
+            { "pickup authorized", "\ue876" },
             { "recogida autorizada", "\ue876" },
         };
 
@@ -43,6 +48,8 @@ namespace ColeHop.Views
 
             if (title.Contains("error", StringComparison.OrdinalIgnoreCase) ||
                 title.Contains("denegado", StringComparison.OrdinalIgnoreCase) ||
+                title.Contains("denied", StringComparison.OrdinalIgnoreCase) ||
+                title.Contains("not authorized", StringComparison.OrdinalIgnoreCase) ||
                 title.Contains("no autorizada", StringComparison.OrdinalIgnoreCase))
             {
                 iconColor = (Color)Application.Current.Resources["Danger"];
@@ -50,14 +57,16 @@ namespace ColeHop.Views
             }
             else if (title.Contains("éxito", StringComparison.OrdinalIgnoreCase) ||
                      title.Contains("success", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("autorizada", StringComparison.OrdinalIgnoreCase))
+                     title.Contains("autorizada", StringComparison.OrdinalIgnoreCase) ||
+                     title.Contains("authorized", StringComparison.OrdinalIgnoreCase))
             {
                 iconColor = (Color)Application.Current.Resources["Success"];
                 iconBgColor = GetThemeColor(isDark, "SuccessBgDark", "SuccessBgLight");
             }
             else if (title.Contains("aviso", StringComparison.OrdinalIgnoreCase) ||
                      title.Contains("warning", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("tiempo", StringComparison.OrdinalIgnoreCase))
+                     title.Contains("tiempo", StringComparison.OrdinalIgnoreCase) ||
+                     title.Contains("timeout", StringComparison.OrdinalIgnoreCase))
             {
                 iconColor = (Color)Application.Current.Resources["Accent"];
                 iconBgColor = GetThemeColor(isDark, "WarningBgDark", "WarningBgLight");

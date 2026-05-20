@@ -70,6 +70,24 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Acceso denegado.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Autorizaciones activas.
+        /// </summary>
+        public static string ActiveAuthorizations {
+            get {
+                return ResourceManager.GetString("ActiveAuthorizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Añadir Persona Autorizada.
         /// </summary>
         public static string AddAuthorizedPerson {
@@ -88,11 +106,29 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ✓ Ya recogido.
+        /// </summary>
+        public static string AlreadyPickedUp {
+            get {
+                return ResourceManager.GetString("AlreadyPickedUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ColeHop.
         /// </summary>
         public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Acerque el DNI electrónico al lector....
+        /// </summary>
+        public static string ApproachDniToReader {
+            get {
+                return ResourceManager.GetString("ApproachDniToReader", resourceCulture);
             }
         }
         
@@ -106,15 +142,6 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Versión: .
-        /// </summary>
-        public static string VersionString {
-            get {
-                return ResourceManager.GetString("VersionString", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Busca una cadena traducida similar a Autorización.
         /// </summary>
         public static string Authorization {
@@ -124,11 +151,47 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Calendario de autorizaciones.
+        /// </summary>
+        public static string AuthorizationCalendar {
+            get {
+                return ResourceManager.GetString("AuthorizationCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Autorización creada exitosamente.
         /// </summary>
         public static string AuthorizationCreatedSuccessfully {
             get {
                 return ResourceManager.GetString("AuthorizationCreatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Detalle de autorización.
+        /// </summary>
+        public static string AuthorizationDetail {
+            get {
+                return ResourceManager.GetString("AuthorizationDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Autorización no encontrada.
+        /// </summary>
+        public static string AuthorizationNotFound {
+            get {
+                return ResourceManager.GetString("AuthorizationNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Autorización actualizada correctamente.
+        /// </summary>
+        public static string AuthorizationUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("AuthorizationUpdatedSuccessfully", resourceCulture);
             }
         }
         
@@ -160,11 +223,47 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Personas autorizadas.
+        /// </summary>
+        public static string AuthorizedPersonsMenu {
+            get {
+                return ResourceManager.GetString("AuthorizedPersonsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Acerque el DNI electrónico.
+        /// </summary>
+        public static string BringDnieClose {
+            get {
+                return ResourceManager.GetString("BringDnieClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cancelar.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El CAN debe tener 6 dígitos.
+        /// </summary>
+        public static string CanMustBe6Digits {
+            get {
+                return ResourceManager.GetString("CanMustBe6Digits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Este niño ya ha sido recogido hoy.
+        /// </summary>
+        public static string ChildAlreadyPickedUp {
+            get {
+                return ResourceManager.GetString("ChildAlreadyPickedUp", resourceCulture);
             }
         }
         
@@ -183,6 +282,15 @@ namespace ColeHop.Resources.Strings {
         public static string ChildDetail {
             get {
                 return ResourceManager.GetString("ChildDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se ha especificado el niño a recoger.
+        /// </summary>
+        public static string ChildNotSpecified {
+            get {
+                return ResourceManager.GetString("ChildNotSpecified", resourceCulture);
             }
         }
         
@@ -214,6 +322,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Está seguro de que desea eliminar esta autorización?.
+        /// </summary>
+        public static string ConfirmDeleteAuthorization {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteAuthorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Estás seguro de que deseas eliminar a {0}?.
         /// </summary>
         public static string ConfirmDeleteChild {
@@ -237,6 +354,15 @@ namespace ColeHop.Resources.Strings {
         public static string ConfirmDeletion {
             get {
                 return ResourceManager.GetString("ConfirmDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudieron cargar las recogidas: {0}.
+        /// </summary>
+        public static string CouldNotLoadPickups {
+            get {
+                return ResourceManager.GetString("CouldNotLoadPickups", resourceCulture);
             }
         }
         
@@ -277,11 +403,29 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Crear cuenta nueva.
+        /// </summary>
+        public static string CreateNewAccount {
+            get {
+                return ResourceManager.GetString("CreateNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Personalizado.
         /// </summary>
         public static string Custom {
             get {
                 return ResourceManager.GetString("Custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lista de recogidas del día.
+        /// </summary>
+        public static string DailyPickupList {
+            get {
+                return ResourceManager.GetString("DailyPickupList", resourceCulture);
             }
         }
         
@@ -295,11 +439,38 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Hola! ¿Qué necesitas?.
+        /// </summary>
+        public static string DashboardGreeting {
+            get {
+                return ResourceManager.GetString("DashboardGreeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a dddd, d &apos;de&apos; MMMM &apos;de&apos; yyyy.
+        /// </summary>
+        public static string DateFormatLong {
+            get {
+                return ResourceManager.GetString("DateFormatLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Eliminar.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Eliminar autorización.
+        /// </summary>
+        public static string DeleteAuthorization {
+            get {
+                return ResourceManager.GetString("DeleteAuthorization", resourceCulture);
             }
         }
         
@@ -331,11 +502,29 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se detectó el DNI en 10 segundos. Por favor, intente de nuevo..
+        /// </summary>
+        public static string DniNotDetectedTimeout {
+            get {
+                return ResourceManager.GetString("DniNotDetectedTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El DNI es obligatorio.
         /// </summary>
         public static string DniRequired {
             get {
                 return ResourceManager.GetString("DniRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Editar.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -385,6 +574,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Por favor, active NFC en los ajustes.
+        /// </summary>
+        public static string EnableNfcInSettings {
+            get {
+                return ResourceManager.GetString("EnableNfcInSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Activar notificaciones.
         /// </summary>
         public static string EnableNotifications {
@@ -412,11 +610,38 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Introduzca el CAN del DNI (6 dígitos).
+        /// </summary>
+        public static string EnterCanPrompt {
+            get {
+                return ResourceManager.GetString("EnterCanPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Escribe el motivo del rechazo.
+        /// </summary>
+        public static string EnterRejectionReason {
+            get {
+                return ResourceManager.GetString("EnterRejectionReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El código CAN introducido no es correcto. Revise los 6 dígitos que aparecen en la parte inferior derecha del anverso de su DNI..
+        /// </summary>
+        public static string ErrorCanIncorrect {
+            get {
+                return ResourceManager.GetString("ErrorCanIncorrect", resourceCulture);
             }
         }
         
@@ -430,6 +655,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error al verificar la seguridad del documento. El CAN podría ser incorrecto o el DNI se movió durante la lectura. Inténtelo de nuevo..
+        /// </summary>
+        public static string ErrorCrypto {
+            get {
+                return ResourceManager.GetString("ErrorCrypto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error al eliminar: {0}.
         /// </summary>
         public static string ErrorDeleting {
@@ -439,11 +673,83 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se ha podido acceder a los datos del DNI. Asegúrese de que el documento es un DNI electrónico válido..
+        /// </summary>
+        public static string ErrorDniAccess {
+            get {
+                return ResourceManager.GetString("ErrorDniAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha producido un error de comunicación con el DNI. Vuelva a acercar el documento y manténgalo quieto durante la lectura..
+        /// </summary>
+        public static string ErrorDniCommunication {
+            get {
+                return ResourceManager.GetString("ErrorDniCommunication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha producido un error al leer el DNI. Compruebe que el CAN es correcto, mantenga el documento quieto sobre el teléfono e inténtelo de nuevo..
+        /// </summary>
+        public static string ErrorDniFallback {
+            get {
+                return ResourceManager.GetString("ErrorDniFallback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de comunicación con el DNI electrónico. Mantenga el documento pegado al teléfono sin moverlo e inténtelo de nuevo..
+        /// </summary>
+        public static string ErrorDniGenericComm {
+            get {
+                return ResourceManager.GetString("ErrorDniGenericComm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al cargar personas autorizadas: {0}.
+        /// </summary>
+        public static string ErrorLoadingAuthorizedPersons {
+            get {
+                return ResourceManager.GetString("ErrorLoadingAuthorizedPersons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al cargar hijos: {0}.
+        /// </summary>
+        public static string ErrorLoadingChildren {
+            get {
+                return ResourceManager.GetString("ErrorLoadingChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error al cargar datos: {0}.
         /// </summary>
         public static string ErrorLoadingData {
             get {
                 return ResourceManager.GetString("ErrorLoadingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error en la lectura NFC. Asegúrese de que el DNI está bien posicionado y no lo mueva durante el proceso..
+        /// </summary>
+        public static string ErrorNfcGeneric {
+            get {
+                return ResourceManager.GetString("ErrorNfcGeneric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al establecer la conexión segura con el DNI. Verifique que el CAN es correcto y vuelva a intentarlo..
+        /// </summary>
+        public static string ErrorPaceConnection {
+            get {
+                return ResourceManager.GetString("ErrorPaceConnection", resourceCulture);
             }
         }
         
@@ -475,11 +781,56 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La comunicación segura con el DNI se ha interrumpido. Vuelva a acercar el documento e inténtelo de nuevo..
+        /// </summary>
+        public static string ErrorSecureMessaging {
+            get {
+                return ResourceManager.GetString("ErrorSecureMessaging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al iniciar recogida.
+        /// </summary>
+        public static string ErrorStartingPickup {
+            get {
+                return ResourceManager.GetString("ErrorStartingPickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha perdido la conexión con el DNI. Mantenga el documento pegado al teléfono sin moverlo durante toda la lectura..
+        /// </summary>
+        public static string ErrorTagLost {
+            get {
+                return ResourceManager.GetString("ErrorTagLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de comunicación NFC. Asegúrese de que el DNI está bien posicionado sobre el lector NFC del teléfono..
+        /// </summary>
+        public static string ErrorTransceive {
+            get {
+                return ResourceManager.GetString("ErrorTransceive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Finalizar.
         /// </summary>
         public static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desde: .
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -520,11 +871,47 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Identidad verificada: {0}.
+        /// </summary>
+        public static string IdentityVerified {
+            get {
+                return ResourceManager.GetString("IdentityVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Información.
+        /// </summary>
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contexto de recogida no válido.
+        /// </summary>
+        public static string InvalidPickupContext {
+            get {
+                return ResourceManager.GetString("InvalidPickupContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Idioma.
         /// </summary>
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Idioma cambiado. Se reiniciará la aplicación para aplicar los cambios..
+        /// </summary>
+        public static string LanguageChangedRestart {
+            get {
+                return ResourceManager.GetString("LanguageChangedRestart", resourceCulture);
             }
         }
         
@@ -565,6 +952,51 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Entrar como Profesor.
+        /// </summary>
+        public static string LoginAsTeacher {
+            get {
+                return ResourceManager.GetString("LoginAsTeacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Entrar como Tutor.
+        /// </summary>
+        public static string LoginAsTutor {
+            get {
+                return ResourceManager.GetString("LoginAsTutor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cerrar sesión.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Menores.
+        /// </summary>
+        public static string Minors {
+            get {
+                return ResourceManager.GetString("Minors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mis hijos.
+        /// </summary>
+        public static string MyChildren {
+            get {
+                return ResourceManager.GetString("MyChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre.
         /// </summary>
         public static string Name {
@@ -592,6 +1024,107 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a NFC desactivado. Actívelo para continuar..
+        /// </summary>
+        public static string NfcDisabledWarning {
+            get {
+                return ResourceManager.GetString("NfcDisabledWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a DNI detectado. Mantenga el DNI en el lector hasta que se complete la comprobación..
+        /// </summary>
+        public static string NfcDniDetectedKeepStill {
+            get {
+                return ResourceManager.GetString("NfcDniDetectedKeepStill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Estableciendo canal seguro (PACE)....
+        /// </summary>
+        public static string NfcEstablishingSecureChannel {
+            get {
+                return ResourceManager.GetString("NfcEstablishingSecureChannel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mantenga el DNI en el lector
+        ///hasta que se complete la comprobación.
+        /// </summary>
+        public static string NfcKeepDniOnReader {
+            get {
+                return ResourceManager.GetString("NfcKeepDniOnReader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a NFC no soportado.
+        /// </summary>
+        public static string NfcNotSupported {
+            get {
+                return ResourceManager.GetString("NfcNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Este dispositivo no soporta NFC.
+        /// </summary>
+        public static string NfcNotSupportedDevice {
+            get {
+                return ResourceManager.GetString("NfcNotSupportedDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Coloque la parte trasera del DNIe
+        ///sobre la parte superior del teléfono.
+        /// </summary>
+        public static string NfcPositionInstructions {
+            get {
+                return ResourceManager.GetString("NfcPositionInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Leyendo datos del DNIe....
+        /// </summary>
+        public static string NfcReadingDnieData {
+            get {
+                return ResourceManager.GetString("NfcReadingDnieData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Canal seguro activo. Preparando lectura....
+        /// </summary>
+        public static string NfcSecureChannelReading {
+            get {
+                return ResourceManager.GetString("NfcSecureChannelReading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay autorizaciones activas.
+        /// </summary>
+        public static string NoActiveAuthorizations {
+            get {
+                return ResourceManager.GetString("NoActiveAuthorizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay contexto de recogida activo.
+        /// </summary>
+        public static string NoActivePickupContext {
+            get {
+                return ResourceManager.GetString("NoActivePickupContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No hay personas autorizadas.
         /// </summary>
         public static string NoAuthorizedPersons {
@@ -601,11 +1134,47 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Aún no se ha recogido ningún niño.
+        /// </summary>
+        public static string NoChildrenPickedUpYet {
+            get {
+                return ResourceManager.GetString("NoChildrenPickedUpYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No hay hijos registrados.
         /// </summary>
         public static string NoChildrenRegistered {
             get {
                 return ResourceManager.GetString("NoChildrenRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay altas pendientes.
+        /// </summary>
+        public static string NoPendingApprovals {
+            get {
+                return ResourceManager.GetString("NoPendingApprovals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay recogidas pendientes.
+        /// </summary>
+        public static string NoPendingPickups {
+            get {
+                return ResourceManager.GetString("NoPendingPickups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No autorizado.
+        /// </summary>
+        public static string NotAuthorized {
+            get {
+                return ResourceManager.GetString("NotAuthorized", resourceCulture);
             }
         }
         
@@ -673,6 +1242,42 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Pendiente de aprobación.
+        /// </summary>
+        public static string PendingApproval {
+            get {
+                return ResourceManager.GetString("PendingApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Altas pendientes.
+        /// </summary>
+        public static string PendingApprovals {
+            get {
+                return ResourceManager.GetString("PendingApprovals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pendiente de recogida.
+        /// </summary>
+        public static string PendingPickup {
+            get {
+                return ResourceManager.GetString("PendingPickup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pendientes de recoger.
+        /// </summary>
+        public static string PendingPickups {
+            get {
+                return ResourceManager.GetString("PendingPickups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Período.
         /// </summary>
         public static string Period {
@@ -687,6 +1292,24 @@ namespace ColeHop.Resources.Strings {
         public static string PersonalInfo {
             get {
                 return ResourceManager.GetString("PersonalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} puede recoger a {1}.
+        /// </summary>
+        public static string PersonCanPickupChild {
+            get {
+                return ResourceManager.GetString("PersonCanPickupChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} {1} con DNI {2} puede recoger a {3}.
+        /// </summary>
+        public static string PersonCanPickupChildWithDni {
+            get {
+                return ResourceManager.GetString("PersonCanPickupChildWithDni", resourceCulture);
             }
         }
         
@@ -709,6 +1332,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a {0} no tiene autorización vigente para recoger a este menor..
+        /// </summary>
+        public static string PersonNotAuthorizedForChild {
+            get {
+                return ResourceManager.GetString("PersonNotAuthorizedForChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Persona autorizada actualizada correctamente.
         /// </summary>
         public static string PersonUpdatedSuccessfully {
@@ -718,11 +1350,83 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Recogidos.
+        /// </summary>
+        public static string PickedUp {
+            get {
+                return ResourceManager.GetString("PickedUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recogido por:.
+        /// </summary>
+        public static string PickedUpBy {
+            get {
+                return ResourceManager.GetString("PickedUpBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recoge:.
+        /// </summary>
+        public static string PicksUp {
+            get {
+                return ResourceManager.GetString("PicksUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recogida autorizada.
+        /// </summary>
+        public static string PickupAuthorized {
+            get {
+                return ResourceManager.GetString("PickupAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recogida confirmada correctamente.
+        /// </summary>
+        public static string PickupConfirmedSuccess {
+            get {
+                return ResourceManager.GetString("PickupConfirmedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recogida no autorizada.
+        /// </summary>
+        public static string PickupNotAuthorized {
+            get {
+                return ResourceManager.GetString("PickupNotAuthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recogida de {0}.
+        /// </summary>
+        public static string PickupOf {
+            get {
+                return ResourceManager.GetString("PickupOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Infantil.
         /// </summary>
         public static string Preschool {
             get {
                 return ResourceManager.GetString("Preschool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pulse el botón + para crear una nueva autorización.
+        /// </summary>
+        public static string PressButtonToAddAuthorization {
+            get {
+                return ResourceManager.GetString("PressButtonToAddAuthorization", resourceCulture);
             }
         }
         
@@ -754,6 +1458,24 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listo para escanear DNI para recoger a {0}.
+        /// </summary>
+        public static string ReadyToScanForChild {
+            get {
+                return ResourceManager.GetString("ReadyToScanForChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Motivo....
+        /// </summary>
+        public static string ReasonPlaceholder {
+            get {
+                return ResourceManager.GetString("ReasonPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Registrar.
         /// </summary>
         public static string Register {
@@ -777,6 +1499,42 @@ namespace ColeHop.Resources.Strings {
         public static string RegistrationCompletedSuccessfully {
             get {
                 return ResourceManager.GetString("RegistrationCompletedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rechazar.
+        /// </summary>
+        public static string Reject {
+            get {
+                return ResourceManager.GetString("Reject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rechazar alta.
+        /// </summary>
+        public static string RejectChild {
+            get {
+                return ResourceManager.GetString("RejectChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rechazada.
+        /// </summary>
+        public static string Rejected {
+            get {
+                return ResourceManager.GetString("Rejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Solicitud rechazada.
+        /// </summary>
+        public static string RejectedRegistration {
+            get {
+                return ResourceManager.GetString("RejectedRegistration", resourceCulture);
             }
         }
         
@@ -813,6 +1571,15 @@ namespace ColeHop.Resources.Strings {
         public static string SaveChanges {
             get {
                 return ResourceManager.GetString("SaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Escaneo cancelado.
+        /// </summary>
+        public static string ScanCancelled {
+            get {
+                return ResourceManager.GetString("ScanCancelled", resourceCulture);
             }
         }
         
@@ -925,6 +1692,15 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Iniciar escaneo.
+        /// </summary>
+        public static string StartScan {
+            get {
+                return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Paso.
         /// </summary>
         public static string Step {
@@ -961,11 +1737,47 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Panel del Profesor.
+        /// </summary>
+        public static string TeacherDashboard {
+            get {
+                return ResourceManager.GetString("TeacherDashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tema.
         /// </summary>
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tiempo agotado.
+        /// </summary>
+        public static string TimeoutExpired {
+            get {
+                return ResourceManager.GetString("TimeoutExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tiempo de espera agotado. Intente de nuevo..
+        /// </summary>
+        public static string TimeoutRetry {
+            get {
+                return ResourceManager.GetString("TimeoutRetry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hasta: .
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         
@@ -988,6 +1800,78 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Demasiados intentos. Espere {0}s....
+        /// </summary>
+        public static string TooManyAttemptsWait {
+            get {
+                return ResourceManager.GetString("TooManyAttemptsWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Panel del Tutor.
+        /// </summary>
+        public static string TutorDashboard {
+            get {
+                return ResourceManager.GetString("TutorDashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Acceso no autorizado.
+        /// </summary>
+        public static string UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Desconocido.
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Estado desconocido.
+        /// </summary>
+        public static string UnknownStatus {
+            get {
+                return ResourceManager.GetString("UnknownStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuario o email.
+        /// </summary>
+        public static string UsernameOrEmail {
+            get {
+                return ResourceManager.GetString("UsernameOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Periodo de validez.
+        /// </summary>
+        public static string ValidityPeriod {
+            get {
+                return ResourceManager.GetString("ValidityPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de verificación.
+        /// </summary>
+        public static string VerificationError {
+            get {
+                return ResourceManager.GetString("VerificationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Versión.
         /// </summary>
         public static string Version {
@@ -995,364 +1879,31 @@ namespace ColeHop.Resources.Strings {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
         }
-
-        public static string TutorDashboard {
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Versión: .
+        /// </summary>
+        public static string VersionString {
             get {
-                return ResourceManager.GetString("TutorDashboard", resourceCulture);
+                return ResourceManager.GetString("VersionString", resourceCulture);
             }
         }
-
-        public static string MyChildren {
-            get {
-                return ResourceManager.GetString("MyChildren", resourceCulture);
-            }
-        }
-
-        public static string AuthorizedPersonsMenu {
-            get {
-                return ResourceManager.GetString("AuthorizedPersonsMenu", resourceCulture);
-            }
-        }
-
-        public static string AuthorizationCalendar {
-            get {
-                return ResourceManager.GetString("AuthorizationCalendar", resourceCulture);
-            }
-        }
-
-        public static string Logout {
-            get {
-                return ResourceManager.GetString("Logout", resourceCulture);
-            }
-        }
-
-        public static string TeacherDashboard {
-            get {
-                return ResourceManager.GetString("TeacherDashboard", resourceCulture);
-            }
-        }
-
-        public static string DailyPickupList {
-            get {
-                return ResourceManager.GetString("DailyPickupList", resourceCulture);
-            }
-        }
-
-        public static string LoginAsTeacher {
-            get {
-                return ResourceManager.GetString("LoginAsTeacher", resourceCulture);
-            }
-        }
-
-        public static string LoginAsTutor {
-            get {
-                return ResourceManager.GetString("LoginAsTutor", resourceCulture);
-            }
-        }
-
-        public static string CreateNewAccount {
-            get {
-                return ResourceManager.GetString("CreateNewAccount", resourceCulture);
-            }
-        }
-
-        public static string PendingPickups {
-            get {
-                return ResourceManager.GetString("PendingPickups", resourceCulture);
-            }
-        }
-
-        public static string NoPendingPickups {
-            get {
-                return ResourceManager.GetString("NoPendingPickups", resourceCulture);
-            }
-        }
-
-        public static string PickedUp {
-            get {
-                return ResourceManager.GetString("PickedUp", resourceCulture);
-            }
-        }
-
-        public static string NoChildrenPickedUpYet {
-            get {
-                return ResourceManager.GetString("NoChildrenPickedUpYet", resourceCulture);
-            }
-        }
-
-        public static string EnterCanPrompt {
-            get {
-                return ResourceManager.GetString("EnterCanPrompt", resourceCulture);
-            }
-        }
-
-        public static string StartScan {
-            get {
-                return ResourceManager.GetString("StartScan", resourceCulture);
-            }
-        }
-
-        public static string BringDnieClose {
-            get {
-                return ResourceManager.GetString("BringDnieClose", resourceCulture);
-            }
-        }
-
-        public static string UsernameOrEmail {
-            get {
-                return ResourceManager.GetString("UsernameOrEmail", resourceCulture);
-            }
-        }
-
-        public static string DashboardGreeting {
-            get {
-                return ResourceManager.GetString("DashboardGreeting", resourceCulture);
-            }
-        }
-
-        public static string PendingApprovals {
-            get {
-                return ResourceManager.GetString("PendingApprovals", resourceCulture);
-            }
-        }
-
-        public static string NoPendingApprovals {
-            get {
-                return ResourceManager.GetString("NoPendingApprovals", resourceCulture);
-            }
-        }
-
-        public static string PendingApproval {
-            get {
-                return ResourceManager.GetString("PendingApproval", resourceCulture);
-            }
-        }
-
-        public static string Rejected {
-            get {
-                return ResourceManager.GetString("Rejected", resourceCulture);
-            }
-        }
-
-        public static string RejectedRegistration {
-            get {
-                return ResourceManager.GetString("RejectedRegistration", resourceCulture);
-            }
-        }
-
-        public static string RejectChild {
-            get {
-                return ResourceManager.GetString("RejectChild", resourceCulture);
-            }
-        }
-
-        public static string EnterRejectionReason {
-            get {
-                return ResourceManager.GetString("EnterRejectionReason", resourceCulture);
-            }
-        }
-
-        public static string Reject {
-            get {
-                return ResourceManager.GetString("Reject", resourceCulture);
-            }
-        }
-
-        public static string ReasonPlaceholder {
-            get {
-                return ResourceManager.GetString("ReasonPlaceholder", resourceCulture);
-            }
-        }
-
-        public static string NfcNotSupported {
-            get {
-                return ResourceManager.GetString("NfcNotSupported", resourceCulture);
-            }
-        }
-
-        public static string NfcDisabledWarning {
-            get {
-                return ResourceManager.GetString("NfcDisabledWarning", resourceCulture);
-            }
-        }
-
-        public static string ChildNotSpecified {
-            get {
-                return ResourceManager.GetString("ChildNotSpecified", resourceCulture);
-            }
-        }
-
-        public static string CanMustBe6Digits {
-            get {
-                return ResourceManager.GetString("CanMustBe6Digits", resourceCulture);
-            }
-        }
-
-        public static string InvalidPickupContext {
-            get {
-                return ResourceManager.GetString("InvalidPickupContext", resourceCulture);
-            }
-        }
-
-        public static string TimeoutExpired {
-            get {
-                return ResourceManager.GetString("TimeoutExpired", resourceCulture);
-            }
-        }
-
-        public static string DniNotDetectedTimeout {
-            get {
-                return ResourceManager.GetString("DniNotDetectedTimeout", resourceCulture);
-            }
-        }
-
-        public static string VerificationError {
-            get {
-                return ResourceManager.GetString("VerificationError", resourceCulture);
-            }
-        }
-
-        public static string NoActivePickupContext {
-            get {
-                return ResourceManager.GetString("NoActivePickupContext", resourceCulture);
-            }
-        }
-
-        public static string AccessDenied {
-            get {
-                return ResourceManager.GetString("AccessDenied", resourceCulture);
-            }
-        }
-
-        public static string NotAuthorized {
-            get {
-                return ResourceManager.GetString("NotAuthorized", resourceCulture);
-            }
-        }
-
-        public static string PickupAuthorized {
-            get {
-                return ResourceManager.GetString("PickupAuthorized", resourceCulture);
-            }
-        }
-
-        public static string PersonCanPickupChild {
-            get {
-                return ResourceManager.GetString("PersonCanPickupChild", resourceCulture);
-            }
-        }
-
-        public static string UnauthorizedAccess {
-            get {
-                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
-            }
-        }
-
-        public static string CouldNotLoadPickups {
-            get {
-                return ResourceManager.GetString("CouldNotLoadPickups", resourceCulture);
-            }
-        }
-
-        public static string ChildAlreadyPickedUp {
-            get {
-                return ResourceManager.GetString("ChildAlreadyPickedUp", resourceCulture);
-            }
-        }
-
-        public static string Information {
-            get {
-                return ResourceManager.GetString("Information", resourceCulture);
-            }
-        }
-
-        public static string Warning {
-            get {
-                return ResourceManager.GetString("Warning", resourceCulture);
-            }
-        }
-
-        public static string LanguageChangedRestart {
-            get {
-                return ResourceManager.GetString("LanguageChangedRestart", resourceCulture);
-            }
-        }
-
-        public static string ErrorLoadingAuthorizedPersons {
-            get {
-                return ResourceManager.GetString("ErrorLoadingAuthorizedPersons", resourceCulture);
-            }
-        }
-
-        public static string ErrorLoadingChildren {
-            get {
-                return ResourceManager.GetString("ErrorLoadingChildren", resourceCulture);
-            }
-        }
-
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Esperando DNI electrónico....
+        /// </summary>
         public static string WaitingForDni {
             get {
                 return ResourceManager.GetString("WaitingForDni", resourceCulture);
             }
         }
-
-        public static string NfcNotSupportedDevice {
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Aviso.
+        /// </summary>
+        public static string Warning {
             get {
-                return ResourceManager.GetString("NfcNotSupportedDevice", resourceCulture);
-            }
-        }
-
-        public static string EnableNfcInSettings {
-            get {
-                return ResourceManager.GetString("EnableNfcInSettings", resourceCulture);
-            }
-        }
-
-        public static string ReadyToScanForChild {
-            get {
-                return ResourceManager.GetString("ReadyToScanForChild", resourceCulture);
-            }
-        }
-
-        public static string ErrorStartingPickup {
-            get {
-                return ResourceManager.GetString("ErrorStartingPickup", resourceCulture);
-            }
-        }
-
-        public static string TooManyAttemptsWait {
-            get {
-                return ResourceManager.GetString("TooManyAttemptsWait", resourceCulture);
-            }
-        }
-
-        public static string ApproachDniToReader {
-            get {
-                return ResourceManager.GetString("ApproachDniToReader", resourceCulture);
-            }
-        }
-
-        public static string AuthorizationNotFound {
-            get {
-                return ResourceManager.GetString("AuthorizationNotFound", resourceCulture);
-            }
-        }
-
-        public static string Unknown {
-            get {
-                return ResourceManager.GetString("Unknown", resourceCulture);
-            }
-        }
-
-        public static string DeleteAuthorization {
-            get {
-                return ResourceManager.GetString("DeleteAuthorization", resourceCulture);
-            }
-        }
-
-        public static string ConfirmDeleteAuthorization {
-            get {
-                return ResourceManager.GetString("ConfirmDeleteAuthorization", resourceCulture);
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
     }

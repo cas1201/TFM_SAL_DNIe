@@ -1,577 +1,737 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-	<xsd:element name="root" msdata:IsDataSet="true">
-	  <xsd:complexType>
-		<xsd:choice maxOccurs="unbounded">
-		  <xsd:element name="metadata">
-			<xsd:complexType>
-			  <xsd:sequence>
-				<xsd:element name="value" type="xsd:string" minOccurs="0" />
-			  </xsd:sequence>
-			  <xsd:attribute name="name" use="required" type="xsd:string" />
-			  <xsd:attribute name="type" type="xsd:string" />
-			  <xsd:attribute name="mimetype" type="xsd:string" />
-			  <xsd:attribute ref="xml:space" />
-			</xsd:complexType>
-		  </xsd:element>
-		  <xsd:element name="assembly">
-			<xsd:complexType>
-			  <xsd:attribute name="alias" type="xsd:string" />
-			  <xsd:attribute name="name" type="xsd:string" />
-			</xsd:complexType>
-		  </xsd:element>
-		  <xsd:element name="data">
-			<xsd:complexType>
-			  <xsd:sequence>
-				<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-				<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-			  </xsd:sequence>
-			  <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-			  <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-			  <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-			  <xsd:attribute ref="xml:space" msdata:Ordinal="5" />
-			</xsd:complexType>
-		  </xsd:element>
-		  <xsd:element name="resheader">
-			<xsd:complexType>
-			  <xsd:sequence>
-				<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-			  </xsd:sequence>
-			  <xsd:attribute name="name" type="xsd:string" use="required" />
-			</xsd:complexType>
-		  </xsd:element>
-		</xsd:choice>
-	  </xsd:complexType>
-	</xsd:element>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
   </xsd:schema>
   <resheader name="resmimetype">
-	<value>text/microsoft-resx</value>
+    <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-	<value>2.0</value>
+    <value>2.0</value>
   </resheader>
   <resheader name="reader">
-	<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-	<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
   <data name="AppName" xml:space="preserve">
-	<value>ColeHop</value>
+    <value>ColeHop</value>
   </data>
-
   <data name="Login" xml:space="preserve">
-	<value>Iniciar sesión</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="Register" xml:space="preserve">
-	<value>Registrar</value>
+    <value>Registrar</value>
   </data>
   <data name="Email" xml:space="preserve">
-	<value>Email</value>
+    <value>Email</value>
   </data>
   <data name="Password" xml:space="preserve">
-	<value>Contraseña</value>
+    <value>Contraseña</value>
   </data>
   <data name="Name" xml:space="preserve">
-	<value>Nombre</value>
+    <value>Nombre</value>
   </data>
   <data name="LastName" xml:space="preserve">
-	<value>Apellidos</value>
+    <value>Apellidos</value>
   </data>
   <data name="DNI" xml:space="preserve">
-	<value>DNI</value>
+    <value>DNI</value>
   </data>
   <data name="School" xml:space="preserve">
-	<value>Escuela</value>
+    <value>Escuela</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
-	<value>Crear cuenta</value>
+    <value>Crear cuenta</value>
   </data>
-
   <data name="Children" xml:space="preserve">
-	<value>Hijos</value>
+    <value>Hijos</value>
   </data>
   <data name="AddChild" xml:space="preserve">
-	<value>Añadir Hijo</value>
+    <value>Añadir Hijo</value>
   </data>
   <data name="NoChildrenRegistered" xml:space="preserve">
-	<value>No hay hijos registrados</value>
+    <value>No hay hijos registrados</value>
   </data>
   <data name="PressButtonToAddOne" xml:space="preserve">
-	<value>Pulsa el botón + para añadir uno</value>
+    <value>Pulsa el botón + para añadir uno</value>
   </data>
-
   <data name="AuthorizedPersons" xml:space="preserve">
-	<value>Personas Autorizadas</value>
+    <value>Personas Autorizadas</value>
   </data>
   <data name="AddAuthorizedPerson" xml:space="preserve">
-	<value>Añadir Persona Autorizada</value>
+    <value>Añadir Persona Autorizada</value>
   </data>
   <data name="NoAuthorizedPersons" xml:space="preserve">
-	<value>No hay personas autorizadas</value>
+    <value>No hay personas autorizadas</value>
   </data>
-
   <data name="FullName" xml:space="preserve">
-	<value>Nombre completo</value>
+    <value>Nombre completo</value>
   </data>
   <data name="EducationType" xml:space="preserve">
-	<value>Tipo de enseñanza</value>
+    <value>Tipo de enseñanza</value>
   </data>
   <data name="Course" xml:space="preserve">
-	<value>Curso</value>
+    <value>Curso</value>
   </data>
   <data name="Group" xml:space="preserve">
-	<value>Grupo</value>
+    <value>Grupo</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-	<value>Relación</value>
+    <value>Relación</value>
   </data>
   <data name="Save" xml:space="preserve">
-	<value>Guardar</value>
+    <value>Guardar</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-	<value>Cancelar</value>
+    <value>Cancelar</value>
   </data>
-
   <data name="CreateAuthorization" xml:space="preserve">
-	<value>Crear autorización</value>
+    <value>Crear autorización</value>
   </data>
   <data name="FromDate" xml:space="preserve">
-	<value>Fecha desde</value>
+    <value>Fecha desde</value>
   </data>
   <data name="ToDate" xml:space="preserve">
-	<value>Fecha hasta</value>
+    <value>Fecha hasta</value>
   </data>
   <data name="AuthorizedChildren" xml:space="preserve">
-	<value>Niños autorizados</value>
+    <value>Niños autorizados</value>
   </data>
   <data name="AuthorizedPerson" xml:space="preserve">
-	<value>Persona autorizada</value>
+    <value>Persona autorizada</value>
   </data>
-
   <data name="Settings" xml:space="preserve">
-	<value>Ajustes</value>
+    <value>Ajustes</value>
   </data>
   <data name="Language" xml:space="preserve">
-	<value>Idioma</value>
+    <value>Idioma</value>
   </data>
   <data name="Theme" xml:space="preserve">
-	<value>Tema</value>
+    <value>Tema</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-	<value>Notificaciones</value>
+    <value>Notificaciones</value>
   </data>
   <data name="About" xml:space="preserve">
-	<value>Acerca de</value>
+    <value>Acerca de</value>
   </data>
   <data name="Version" xml:space="preserve">
-	<value>Versión</value>
+    <value>Versión</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-	<value>Español</value>
+    <value>Español</value>
   </data>
   <data name="English" xml:space="preserve">
-	<value>Inglés</value>
+    <value>Inglés</value>
   </data>
   <data name="Light" xml:space="preserve">
-	<value>Claro</value>
+    <value>Claro</value>
   </data>
   <data name="Dark" xml:space="preserve">
-	<value>Oscuro</value>
+    <value>Oscuro</value>
   </data>
   <data name="System" xml:space="preserve">
-	<value>Sistema</value>
+    <value>Sistema</value>
   </data>
   <data name="EnableNotifications" xml:space="preserve">
-	<value>Activar notificaciones</value>
+    <value>Activar notificaciones</value>
   </data>
   <data name="AppVersion" xml:space="preserve">
-	<value>Versión de la aplicación</value>
+    <value>Versión de la aplicación</value>
   </data>
   <data name="VersionString" xml:space="preserve">
-	<value>Versión: </value>
+    <value>Versión: </value>
   </data>
   <data name="Developer" xml:space="preserve">
-	<value>Desarrollador</value>
+    <value>Desarrollador</value>
   </data>
-
   <data name="Error" xml:space="preserve">
-	<value>Error</value>
+    <value>Error</value>
   </data>
   <data name="Success" xml:space="preserve">
-	<value>Éxito</value>
+    <value>Éxito</value>
   </data>
   <data name="OK" xml:space="preserve">
-	<value>OK</value>
+    <value>OK</value>
   </data>
   <data name="Delete" xml:space="preserve">
-	<value>Eliminar</value>
+    <value>Eliminar</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-	<value>Confirmar</value>
+    <value>Confirmar</value>
   </data>
-
   <data name="Preschool" xml:space="preserve">
-	<value>Infantil</value>
+    <value>Infantil</value>
   </data>
   <data name="Primary" xml:space="preserve">
-	<value>Primaria</value>
+    <value>Primaria</value>
   </data>
   <data name="SelectType" xml:space="preserve">
-	<value>Seleccione tipo</value>
+    <value>Seleccione tipo</value>
   </data>
-
-  <!-- Validation Messages -->
   <data name="NameRequired" xml:space="preserve">
-	<value>El nombre es obligatorio</value>
+    <value>El nombre es obligatorio</value>
   </data>
   <data name="LastNameRequired" xml:space="preserve">
-	<value>Los apellidos son obligatorios</value>
+    <value>Los apellidos son obligatorios</value>
   </data>
   <data name="DniRequired" xml:space="preserve">
-	<value>El DNI es obligatorio</value>
+    <value>El DNI es obligatorio</value>
   </data>
   <data name="DniInvalidFormat" xml:space="preserve">
-	<value>El DNI no tiene un formato válido</value>
+    <value>El DNI no tiene un formato válido</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
-	<value>El email es obligatorio</value>
+    <value>El email es obligatorio</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
-	<value>La contraseña es obligatoria</value>
+    <value>La contraseña es obligatoria</value>
   </data>
   <data name="SchoolRequired" xml:space="preserve">
-	<value>La escuela es obligatoria</value>
+    <value>La escuela es obligatoria</value>
   </data>
   <data name="EducationTypeRequired" xml:space="preserve">
-	<value>El tipo de enseñanza es obligatorio</value>
+    <value>El tipo de enseñanza es obligatorio</value>
   </data>
   <data name="CourseRequired" xml:space="preserve">
-	<value>El curso es obligatorio</value>
+    <value>El curso es obligatorio</value>
   </data>
   <data name="GroupRequired" xml:space="preserve">
-	<value>El grupo es obligatorio</value>
+    <value>El grupo es obligatorio</value>
   </data>
   <data name="RelationshipRequired" xml:space="preserve">
-	<value>La relación es obligatoria</value>
+    <value>La relación es obligatoria</value>
   </data>
   <data name="SelectAtLeastOneChild" xml:space="preserve">
-	<value>Selecciona al menos un hijo</value>
+    <value>Selecciona al menos un hijo</value>
   </data>
   <data name="SelectAuthorizedPerson" xml:space="preserve">
-	<value>Selecciona una persona autorizada</value>
+    <value>Selecciona una persona autorizada</value>
   </data>
   <data name="EndDateMustBeAfterStartDate" xml:space="preserve">
-	<value>La fecha de fin debe ser posterior a la fecha de inicio</value>
+    <value>La fecha de fin debe ser posterior a la fecha de inicio</value>
   </data>
-
-  <!-- Error Messages -->
   <data name="ErrorSaving" xml:space="preserve">
-	<value>Error al guardar: {0}</value>
+    <value>Error al guardar: {0}</value>
   </data>
   <data name="ErrorLoadingData" xml:space="preserve">
-	<value>Error al cargar datos: {0}</value>
+    <value>Error al cargar datos: {0}</value>
   </data>
   <data name="ErrorSavingChanges" xml:space="preserve">
-	<value>Error al guardar cambios: {0}</value>
+    <value>Error al guardar cambios: {0}</value>
   </data>
   <data name="ErrorDeleting" xml:space="preserve">
-	<value>Error al eliminar: {0}</value>
+    <value>Error al eliminar: {0}</value>
   </data>
   <data name="ErrorRegistering" xml:space="preserve">
-	<value>Error al registrar: {0}</value>
+    <value>Error al registrar: {0}</value>
   </data>
   <data name="ErrorCreatingAuthorization" xml:space="preserve">
-	<value>Error al crear autorización: {0}</value>
+    <value>Error al crear autorización: {0}</value>
   </data>
-
-  <!-- Success Messages -->
   <data name="ChildUpdatedSuccessfully" xml:space="preserve">
-	<value>Hijo actualizado correctamente</value>
+    <value>Hijo actualizado correctamente</value>
   </data>
   <data name="ChildDeletedSuccessfully" xml:space="preserve">
-	<value>Hijo eliminado correctamente</value>
+    <value>Hijo eliminado correctamente</value>
   </data>
   <data name="PersonUpdatedSuccessfully" xml:space="preserve">
-	<value>Persona autorizada actualizada correctamente</value>
+    <value>Persona autorizada actualizada correctamente</value>
   </data>
   <data name="PersonDeletedSuccessfully" xml:space="preserve">
-	<value>Persona autorizada eliminada correctamente</value>
+    <value>Persona autorizada eliminada correctamente</value>
   </data>
   <data name="RegistrationCompletedSuccessfully" xml:space="preserve">
-	<value>Registro completado exitosamente</value>
+    <value>Registro completado exitosamente</value>
   </data>
   <data name="AuthorizationCreatedSuccessfully" xml:space="preserve">
-	<value>Autorización creada exitosamente</value>
+    <value>Autorización creada exitosamente</value>
   </data>
-
-  <!-- Confirmation Messages -->
   <data name="ConfirmDeletion" xml:space="preserve">
-	<value>Confirmar eliminación</value>
+    <value>Confirmar eliminación</value>
   </data>
   <data name="ConfirmDeleteChild" xml:space="preserve">
-	<value>¿Estás seguro de que deseas eliminar a {0}?</value>
+    <value>¿Estás seguro de que deseas eliminar a {0}?</value>
   </data>
   <data name="ConfirmDeletePerson" xml:space="preserve">
-	<value>¿Estás seguro de que deseas eliminar a {0} {1}?</value>
+    <value>¿Estás seguro de que deseas eliminar a {0} {1}?</value>
   </data>
-
-  <!-- Other -->
   <data name="Registration" xml:space="preserve">
-	<value>Registro</value>
+    <value>Registro</value>
   </data>
   <data name="Authorization" xml:space="preserve">
-	<value>Autorización</value>
+    <value>Autorización</value>
   </data>
-
-  <!-- Authorization Wizard -->
   <data name="Step" xml:space="preserve">
-	<value>Paso</value>
+    <value>Paso</value>
   </data>
   <data name="Of" xml:space="preserve">
-	<value>de</value>
+    <value>de</value>
   </data>
   <data name="SelectChildren" xml:space="preserve">
-	<value>Selecciona los hijos</value>
+    <value>Selecciona los hijos</value>
   </data>
   <data name="SelectPerson" xml:space="preserve">
-	<value>Selecciona persona autorizada</value>
+    <value>Selecciona persona autorizada</value>
   </data>
   <data name="SetDates" xml:space="preserve">
-	<value>Define el período</value>
+    <value>Define el período</value>
   </data>
   <data name="Next" xml:space="preserve">
-	<value>Siguiente</value>
+    <value>Siguiente</value>
   </data>
   <data name="Previous" xml:space="preserve">
-	<value>Anterior</value>
+    <value>Anterior</value>
   </data>
   <data name="Finish" xml:space="preserve">
-	<value>Finalizar</value>
+    <value>Finalizar</value>
   </data>
   <data name="Today" xml:space="preserve">
-	<value>Hoy</value>
+    <value>Hoy</value>
   </data>
   <data name="OneWeek" xml:space="preserve">
-	<value>1 Semana</value>
+    <value>1 Semana</value>
   </data>
   <data name="OneMonth" xml:space="preserve">
-	<value>1 Mes</value>
+    <value>1 Mes</value>
   </data>
   <data name="Custom" xml:space="preserve">
-	<value>Personalizado</value>
+    <value>Personalizado</value>
   </data>
   <data name="SelectedCount" xml:space="preserve">
-	<value>{0} seleccionado(s)</value>
+    <value>{0} seleccionado(s)</value>
   </data>
   <data name="Summary" xml:space="preserve">
-	<value>Resumen</value>
+    <value>Resumen</value>
   </data>
   <data name="Period" xml:space="preserve">
-	<value>Período</value>
+    <value>Período</value>
   </data>
   <data name="SelectAtLeastOneChildMessage" xml:space="preserve">
-	<value>Debes seleccionar al menos un hijo</value>
+    <value>Debes seleccionar al menos un hijo</value>
   </data>
   <data name="PersonalInfo" xml:space="preserve">
-	<value>Información Personal</value>
+    <value>Información Personal</value>
   </data>
   <data name="EducationInfo" xml:space="preserve">
-	<value>Información Educativa</value>
+    <value>Información Educativa</value>
   </data>
   <data name="ChildDetail" xml:space="preserve">
-	<value>Detalle del Hijo</value>
+    <value>Detalle del Hijo</value>
   </data>
   <data name="PersonDetail" xml:space="preserve">
-	<value>Detalle de Persona Autorizada</value>
+    <value>Detalle de Persona Autorizada</value>
   </data>
   <data name="SaveChanges" xml:space="preserve">
-	<value>Guardar cambios</value>
+    <value>Guardar cambios</value>
   </data>
-
   <data name="TutorDashboard" xml:space="preserve">
-	<value>Panel del Tutor</value>
+    <value>Panel del Tutor</value>
   </data>
   <data name="MyChildren" xml:space="preserve">
-	<value>Mis hijos</value>
+    <value>Mis hijos</value>
   </data>
   <data name="AuthorizedPersonsMenu" xml:space="preserve">
-	<value>Personas autorizadas</value>
+    <value>Personas autorizadas</value>
   </data>
   <data name="AuthorizationCalendar" xml:space="preserve">
-	<value>Calendario de autorizaciones</value>
+    <value>Calendario de autorizaciones</value>
   </data>
   <data name="Logout" xml:space="preserve">
-	<value>Cerrar sesión</value>
+    <value>Cerrar sesión</value>
   </data>
   <data name="TeacherDashboard" xml:space="preserve">
-	<value>Panel del Profesor</value>
+    <value>Panel del Profesor</value>
   </data>
   <data name="DailyPickupList" xml:space="preserve">
-	<value>Lista de recogidas del día</value>
+    <value>Lista de recogidas del día</value>
   </data>
   <data name="LoginAsTeacher" xml:space="preserve">
-	<value>Entrar como Profesor</value>
+    <value>Entrar como Profesor</value>
   </data>
   <data name="LoginAsTutor" xml:space="preserve">
-	<value>Entrar como Tutor</value>
+    <value>Entrar como Tutor</value>
   </data>
   <data name="CreateNewAccount" xml:space="preserve">
-	<value>Crear cuenta nueva</value>
+    <value>Crear cuenta nueva</value>
   </data>
   <data name="PendingPickups" xml:space="preserve">
-	<value>Pendientes de recoger</value>
+    <value>Pendientes de recoger</value>
   </data>
   <data name="NoPendingPickups" xml:space="preserve">
-	<value>No hay recogidas pendientes</value>
+    <value>No hay recogidas pendientes</value>
   </data>
   <data name="PickedUp" xml:space="preserve">
-	<value>Recogidos</value>
+    <value>Recogidos</value>
   </data>
   <data name="NoChildrenPickedUpYet" xml:space="preserve">
-	<value>Aún no se ha recogido ningún niño</value>
+    <value>Aún no se ha recogido ningún niño</value>
   </data>
   <data name="EnterCanPrompt" xml:space="preserve">
-	<value>Introduzca el CAN del DNI (6 dígitos)</value>
+    <value>Introduzca el CAN del DNI (6 dígitos)</value>
   </data>
   <data name="StartScan" xml:space="preserve">
-	<value>Iniciar escaneo</value>
+    <value>Iniciar escaneo</value>
   </data>
   <data name="BringDnieClose" xml:space="preserve">
-	<value>Acerque el DNI electrónico</value>
+    <value>Acerque el DNI electrónico</value>
   </data>
   <data name="UsernameOrEmail" xml:space="preserve">
-	<value>Usuario o email</value>
+    <value>Usuario o email</value>
   </data>
   <data name="DashboardGreeting" xml:space="preserve">
-	<value>¡Hola! ¿Qué necesitas?</value>
+    <value>¡Hola! ¿Qué necesitas?</value>
   </data>
   <data name="PendingApprovals" xml:space="preserve">
-	<value>Altas pendientes</value>
+    <value>Altas pendientes</value>
   </data>
   <data name="NoPendingApprovals" xml:space="preserve">
-	<value>No hay altas pendientes</value>
+    <value>No hay altas pendientes</value>
   </data>
   <data name="PendingApproval" xml:space="preserve">
-	<value>Pendiente de aprobación</value>
+    <value>Pendiente de aprobación</value>
   </data>
   <data name="Rejected" xml:space="preserve">
-	<value>Rechazada</value>
+    <value>Rechazada</value>
   </data>
   <data name="RejectedRegistration" xml:space="preserve">
-	<value>Solicitud rechazada</value>
+    <value>Solicitud rechazada</value>
   </data>
   <data name="RejectChild" xml:space="preserve">
-	<value>Rechazar alta</value>
+    <value>Rechazar alta</value>
   </data>
   <data name="EnterRejectionReason" xml:space="preserve">
-	<value>Escribe el motivo del rechazo</value>
+    <value>Escribe el motivo del rechazo</value>
   </data>
   <data name="Reject" xml:space="preserve">
-	<value>Rechazar</value>
+    <value>Rechazar</value>
   </data>
   <data name="ReasonPlaceholder" xml:space="preserve">
-	<value>Motivo...</value>
+    <value>Motivo...</value>
   </data>
-
-  <!-- NFC/Pickup Messages -->
   <data name="NfcNotSupported" xml:space="preserve">
-	<value>NFC no soportado</value>
+    <value>NFC no soportado</value>
   </data>
   <data name="NfcDisabledWarning" xml:space="preserve">
-	<value>NFC desactivado. Actívelo para continuar.</value>
+    <value>NFC desactivado. Actívelo para continuar.</value>
   </data>
   <data name="ChildNotSpecified" xml:space="preserve">
-	<value>No se ha especificado el niño a recoger</value>
+    <value>No se ha especificado el niño a recoger</value>
   </data>
   <data name="CanMustBe6Digits" xml:space="preserve">
-	<value>El CAN debe tener 6 dígitos</value>
+    <value>El CAN debe tener 6 dígitos</value>
   </data>
   <data name="InvalidPickupContext" xml:space="preserve">
-	<value>Contexto de recogida no válido</value>
+    <value>Contexto de recogida no válido</value>
   </data>
   <data name="TimeoutExpired" xml:space="preserve">
-	<value>Tiempo agotado</value>
+    <value>Tiempo agotado</value>
   </data>
   <data name="DniNotDetectedTimeout" xml:space="preserve">
-	<value>No se detectó el DNI en 10 segundos. Por favor, intente de nuevo.</value>
+    <value>No se detectó el DNI en 10 segundos. Por favor, intente de nuevo.</value>
   </data>
   <data name="VerificationError" xml:space="preserve">
-	<value>Error de verificación</value>
+    <value>Error de verificación</value>
   </data>
   <data name="NoActivePickupContext" xml:space="preserve">
-	<value>No hay contexto de recogida activo</value>
+    <value>No hay contexto de recogida activo</value>
   </data>
   <data name="AccessDenied" xml:space="preserve">
-	<value>Acceso denegado</value>
+    <value>Acceso denegado</value>
   </data>
   <data name="NotAuthorized" xml:space="preserve">
-	<value>No autorizado</value>
+    <value>No autorizado</value>
   </data>
   <data name="PickupAuthorized" xml:space="preserve">
-	<value>Recogida autorizada</value>
+    <value>Recogida autorizada</value>
   </data>
   <data name="PersonCanPickupChild" xml:space="preserve">
-	<value>{0} puede recoger a {1}</value>
+    <value>{0} puede recoger a {1}</value>
   </data>
   <data name="UnauthorizedAccess" xml:space="preserve">
-	<value>Acceso no autorizado</value>
+    <value>Acceso no autorizado</value>
   </data>
   <data name="CouldNotLoadPickups" xml:space="preserve">
-	<value>No se pudieron cargar las recogidas: {0}</value>
+    <value>No se pudieron cargar las recogidas: {0}</value>
   </data>
   <data name="ChildAlreadyPickedUp" xml:space="preserve">
-	<value>Este niño ya ha sido recogido hoy</value>
+    <value>Este niño ya ha sido recogido hoy</value>
   </data>
   <data name="Information" xml:space="preserve">
-	<value>Información</value>
+    <value>Información</value>
   </data>
   <data name="Warning" xml:space="preserve">
-	<value>Aviso</value>
+    <value>Aviso</value>
   </data>
   <data name="LanguageChangedRestart" xml:space="preserve">
-	<value>Idioma cambiado. Reinicia la aplicación para aplicar los cambios.</value>
+    <value>Idioma cambiado. Se reiniciará la aplicación para aplicar los cambios.</value>
   </data>
   <data name="ErrorLoadingAuthorizedPersons" xml:space="preserve">
-	<value>Error al cargar personas autorizadas: {0}</value>
+    <value>Error al cargar personas autorizadas: {0}</value>
   </data>
   <data name="ErrorLoadingChildren" xml:space="preserve">
-	<value>Error al cargar hijos: {0}</value>
+    <value>Error al cargar hijos: {0}</value>
   </data>
   <data name="WaitingForDni" xml:space="preserve">
-	<value>Esperando DNI electrónico...</value>
+    <value>Esperando DNI electrónico...</value>
   </data>
   <data name="NfcNotSupportedDevice" xml:space="preserve">
-	<value>Este dispositivo no soporta NFC</value>
+    <value>Este dispositivo no soporta NFC</value>
   </data>
   <data name="EnableNfcInSettings" xml:space="preserve">
-	<value>Por favor, active NFC en los ajustes</value>
+    <value>Por favor, active NFC en los ajustes</value>
   </data>
   <data name="ReadyToScanForChild" xml:space="preserve">
-	<value>Listo para escanear DNI para recoger a {0}</value>
+    <value>Listo para escanear DNI para recoger a {0}</value>
   </data>
   <data name="ErrorStartingPickup" xml:space="preserve">
-	<value>Error al iniciar recogida</value>
+    <value>Error al iniciar recogida</value>
   </data>
   <data name="TooManyAttemptsWait" xml:space="preserve">
-	<value>Demasiados intentos. Espere {0}s...</value>
+    <value>Demasiados intentos. Espere {0}s...</value>
   </data>
   <data name="ApproachDniToReader" xml:space="preserve">
-	<value>Acerque el DNI electrónico al lector...</value>
+    <value>Acerque el DNI electrónico al lector...</value>
   </data>
   <data name="AuthorizationNotFound" xml:space="preserve">
-	<value>Autorización no encontrada</value>
+    <value>Autorización no encontrada</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-	<value>Desconocido</value>
+    <value>Desconocido</value>
   </data>
   <data name="DeleteAuthorization" xml:space="preserve">
-	<value>Eliminar autorización</value>
+    <value>Eliminar autorización</value>
   </data>
   <data name="ConfirmDeleteAuthorization" xml:space="preserve">
-	<value>¿Está seguro de que desea eliminar esta autorización?</value>
+    <value>¿Está seguro de que desea eliminar esta autorización?</value>
+  </data>
+  <data name="ActiveAuthorizations" xml:space="preserve">
+    <value>Autorizaciones activas</value>
+  </data>
+  <data name="NoActiveAuthorizations" xml:space="preserve">
+    <value>No hay autorizaciones activas</value>
+  </data>
+  <data name="PressButtonToAddAuthorization" xml:space="preserve">
+    <value>Pulse el botón + para crear una nueva autorización</value>
+  </data>
+  <data name="PickupOf" xml:space="preserve">
+    <value>Recogida de {0}</value>
+  </data>
+  <data name="PicksUp" xml:space="preserve">
+    <value>Recoge:</value>
+  </data>
+  <data name="PickedUpBy" xml:space="preserve">
+    <value>Recogido por:</value>
+  </data>
+  <data name="AlreadyPickedUp" xml:space="preserve">
+    <value>✓ Ya recogido</value>
+  </data>
+  <data name="PendingPickup" xml:space="preserve">
+    <value>Pendiente de recogida</value>
+  </data>
+  <data name="UnknownStatus" xml:space="preserve">
+    <value>Estado desconocido</value>
+  </data>
+  <data name="ScanCancelled" xml:space="preserve">
+    <value>Escaneo cancelado</value>
+  </data>
+  <data name="TimeoutRetry" xml:space="preserve">
+    <value>Tiempo de espera agotado. Intente de nuevo.</value>
+  </data>
+  <data name="IdentityVerified" xml:space="preserve">
+    <value>Identidad verificada: {0}</value>
+  </data>
+  <data name="PickupConfirmedSuccess" xml:space="preserve">
+    <value>Recogida confirmada correctamente</value>
+  </data>
+  <data name="PickupNotAuthorized" xml:space="preserve">
+    <value>Recogida no autorizada</value>
+  </data>
+  <data name="PersonCanPickupChildWithDni" xml:space="preserve">
+    <value>{0} {1} con DNI {2} puede recoger a {3}</value>
+  </data>
+  <data name="ErrorCanIncorrect" xml:space="preserve">
+    <value>El código CAN introducido no es correcto. Revise los 6 dígitos que aparecen en la parte inferior derecha del anverso de su DNI.</value>
+  </data>
+  <data name="ErrorDniAccess" xml:space="preserve">
+    <value>No se ha podido acceder a los datos del DNI. Asegúrese de que el documento es un DNI electrónico válido.</value>
+  </data>
+  <data name="ErrorDniCommunication" xml:space="preserve">
+    <value>Se ha producido un error de comunicación con el DNI. Vuelva a acercar el documento y manténgalo quieto durante la lectura.</value>
+  </data>
+  <data name="ErrorPaceConnection" xml:space="preserve">
+    <value>Error al establecer la conexión segura con el DNI. Verifique que el CAN es correcto y vuelva a intentarlo.</value>
+  </data>
+  <data name="ErrorDniGenericComm" xml:space="preserve">
+    <value>Error de comunicación con el DNI electrónico. Mantenga el documento pegado al teléfono sin moverlo e inténtelo de nuevo.</value>
+  </data>
+  <data name="ErrorTagLost" xml:space="preserve">
+    <value>Se ha perdido la conexión con el DNI. Mantenga el documento pegado al teléfono sin moverlo durante toda la lectura.</value>
+  </data>
+  <data name="ErrorTransceive" xml:space="preserve">
+    <value>Error de comunicación NFC. Asegúrese de que el DNI está bien posicionado sobre el lector NFC del teléfono.</value>
+  </data>
+  <data name="ErrorCrypto" xml:space="preserve">
+    <value>Error al verificar la seguridad del documento. El CAN podría ser incorrecto o el DNI se movió durante la lectura. Inténtelo de nuevo.</value>
+  </data>
+  <data name="ErrorSecureMessaging" xml:space="preserve">
+    <value>La comunicación segura con el DNI se ha interrumpido. Vuelva a acercar el documento e inténtelo de nuevo.</value>
+  </data>
+  <data name="ErrorNfcGeneric" xml:space="preserve">
+    <value>Error en la lectura NFC. Asegúrese de que el DNI está bien posicionado y no lo mueva durante el proceso.</value>
+  </data>
+  <data name="ErrorDniFallback" xml:space="preserve">
+    <value>Se ha producido un error al leer el DNI. Compruebe que el CAN es correcto, mantenga el documento quieto sobre el teléfono e inténtelo de nuevo.</value>
+  </data>
+  <data name="DateFormatLong" xml:space="preserve">
+    <value>dddd, d 'de' MMMM 'de' yyyy</value>
+  </data>
+  <data name="AuthorizationDetail" xml:space="preserve">
+    <value>Detalle de autorización</value>
+  </data>
+  <data name="ValidityPeriod" xml:space="preserve">
+    <value>Periodo de validez</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>Desde: </value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Hasta: </value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Minors" xml:space="preserve">
+    <value>Menores</value>
+  </data>
+  <data name="PersonNotAuthorizedForChild" xml:space="preserve">
+    <value>{0} no tiene autorización vigente para recoger a este menor.</value>
+  </data>
+  <data name="NfcPositionInstructions" xml:space="preserve">
+    <value>Coloque la parte trasera del DNIe
+sobre la parte superior del teléfono</value>
+  </data>
+  <data name="NfcKeepDniOnReader" xml:space="preserve">
+    <value>Mantenga el DNI en el lector
+hasta que se complete la comprobación</value>
+  </data>
+  <data name="NfcDniDetectedKeepStill" xml:space="preserve">
+    <value>DNI detectado. Mantenga el DNI en el lector hasta que se complete la comprobación.</value>
+  </data>
+  <data name="NfcEstablishingSecureChannel" xml:space="preserve">
+    <value>Estableciendo canal seguro (PACE)...</value>
+  </data>
+  <data name="NfcSecureChannelReading" xml:space="preserve">
+    <value>Canal seguro activo. Preparando lectura...</value>
+  </data>
+  <data name="NfcReadingDnieData" xml:space="preserve">
+    <value>Leyendo datos del DNIe...</value>
+  </data>
+  <data name="AuthorizationUpdatedSuccessfully" xml:space="preserve">
+    <value>Autorización actualizada correctamente</value>
   </data>
 </root>

@@ -9,7 +9,7 @@
         <VerticalStackLayout Padding="24" Spacing="24" VerticalOptions="Center">
 
             <Label
-                Text="{Binding ChildName, StringFormat='Recogida de {0}'}"
+                Text="{Binding PickupTitle}"
                 FontSize="20"
                 FontAttributes="Bold"
                 HorizontalTextAlignment="Center" />
@@ -73,7 +73,7 @@
 
                     <!-- Instrucciones de posicionamiento (antes de detectar) -->
                     <Label
-                        Text="Coloque la parte trasera del DNIe&#10;sobre la parte superior del teléfono"
+                        Text="{x:Static res:AppResources.NfcPositionInstructions}"
                         FontSize="14"
                         HorizontalTextAlignment="Center"
                         TextColor="{DynamicResource Gray400}"
@@ -81,7 +81,7 @@
 
                     <!-- Mensaje de mantener (después de detectar) -->
                     <Label
-                        Text="Mantenga el DNI en el lector&#10;hasta que se complete la comprobación"
+                        Text="{x:Static res:AppResources.NfcKeepDniOnReader}"
                         FontSize="14"
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center"

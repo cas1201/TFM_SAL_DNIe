@@ -42,7 +42,7 @@ namespace ColeHop.Services.Nfc
                 System.Diagnostics.Debug.WriteLine("NFC: Esperando que el usuario acerque el DNI...");
                 await _platformService.WaitForTagAsync(cancellationToken);
                 System.Diagnostics.Debug.WriteLine("NFC: DNI detectado, iniciando lectura...");
-                progress?.Report("DNI detectado. Mantenga el DNI en el lector hasta que se complete la comprobación.");
+                progress?.Report(Resources.Strings.AppResources.NfcDniDetectedKeepStill);
 
                 var session = new DnieSession(_platformService, can, progress);
                 var identity = await session.ExecuteAsync(cancellationToken);

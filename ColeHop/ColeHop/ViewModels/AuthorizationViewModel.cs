@@ -287,7 +287,7 @@ namespace ColeHop.ViewModels
                 if (IsEditing)
                 {
                     await _tutorManagementService.UpdateAuthorizationAsync(tutorId, AuthorizationId, authorizationData);
-                    await Alert.ShowAsync(AppResources.Authorization, "Autorización actualizada correctamente", AppResources.OK);
+                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationUpdatedSuccessfully, AppResources.OK);
                 }
                 else
                 {

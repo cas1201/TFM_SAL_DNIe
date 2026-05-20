@@ -1,3 +1,4 @@
+using ColeHop.Resources.Strings;
 using ColeHop.Services.Nfc;
 using ColeHop.Services.TutorManagement;
 using ColeHop.Models;
@@ -92,7 +93,7 @@ namespace ColeHop.Services.Pickup
 
             if (!hasAuth)
             {
-                return new PickupAuthorizationResult(false, $"{person.FullName} no tiene autorización vigente para recoger a este menor.");
+                return new PickupAuthorizationResult(false, string.Format(AppResources.PersonNotAuthorizedForChild, person.FullName));
             }
 
             return new PickupAuthorizationResult(true, null);

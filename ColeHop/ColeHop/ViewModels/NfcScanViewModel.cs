@@ -31,6 +31,10 @@ namespace ColeHop.ViewModels
         [ObservableProperty]
         private string _childName = string.Empty;
 
+        public string PickupTitle => string.Format(AppResources.PickupOf, ChildName);
+
+        partial void OnChildNameChanged(string value) => OnPropertyChanged(nameof(PickupTitle));
+
         [ObservableProperty]
         private bool _isScanning;
 
@@ -137,7 +141,7 @@ namespace ColeHop.ViewModels
                 var progress = new Progress<string>(phase =>
                 {
                     ScanStatus = phase;
-                    if (phase.Contains("DNI detectado", StringComparison.OrdinalIgnoreCase))
+                    if (phase == AppResources.NfcDniDetectedKeepStill)
                         DniDetected = true;
                 });
                 await _nfcService.BeginDnieReadingAsync(Can, _scanCts.Token, progress);
@@ -149,7 +153,7 @@ namespace ColeHop.ViewModels
                 if (_userCancelled || _isNavigatingAway)
                 {
                     // Cancelación por el usuario o navegación hacia atrás: no mostrar error
-                    ScanStatus = "Escaneo cancelado";
+                    ScanStatus = AppResources.ScanCancelled;
                     await EnsureNfcStoppedAsync();
                 }
                 else
@@ -158,7 +162,7 @@ namespace ColeHop.ViewModels
                     _failedAttempts++;
                     IsScanning = false;
                     ShowCanInput = true;
-                    ScanStatus = "Tiempo de espera agotado. Intente de nuevo.";
+                    ScanStatus = AppResources.TimeoutRetry;
                     await EnsureNfcStoppedAsync();
                     await Alert.ShowAsync(
                         AppResources.TimeoutExpired,
@@ -184,7 +188,7 @@ namespace ColeHop.ViewModels
             _scanCts?.Cancel();
             IsScanning = false;
             ShowCanInput = true;
-            ScanStatus = "Escaneo cancelado";
+            ScanStatus = AppResources.ScanCancelled;
             await EnsureNfcStoppedAsync();
         }
 
@@ -196,30 +200,30 @@ namespace ColeHop.ViewModels
             if (message.Contains("SW=6988", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("SW=6982", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("SW=6300", StringComparison.OrdinalIgnoreCase))
-                return "El código CAN introducido no es correcto. Revise los 6 dígitos que aparecen en la parte inferior derecha del anverso de su DNI.";
+                return AppResources.ErrorCanIncorrect;
 
             if (message.Contains("SW=6A82", StringComparison.OrdinalIgnoreCase))
-                return "No se ha podido acceder a los datos del DNI. Asegúrese de que el documento es un DNI electrónico válido.";
+                return AppResources.ErrorDniAccess;
 
             if (message.Contains("SW=6999", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("SW=6F00", StringComparison.OrdinalIgnoreCase))
-                return "Se ha producido un error de comunicación con el DNI. Vuelva a acercar el documento y manténgalo quieto durante la lectura.";
+                return AppResources.ErrorDniCommunication;
 
             if (message.Contains("SW=", StringComparison.OrdinalIgnoreCase) &&
                 message.Contains("PACE", StringComparison.OrdinalIgnoreCase))
-                return "Error al establecer la conexión segura con el DNI. Verifique que el CAN es correcto y vuelva a intentarlo.";
+                return AppResources.ErrorPaceConnection;
 
             if (message.Contains("SW=", StringComparison.OrdinalIgnoreCase))
-                return "Error de comunicación con el DNI electrónico. Mantenga el documento pegado al teléfono sin moverlo e inténtelo de nuevo.";
+                return AppResources.ErrorDniGenericComm;
 
             // NFC / IO errors
             if (message.Contains("TagLost", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("Tag was lost", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("IOException", StringComparison.OrdinalIgnoreCase))
-                return "Se ha perdido la conexión con el DNI. Mantenga el documento pegado al teléfono sin moverlo durante toda la lectura.";
+                return AppResources.ErrorTagLost;
 
             if (message.Contains("transceive", StringComparison.OrdinalIgnoreCase))
-                return "Error de comunicación NFC. Asegúrese de que el DNI está bien posicionado sobre el lector NFC del teléfono.";
+                return AppResources.ErrorTransceive;
 
             // BouncyCastle / crypto errors
             if (message.Contains("Org.BouncyCastle", StringComparison.OrdinalIgnoreCase) ||
@@ -227,19 +231,19 @@ namespace ColeHop.ViewModels
                 message.Contains("mac", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("decrypt", StringComparison.OrdinalIgnoreCase) ||
                 ex.GetType().FullName?.Contains("BouncyCastle") == true)
-                return "Error al verificar la seguridad del documento. El CAN podría ser incorrecto o el DNI se movió durante la lectura. Inténtelo de nuevo.";
+                return AppResources.ErrorCrypto;
 
             // Secure messaging
             if (message.Contains("SecureMessaging", StringComparison.OrdinalIgnoreCase) ||
                 message.Contains("Respuesta NFC demasiado corta", StringComparison.OrdinalIgnoreCase))
-                return "La comunicación segura con el DNI se ha interrumpido. Vuelva a acercar el documento e inténtelo de nuevo.";
+                return AppResources.ErrorSecureMessaging;
 
             // Generic NFC
             if (message.Contains("NFC", StringComparison.OrdinalIgnoreCase))
-                return "Error en la lectura NFC. Asegúrese de que el DNI está bien posicionado y no lo mueva durante el proceso.";
+                return AppResources.ErrorNfcGeneric;
 
             // Fallback
-            return "Se ha producido un error al leer el DNI. Compruebe que el CAN es correcto, mantenga el documento quieto sobre el teléfono e inténtelo de nuevo.";
+            return AppResources.ErrorDniFallback;
         }
 
         private async Task EnsureNfcStoppedAsync()
@@ -301,7 +305,7 @@ namespace ColeHop.ViewModels
         {
             try
             {
-                ScanStatus = $"Identidad verificada: {verifiedIdentity.FullName}";
+                ScanStatus = string.Format(AppResources.IdentityVerified, verifiedIdentity.FullName);
                 IsScanning = false;
                 await EnsureNfcStoppedAsync();
 
@@ -317,17 +321,17 @@ namespace ColeHop.ViewModels
 
                 if (!authResult.IsAuthorized)
                 {
-                    ScanStatus = $"Acceso denegado: {authResult.DenialReason}";
-                    await Alert.ShowAsync("Recogida no autorizada", authResult.DenialReason ?? AppResources.NotAuthorized);
+                    ScanStatus = $"{AppResources.AccessDenied}: {authResult.DenialReason}";
+                    await Alert.ShowAsync(AppResources.PickupNotAuthorized, authResult.DenialReason ?? AppResources.NotAuthorized);
                 }
                 else
                 {
                     var teacherId = Auth.CurrentUserId!;
                     await _pickupService.ConfirmPickupAsync(teacherId, _currentContext, verifiedIdentity);
-                    ScanStatus = "Recogida confirmada correctamente";
+                    ScanStatus = AppResources.PickupConfirmedSuccess;
                     await Alert.ShowAsync(
                         AppResources.PickupAuthorized,
-                        $"{verifiedIdentity.GivenNames} {verifiedIdentity.Surnames} con DNI {verifiedIdentity.DocumentNumber} puede recoger a {ChildName}");
+                        string.Format(AppResources.PersonCanPickupChildWithDni, verifiedIdentity.GivenNames, verifiedIdentity.Surnames, verifiedIdentity.DocumentNumber, ChildName));
                 }
 
                 // Navegar de vuelta

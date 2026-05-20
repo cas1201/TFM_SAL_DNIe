@@ -1,3 +1,5 @@
+using ColeHop.Resources.Strings;
+
 namespace ColeHop.Models
 {
     public sealed class AuthorizationDisplayItem
@@ -15,6 +17,6 @@ namespace ColeHop.Models
         public int PickedUpCount { get; init; }
         public int TotalChildren { get; init; }
         public bool HasPartialProgress => IsToday && PickedUpCount > 0 && !IsCompleted;
-        public string ProgressText => $"{PickedUpCount}/{TotalChildren}";
+        public string ProgressText => $"{AppResources.PickedUp}: {PickedUpCount}/{TotalChildren}";
     }
 }
