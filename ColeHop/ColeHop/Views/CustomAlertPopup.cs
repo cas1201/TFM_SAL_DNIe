@@ -1,3 +1,5 @@
+using ColeHop.Services.Alert;
+
 namespace ColeHop.Views
 {
     public class CustomAlertPopup : ContentPage
@@ -5,27 +7,30 @@ namespace ColeHop.Views
         private readonly TaskCompletionSource<bool> _tcs = new();
         private readonly TaskCompletionSource _dismissedTcs = new();
 
-        private static readonly Dictionary<string, string> IconMap = new(StringComparer.OrdinalIgnoreCase)
+        private static string GetIconGlyph(AlertIcon alertIcon) => alertIcon switch
         {
-            { "error", "\ue000" },
-            { "aviso", "\ue002" },
-            { "warning", "\ue002" },
-            { "éxito", "\ue86c" },
-            { "success", "\ue86c" },
-            { "información", "\ue88e" },
-            { "information", "\ue88e" },
-            { "info", "\ue88e" },
-            { "acceso denegado", "\ue899" },
-            { "access denied", "\ue899" },
-            { "not authorized", "\ue5cd" },
-            { "no autorizada", "\ue5cd" },
-            { "tiempo agotado", "\ue425" },
-            { "timeout", "\ue425" },
-            { "pickup authorized", "\ue876" },
-            { "recogida autorizada", "\ue876" },
+            AlertIcon.Error => "\ue000",
+            AlertIcon.Warning => "\ue002",
+            AlertIcon.Success => "\ue86c",
+            AlertIcon.Info => "\ue88e",
+            AlertIcon.AccessDenied => "\ue899",
+            AlertIcon.NotAuthorized => "\ue5cd",
+            AlertIcon.Timeout => "\ue425",
+            AlertIcon.PickupAuthorized => "\ue876",
+            _ => "\ue88e"
         };
 
-        public CustomAlertPopup(string title, string message, string cancelText, string? acceptText)
+        private enum IconCategory { Info, Success, Warning, Error }
+
+        private static IconCategory GetIconCategory(AlertIcon alertIcon) => alertIcon switch
+        {
+            AlertIcon.Error or AlertIcon.AccessDenied or AlertIcon.NotAuthorized => IconCategory.Error,
+            AlertIcon.Success or AlertIcon.PickupAuthorized => IconCategory.Success,
+            AlertIcon.Warning or AlertIcon.Timeout => IconCategory.Warning,
+            _ => IconCategory.Info
+        };
+
+        public CustomAlertPopup(string title, string message, string cancelText, string? acceptText, AlertIcon alertIcon = AlertIcon.Info)
         {
             BackgroundColor = Color.FromArgb("#80000000");
             Shell.SetNavBarIsVisible(this, false);
@@ -33,40 +38,23 @@ namespace ColeHop.Views
 
             var isDark = Application.Current!.RequestedTheme == AppTheme.Dark;
 
-            var icon = "\ue88e";
-            foreach (var kvp in IconMap)
-            {
-                if (title.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    icon = kvp.Value;
-                    break;
-                }
-            }
+            var icon = GetIconGlyph(alertIcon);
+            var category = GetIconCategory(alertIcon);
 
             var iconColor = GetThemeColor(isDark, "PrimaryDark", "Primary");
             var iconBgColor = GetThemeColor(isDark, "InfoBgDark", "InfoBgLight");
 
-            if (title.Contains("error", StringComparison.OrdinalIgnoreCase) ||
-                title.Contains("denegado", StringComparison.OrdinalIgnoreCase) ||
-                title.Contains("denied", StringComparison.OrdinalIgnoreCase) ||
-                title.Contains("not authorized", StringComparison.OrdinalIgnoreCase) ||
-                title.Contains("no autorizada", StringComparison.OrdinalIgnoreCase))
+            if (category == IconCategory.Error)
             {
-                iconColor = (Color)Application.Current.Resources["Danger"];
-                iconBgColor = GetThemeColor(isDark, "DangerBgDark", "DangerBgLight");
+                iconColor = (Color)Application.Current.Resources["Error"];
+                iconBgColor = GetThemeColor(isDark, "ErrorBgDark", "ErrorBgLight");
             }
-            else if (title.Contains("éxito", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("success", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("autorizada", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("authorized", StringComparison.OrdinalIgnoreCase))
+            else if (category == IconCategory.Success)
             {
                 iconColor = (Color)Application.Current.Resources["Success"];
                 iconBgColor = GetThemeColor(isDark, "SuccessBgDark", "SuccessBgLight");
             }
-            else if (title.Contains("aviso", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("warning", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("tiempo", StringComparison.OrdinalIgnoreCase) ||
-                     title.Contains("timeout", StringComparison.OrdinalIgnoreCase))
+            else if (category == IconCategory.Warning)
             {
                 iconColor = (Color)Application.Current.Resources["Accent"];
                 iconBgColor = GetThemeColor(isDark, "WarningBgDark", "WarningBgLight");

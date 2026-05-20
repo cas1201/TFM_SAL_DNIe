@@ -331,7 +331,7 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¿Estás seguro de que deseas eliminar a {0}?.
+        ///   Busca una cadena traducida similar a ¿Estás seguro de que deseas eliminar a {0} {1}?.
         /// </summary>
         public static string ConfirmDeleteChild {
             get {
@@ -498,6 +498,15 @@ namespace ColeHop.Resources.Strings {
         public static string DniInvalidFormat {
             get {
                 return ResourceManager.GetString("DniInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El DNI {0} no corresponde a ninguna persona autorizada..
+        /// </summary>
+        public static string DniNoMatch {
+            get {
+                return ResourceManager.GetString("DniNoMatch", resourceCulture);
             }
         }
         
@@ -1051,8 +1060,7 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mantenga el DNI en el lector
-        ///hasta que se complete la comprobación.
+        ///   Busca una cadena traducida similar a Mantenga el DNI en el lector hasta que se complete la comprobación.
         /// </summary>
         public static string NfcKeepDniOnReader {
             get {
@@ -1079,8 +1087,7 @@ namespace ColeHop.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Coloque la parte trasera del DNIe
-        ///sobre la parte superior del teléfono.
+        ///   Busca una cadena traducida similar a Coloque la parte trasera del DNIe sobre la parte superior del teléfono.
         /// </summary>
         public static string NfcPositionInstructions {
             get {
@@ -1679,6 +1686,33 @@ namespace ColeHop.Resources.Strings {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Femenino.
+        /// </summary>
+        public static string SexFemenine {
+            get {
+                return ResourceManager.GetString("SexFemenine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Masculino.
+        /// </summary>
+        public static string SexMasculine {
+            get {
+                return ResourceManager.GetString("SexMasculine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sexo no definido.
+        /// </summary>
+        public static string SexNotDefined {
+            get {
+                return ResourceManager.GetString("SexNotDefined", resourceCulture);
             }
         }
         

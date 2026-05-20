@@ -57,7 +57,7 @@ namespace ColeHop.ViewModels
                 );
 
                 await Auth.RegisterTutorAsync(registrationData);
-                await Alert.ShowAsync(AppResources.Registration, AppResources.RegistrationCompletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Registration, AppResources.RegistrationCompletedSuccessfully, AppResources.OK, AlertIcon.Success);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)

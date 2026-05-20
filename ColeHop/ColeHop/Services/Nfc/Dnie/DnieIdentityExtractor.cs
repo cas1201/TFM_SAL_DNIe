@@ -1,4 +1,5 @@
 using ColeHop.Helpers;
+using ColeHop.Resources.Strings;
 
 namespace ColeHop.Services.Nfc.Dnie
 {
@@ -106,7 +107,7 @@ namespace ColeHop.Services.Nfc.Dnie
 
             // Línea 2: fecha nacimiento [0..6], sexo [7], expiración [8..14], nacionalidad [15..18]
             var dateOfBirth = ParseDate(line2[..6]);
-            var sex = line2[7] == 'M' ? "Masculino" : line2[7] == 'F' ? "Femenino" : "No especificado";
+            var sex = line2[7] == 'M' ? AppResources.SexMasculine : line2[7] == 'F' ? AppResources.SexFemenine : AppResources.SexNotDefined;
             var expirationDate = ParseDate(line2[8..14]);
             var nationality = line2[15..18].TrimEnd('<');
 

@@ -60,7 +60,7 @@ namespace ColeHop.ViewModels
         {
             if (CurrentRole != UserRole.Teacher || string.IsNullOrEmpty(Auth.CurrentUserId))
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.UnauthorizedAccess);
+                await Alert.ShowAsync(AppResources.Error, AppResources.UnauthorizedAccess, AppResources.OK, AlertIcon.AccessDenied);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -99,7 +99,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.CouldNotLoadPickups, ex.Message));
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.CouldNotLoadPickups, ex.Message), AppResources.OK, AlertIcon.Error);
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace ColeHop.ViewModels
         {
             if (pickup.AlreadyPickedUp)
             {
-                await Alert.ShowAsync(AppResources.Information, AppResources.ChildAlreadyPickedUp);
+                await Alert.ShowAsync(AppResources.Information, AppResources.ChildAlreadyPickedUp, AppResources.OK, AlertIcon.Info);
                 return;
             }
 

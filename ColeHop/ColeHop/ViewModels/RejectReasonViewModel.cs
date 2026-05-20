@@ -32,10 +32,7 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Reason))
             {
-                await Alert.ShowAsync(
-                    AppResources.Error,
-                    AppResources.EnterRejectionReason,
-                    AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.EnterRejectionReason, AppResources.OK, AlertIcon.Error);
                 return;
             }
 

@@ -79,7 +79,7 @@ namespace ColeHop.Services.Pickup
 
             if (person == null)
             {
-                return new PickupAuthorizationResult(false, $"El DNI {verifiedIdentity.Dni} no corresponde a ninguna persona autorizada.");
+                return new PickupAuthorizationResult(false, string.Format(AppResources.DniNoMatch, verifiedIdentity.Dni));
             }
 
             // Verificar que tiene autorización activa para este niño hoy

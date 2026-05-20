@@ -12,7 +12,7 @@
     <Color x:Key="Accent">#FFBE0B</Color>
     <Color x:Key="Success">#06D6A0</Color>
     <Color x:Key="Warning">#FFA726</Color>
-    <Color x:Key="Danger">#EF476F</Color>
+    <Color x:Key="Error">#EF476F</Color>
     <Color x:Key="Surface">#F8F9FE</Color>
 
     <Color x:Key="White">White</Color>
@@ -58,8 +58,8 @@
     <Color x:Key="SuccessTintDark">#1A2E28</Color>
 
     <!-- Popup icon background colors -->
-    <Color x:Key="DangerBgLight">#FFEBEE</Color>
-    <Color x:Key="DangerBgDark">#3D1F1F</Color>
+    <Color x:Key="ErrorBgLight">#FFEBEE</Color>
+    <Color x:Key="ErrorBgDark">#3D1F1F</Color>
     <Color x:Key="SuccessBgLight">#E8F5E9</Color>
     <Color x:Key="SuccessBgDark">#1A2E1F</Color>
     <Color x:Key="WarningBgLight">#FFF8E1</Color>

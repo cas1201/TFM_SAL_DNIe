@@ -116,7 +116,7 @@
                 <Button
                     Text="{x:Static res:AppResources.DeleteAuthorization}"
                     Command="{Binding DeleteCommand}"
-                    BackgroundColor="{StaticResource Danger}"
+                    BackgroundColor="{StaticResource Error}"
                     TextColor="White"
                     FontSize="16"
                     FontAttributes="Bold"

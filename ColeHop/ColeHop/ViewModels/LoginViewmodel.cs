@@ -28,7 +28,7 @@ public sealed partial class LoginViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK);
+            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK, AlertIcon.Error);
         }
         finally
         {
@@ -47,7 +47,7 @@ public sealed partial class LoginViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK);
+            await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK, AlertIcon.Error);
         }
         finally
         {

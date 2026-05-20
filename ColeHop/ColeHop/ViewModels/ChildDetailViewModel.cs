@@ -86,7 +86,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorLoadingData}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorLoadingData}: {ex.Message}", AppResources.OK, AlertIcon.Error);
             }
             finally
             {
@@ -99,7 +99,7 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK, AlertIcon.Error);
                 return;
             }
 
@@ -114,12 +114,12 @@ namespace ColeHop.ViewModels
                 var updatedData = new ChildData(Name, LastName, EducationType, Course, Group);
                 await _tutorManagementService.UpdateChildAsync(tutorId, ChildId, updatedData);
 
-                await Alert.ShowAsync(AppResources.Success, AppResources.ChildUpdatedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.ChildUpdatedSuccessfully, AppResources.OK, AlertIcon.Success);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK, AlertIcon.Error);
             }
             finally
             {
@@ -130,11 +130,7 @@ namespace ColeHop.ViewModels
         [RelayCommand]
         private async Task DeleteAsync()
         {
-            var confirm = await Alert.ShowConfirmAsync(
-                AppResources.ConfirmDeletion,
-                $"{AppResources.ConfirmDeleteChild.Replace("{0}", Name)}",
-                AppResources.Delete,
-                AppResources.Cancel);
+            var confirm = await Alert.ShowConfirmAsync(AppResources.ConfirmDeletion, string.Format(AppResources.ConfirmDeleteChild, Name, LastName), AppResources.Delete, AppResources.Cancel, AlertIcon.Warning);
 
             if (!confirm)
                 return;
@@ -149,12 +145,12 @@ namespace ColeHop.ViewModels
 
                 await _tutorManagementService.RemoveChildAsync(tutorId, ChildId);
 
-                await Alert.ShowAsync(AppResources.Success, AppResources.ChildDeletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.ChildDeletedSuccessfully, AppResources.OK, AlertIcon.Success);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK, AlertIcon.Error);
             }
             finally
             {

@@ -45,7 +45,7 @@
                             </DataTrigger>
                             <DataTrigger TargetType="Border" Binding="{Binding IsRejected}" Value="True">
                                 <Setter Property="Opacity" Value="0.6" />
-                                <Setter Property="Stroke" Value="{DynamicResource Danger}" />
+                                <Setter Property="Stroke" Value="{DynamicResource Error}" />
                             </DataTrigger>
                         </Border.Triggers>
 
@@ -94,7 +94,7 @@
                                 Grid.Column="1"
                                 Text="{x:Static res:AppResources.Rejected}"
                                 FontSize="11"
-                                TextColor="{DynamicResource Danger}"
+                                TextColor="{DynamicResource Error}"
                                 FontAttributes="Bold"
                                 VerticalOptions="Center"
                                 IsVisible="{Binding IsRejected}" />

@@ -355,7 +355,7 @@
     <value>Confirmar eliminación</value>
   </data>
   <data name="ConfirmDeleteChild" xml:space="preserve">
-    <value>¿Estás seguro de que deseas eliminar a {0}?</value>
+    <value>¿Estás seguro de que deseas eliminar a {0} {1}?</value>
   </data>
   <data name="ConfirmDeletePerson" xml:space="preserve">
     <value>¿Estás seguro de que deseas eliminar a {0} {1}?</value>
@@ -712,12 +712,10 @@
     <value>{0} no tiene autorización vigente para recoger a este menor.</value>
   </data>
   <data name="NfcPositionInstructions" xml:space="preserve">
-    <value>Coloque la parte trasera del DNIe
-sobre la parte superior del teléfono</value>
+    <value>Coloque la parte trasera del DNIe sobre la parte superior del teléfono</value>
   </data>
   <data name="NfcKeepDniOnReader" xml:space="preserve">
-    <value>Mantenga el DNI en el lector
-hasta que se complete la comprobación</value>
+    <value>Mantenga el DNI en el lector hasta que se complete la comprobación</value>
   </data>
   <data name="NfcDniDetectedKeepStill" xml:space="preserve">
     <value>DNI detectado. Mantenga el DNI en el lector hasta que se complete la comprobación.</value>
@@ -733,5 +731,17 @@ hasta que se complete la comprobación</value>
   </data>
   <data name="AuthorizationUpdatedSuccessfully" xml:space="preserve">
     <value>Autorización actualizada correctamente</value>
+  </data>
+  <data name="SexNotDefined" xml:space="preserve">
+    <value>Sexo no definido</value>
+  </data>
+  <data name="SexMasculine" xml:space="preserve">
+    <value>Masculino</value>
+  </data>
+  <data name="SexFemenine" xml:space="preserve">
+    <value>Femenino</value>
+  </data>
+  <data name="DniNoMatch" xml:space="preserve">
+    <value>El DNI {0} no corresponde a ninguna persona autorizada.</value>
   </data>
 </root>

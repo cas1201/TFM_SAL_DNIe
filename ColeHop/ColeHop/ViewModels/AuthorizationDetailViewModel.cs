@@ -55,7 +55,7 @@ namespace ColeHop.ViewModels
 
             if (_authorization == null)
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.AuthorizationNotFound);
+                await Alert.ShowAsync(AppResources.Error, AppResources.AuthorizationNotFound, AppResources.OK, AlertIcon.Error);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -109,7 +109,8 @@ namespace ColeHop.ViewModels
                 AppResources.DeleteAuthorization,
                 AppResources.ConfirmDeleteAuthorization,
                 AppResources.Delete,
-                AppResources.Cancel);
+                AppResources.Cancel,
+                AlertIcon.Warning);
 
             if (!confirmed) return;
 

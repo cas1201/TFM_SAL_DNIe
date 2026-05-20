@@ -287,12 +287,12 @@ namespace ColeHop.ViewModels
                 if (IsEditing)
                 {
                     await _tutorManagementService.UpdateAuthorizationAsync(tutorId, AuthorizationId, authorizationData);
-                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationUpdatedSuccessfully, AppResources.OK);
+                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationUpdatedSuccessfully, AppResources.OK, AlertIcon.Success);
                 }
                 else
                 {
                     await _tutorManagementService.CreateAuthorizationAsync(tutorId, authorizationData);
-                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK);
+                    await Alert.ShowAsync(AppResources.Authorization, AppResources.AuthorizationCreatedSuccessfully, AppResources.OK, AlertIcon.Success);
                 }
                 await Shell.Current.GoToAsync("..");
             }

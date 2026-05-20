@@ -355,7 +355,7 @@
     <value>Confirm deletion</value>
   </data>
   <data name="ConfirmDeleteChild" xml:space="preserve">
-    <value>Are you sure you want to delete {0}?</value>
+    <value>Are you sure you want to delete {0} {1}?</value>
   </data>
   <data name="ConfirmDeletePerson" xml:space="preserve">
     <value>Are you sure you want to delete {0} {1}?</value>
@@ -712,12 +712,10 @@
     <value>{0} does not have a valid authorization to pick up this child.</value>
   </data>
   <data name="NfcPositionInstructions" xml:space="preserve">
-    <value>Place the back of the ID card
-on top of the phone</value>
+    <value>Place the back of the ID card on top of the phone</value>
   </data>
   <data name="NfcKeepDniOnReader" xml:space="preserve">
-    <value>Keep the ID on the reader
-until verification is complete</value>
+    <value>Keep the ID on the reader until verification is complete</value>
   </data>
   <data name="NfcDniDetectedKeepStill" xml:space="preserve">
     <value>ID detected. Keep the ID on the reader until verification is complete.</value>
@@ -733,5 +731,17 @@ until verification is complete</value>
   </data>
   <data name="AuthorizationUpdatedSuccessfully" xml:space="preserve">
     <value>Authorization updated successfully</value>
+  </data>
+  <data name="SexNotDefined" xml:space="preserve">
+    <value>Sex not defined</value>
+  </data>
+  <data name="SexMasculine" xml:space="preserve">
+    <value>Masculine</value>
+  </data>
+  <data name="SexFemenine" xml:space="preserve">
+    <value>Femenine</value>
+  </data>
+  <data name="DniNoMatch" xml:space="preserve">
+    <value>The ID number {0} does not belong to any authorized person.</value>
   </data>
 </root>

@@ -69,7 +69,7 @@ namespace ColeHop.ViewModels
             {
                 _isNavigatingAway = true;
                 ScanStatus = AppResources.NfcNotSupportedDevice;
-                await Alert.ShowAsync(AppResources.Error, AppResources.NfcNotSupported);
+                await Alert.ShowAsync(AppResources.Error, AppResources.NfcNotSupported, AppResources.OK, AlertIcon.Error);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -78,7 +78,7 @@ namespace ColeHop.ViewModels
             {
                 _isNavigatingAway = true;
                 ScanStatus = AppResources.EnableNfcInSettings;
-                await Alert.ShowAsync(AppResources.Warning, AppResources.NfcDisabledWarning);
+                await Alert.ShowAsync(AppResources.Warning, AppResources.NfcDisabledWarning, AppResources.OK, AlertIcon.Warning);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -86,7 +86,7 @@ namespace ColeHop.ViewModels
             if (string.IsNullOrEmpty(ChildId))
             {
                 _isNavigatingAway = true;
-                await Alert.ShowAsync(AppResources.Error, AppResources.ChildNotSpecified);
+                await Alert.ShowAsync(AppResources.Error, AppResources.ChildNotSpecified, AppResources.OK, AlertIcon.Error);
                 await Shell.Current.GoToAsync("..");
                 return;
             }
@@ -102,7 +102,7 @@ namespace ColeHop.ViewModels
             {
                 _isNavigatingAway = true;
                 ScanStatus = AppResources.ErrorStartingPickup;
-                await Alert.ShowAsync(AppResources.Error, ex.Message);
+                await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK, AlertIcon.Error);
                 await Shell.Current.GoToAsync("..");
             }
         }
@@ -112,13 +112,13 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Can) || Can.Length != 6)
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.CanMustBe6Digits);
+                await Alert.ShowAsync(AppResources.Error, AppResources.CanMustBe6Digits, AppResources.OK, AlertIcon.Error);
                 return;
             }
 
             if (_currentContext == null)
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.InvalidPickupContext);
+                await Alert.ShowAsync(AppResources.Error, AppResources.InvalidPickupContext, AppResources.OK, AlertIcon.Error);
                 return;
             }
 
@@ -164,9 +164,7 @@ namespace ColeHop.ViewModels
                     ShowCanInput = true;
                     ScanStatus = AppResources.TimeoutRetry;
                     await EnsureNfcStoppedAsync();
-                    await Alert.ShowAsync(
-                        AppResources.TimeoutExpired,
-                        AppResources.DniNotDetectedTimeout);
+                    await Alert.ShowAsync(AppResources.TimeoutExpired, AppResources.DniNotDetectedTimeout, AppResources.OK, AlertIcon.Timeout);
                 }
             }
             catch (Exception ex)
@@ -177,7 +175,7 @@ namespace ColeHop.ViewModels
                 var friendlyMessage = GetFriendlyErrorMessage(ex);
                 ScanStatus = $"Error: {friendlyMessage}";
                 await EnsureNfcStoppedAsync();
-                await Alert.ShowAsync(AppResources.VerificationError, friendlyMessage);
+                await Alert.ShowAsync(AppResources.VerificationError, friendlyMessage, AppResources.OK, AlertIcon.Error);
             }
         }
 
@@ -311,7 +309,7 @@ namespace ColeHop.ViewModels
 
                 if (_currentContext == null)
                 {
-                    await Alert.ShowAsync(AppResources.Error, AppResources.NoActivePickupContext);
+                    await Alert.ShowAsync(AppResources.Error, AppResources.NoActivePickupContext, AppResources.OK, AlertIcon.Error);
                     return;
                 }
 
@@ -322,16 +320,15 @@ namespace ColeHop.ViewModels
                 if (!authResult.IsAuthorized)
                 {
                     ScanStatus = $"{AppResources.AccessDenied}: {authResult.DenialReason}";
-                    await Alert.ShowAsync(AppResources.PickupNotAuthorized, authResult.DenialReason ?? AppResources.NotAuthorized);
+                    await Alert.ShowAsync(AppResources.PickupNotAuthorized, authResult.DenialReason ?? AppResources.NotAuthorized, AppResources.OK, AlertIcon.AccessDenied);
                 }
                 else
                 {
                     var teacherId = Auth.CurrentUserId!;
                     await _pickupService.ConfirmPickupAsync(teacherId, _currentContext, verifiedIdentity);
                     ScanStatus = AppResources.PickupConfirmedSuccess;
-                    await Alert.ShowAsync(
-                        AppResources.PickupAuthorized,
-                        string.Format(AppResources.PersonCanPickupChildWithDni, verifiedIdentity.GivenNames, verifiedIdentity.Surnames, verifiedIdentity.DocumentNumber, ChildName));
+                    await Alert.ShowAsync(AppResources.PickupAuthorized,
+                        string.Format(AppResources.PersonCanPickupChildWithDni, verifiedIdentity.GivenNames, verifiedIdentity.Surnames, verifiedIdentity.DocumentNumber, ChildName), "OK", AlertIcon.PickupAuthorized);
                 }
 
                 // Navegar de vuelta
@@ -342,7 +339,7 @@ namespace ColeHop.ViewModels
                 IsScanning = false;
                 ScanStatus = $"Error: {ex.Message}";
                 await EnsureNfcStoppedAsync();
-                await Alert.ShowAsync(AppResources.Error, ex.Message);
+                await Alert.ShowAsync(AppResources.Error, ex.Message, AppResources.OK, AlertIcon.Error);
             }
         }
     }

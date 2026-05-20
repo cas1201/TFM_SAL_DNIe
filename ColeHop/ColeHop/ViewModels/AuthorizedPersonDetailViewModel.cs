@@ -64,7 +64,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingData, ex.Message));
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingData, ex.Message), AppResources.OK, AlertIcon.Error);
             }
             finally
             {
@@ -77,13 +77,13 @@ namespace ColeHop.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.NameRequired, AppResources.OK, AlertIcon.Error);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
-                await Alert.ShowAsync(AppResources.Error, AppResources.LastNameRequired, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, AppResources.LastNameRequired, AppResources.OK, AlertIcon.Error);
                 return;
             }
 
@@ -98,12 +98,12 @@ namespace ColeHop.ViewModels
                 var updatedData = new AuthorizedPersonData(Name, LastName, Dni, Relationship);
                 await _tutorManagementService.UpdateAuthorizedPersonAsync(tutorId, PersonId, updatedData);
 
-                await Alert.ShowAsync(AppResources.Success, AppResources.PersonUpdatedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.PersonUpdatedSuccessfully, AppResources.OK, AlertIcon.Success);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorSavingChanges}: {ex.Message}", AppResources.OK, AlertIcon.Error);
             }
             finally
             {
@@ -118,7 +118,8 @@ namespace ColeHop.ViewModels
                 AppResources.ConfirmDeletion,
                 $"{AppResources.ConfirmDeletePerson.Replace("{0}", Name).Replace("{1}", LastName)}",
                 AppResources.Delete,
-                AppResources.Cancel);
+                AppResources.Cancel,
+                AlertIcon.Warning);
 
             if (!confirm)
                 return;
@@ -133,12 +134,12 @@ namespace ColeHop.ViewModels
 
                 await _tutorManagementService.RemoveAuthorizedPersonAsync(tutorId, PersonId);
 
-                await Alert.ShowAsync(AppResources.Success, AppResources.PersonDeletedSuccessfully, AppResources.OK);
+                await Alert.ShowAsync(AppResources.Success, AppResources.PersonDeletedSuccessfully, AppResources.OK, AlertIcon.Success);
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK);
+                await Alert.ShowAsync(AppResources.Error, $"{AppResources.ErrorDeleting}: {ex.Message}", AppResources.OK, AlertIcon.Error);
             }
             finally
             {

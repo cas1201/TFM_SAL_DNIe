@@ -50,7 +50,7 @@ namespace ColeHop.ViewModels
             }
             catch (Exception ex)
             {
-                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingAuthorizedPersons, ex.Message));
+                await Alert.ShowAsync(AppResources.Error, string.Format(AppResources.ErrorLoadingAuthorizedPersons, ex.Message), AppResources.OK, AlertIcon.Error);
             }
             finally
             {

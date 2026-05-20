@@ -85,7 +85,7 @@
                                     WidthRequest="40"
                                     HeightRequest="40"
                                     CornerRadius="20"
-                                    BackgroundColor="{DynamicResource Danger}"
+                                    BackgroundColor="{DynamicResource Error}"
                                     Padding="8"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PendingApprovalsViewModel}}, Path=RejectCommand}"
                                     CommandParameter="{Binding .}">
